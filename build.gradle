@@ -27,6 +27,7 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'java'
+    apply plugin: 'java-library'
     apply plugin: 'jacoco'
     apply plugin: 'org.sonarqube'
     apply plugin: 'org.asciidoctor.jvm.convert'
@@ -130,6 +131,12 @@ subprojects {
             property "sonar.java.binaries", "${buildDir}/classes"
             property 'sonar.test.inclusions', '**/*Test.java'
             property 'sonar.exclusions', '**/test/**, **/Q*.java, **/*Doc*.java, **/resources/**'
+        }
+    }
+
+    project(':market-api') {
+        dependencies {
+            compileOnly project(':market-domain')
         }
     }
 
