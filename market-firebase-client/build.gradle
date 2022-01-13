@@ -1,0 +1,14 @@
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation(project(":market-common"))
+
+    implementation 'com.google.firebase:firebase-admin:6.8.1'
+}
+

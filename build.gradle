@@ -1,62 +1,136 @@
 plugins {
     id 'org.springframework.boot' version '2.6.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
     id 'java'
+    id 'jacoco'
+    id 'org.sonarqube' version '3.0'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'inu.market'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 repositories {
     mavenCentral()
 }
 
-ext {
-    set('snippetsDir', file("build/generated-snippets"))
-    set('springCloudVersion', "2021.0.0")
+bootJar {
+    enabled = false
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-    runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    testImplementation 'org.springframework.security:spring-security-test'
+jar {
+    enabled = true
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'org.sonarqube'
+    apply plugin: 'org.asciidoctor.jvm.convert'
+
+    group = 'com.study'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '1.8'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
     }
-}
 
-test {
-    outputs.dir snippetsDir
-    useJUnitPlatform()
-}
+    repositories {
+        mavenCentral()
+    }
 
-asciidoctor {
-    inputs.dir snippetsDir
-    dependsOn test
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    test {
+        useJUnitPlatform()
+        finalizedBy 'jacocoTestReport'
+    }
+
+    jacoco {
+        toolVersion = '0.8.7'
+    }
+
+    jacocoTestReport {
+        reports {
+            html.enabled true
+            csv.enabled false
+            xml.enabled true
+        }
+
+        def Qdomains = []
+        def configs = ['**/*Config*']
+
+        for (qPattern in '**/QA'..'**/QZ') { // qPattern = '**/QA', '**/QB', ... '*.QZ'
+            Qdomains.add(qPattern + '*')
+        }
+
+        // 여기부터
+        afterEvaluate {
+            classDirectories.setFrom(
+                    files(classDirectories.files.collect {
+                        fileTree(dir: it, excludes: [] + Qdomains + configs)
+                    })
+            )
+        }
+
+        finalizedBy 'jacocoTestCoverageVerification'
+    }
+
+    jacocoTestCoverageVerification {
+        def Qdomains = []
+
+        for (qPattern in '*.QA'..'*.QZ') { // qPattern = '*.QA', '*.QB', ... '*.QZ'
+            Qdomains.add(qPattern + '*')
+        }
+
+        violationRules {
+            rule {
+                enabled = true
+                element = 'CLASS'
+
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.00
+                }
+
+                limit {
+                    counter = 'BRANCH'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.00
+                }
+
+                excludes = [] + Qdomains
+            }
+        }
+    }
+
+    sonarqube {
+        properties {
+            property 'sonar.host.url', 'http://localhost:9000'
+            property 'sonar.login', 'b4beeec51ce348d709554f5b7e8750a9f8b767ba'
+            property 'sonar.sources', 'src'
+            property 'sonar.language', 'java'
+            property 'sonar.projectVersion', '1.1.0-SNAPSHOT'
+            property 'sonar.sourceEncoding', 'UTF-8'
+            property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+            property "sonar.java.binaries", "${buildDir}/classes"
+            property 'sonar.test.inclusions', '**/*Test.java'
+            property 'sonar.exclusions', '**/test/**, **/Q*.java, **/*Doc*.java, **/resources/**'
+        }
+    }
+
 }

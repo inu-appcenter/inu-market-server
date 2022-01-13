@@ -1,1 +1,8 @@
 rootProject.name = 'market'
+include 'market-api'
+include 'market-common'
+include 'market-domain'
+include 'market-aws-client'
+include 'market-firebase-client'
+include 'market-inu-client'
+
