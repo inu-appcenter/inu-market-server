@@ -36,4 +36,13 @@ public class User extends BaseEntity {
 
     private String pushToken;
 
+    public static User createUser(int inuId, Role role) {
+        User user = new User();
+        user.inuId = inuId;
+        user.role = role;
+        user.score = 0.0;
+        user.notification = true;
+        return user;
+    }
+
 }
