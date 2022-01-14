@@ -42,4 +42,13 @@ public class CategoryService {
         findCategory.changeName(request.getName());
         return CategoryResponse.of(findCategory);
     }
+
+    @Transactional
+    public void delete(Long categoryId) {
+
+        Category findCategory = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
+
+        categoryRepository.delete(findCategory);
+    }
 }
