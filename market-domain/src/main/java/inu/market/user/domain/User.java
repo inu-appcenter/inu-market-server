@@ -49,14 +49,6 @@ public class User extends BaseEntity {
         this.pushToken = pushToken;
     }
 
-    public void changeNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public void changeImage(Image image) {
-        this.image = image;
-    }
-
     public void changeNotification(Boolean notification) {
         this.notification = notification;
     }

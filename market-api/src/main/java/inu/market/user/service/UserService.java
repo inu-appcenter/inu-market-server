@@ -51,26 +51,6 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse updateNickName(Long userId, UserUpdateNickNameRequest request) {
-        User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
-
-        findUser.changeNickName(request.getNickName());
-
-        return UserResponse.from(findUser);
-    }
-
-    @Transactional
-    public UserResponse updateImage(Long userId, MultipartFile file) {
-        User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
-
-        findUser.changeImage(Image.createImage(awsClient.upload(file)));
-
-        return UserResponse.from(findUser);
-    }
-
-    @Transactional
     public UserResponse updateNotification(Long userId, UserUpdateNotificationRequest request) {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));

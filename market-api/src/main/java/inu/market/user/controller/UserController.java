@@ -51,18 +51,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/api/users/nickname")
-    public ResponseEntity<UserResponse> updateNickName(@LoginUser Long userId,
-                                                       @RequestBody @Valid UserUpdateNickNameRequest request) {
-        return ResponseEntity.ok(userService.updateNickName(userId, request));
-    }
-
-    @PatchMapping("/api/users/image")
-    public ResponseEntity<UserResponse> updateImage(@LoginUser Long userId,
-                                                    @RequestPart MultipartFile file) {
-        return ResponseEntity.ok(userService.updateImage(userId, file));
-    }
-
     @PatchMapping("/api/users/notification")
     public ResponseEntity<UserResponse> updateNotification(@LoginUser Long userId,
                                                            @RequestBody @Valid UserUpdateNotificationRequest notificationRequest) {
