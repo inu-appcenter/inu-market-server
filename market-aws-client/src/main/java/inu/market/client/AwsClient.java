@@ -20,11 +20,11 @@ public class AwsClient {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
-    public String upload(MultipartFile file) {
-        String fileName = createFileName(file.getContentType());
+    public String upload(MultipartFile image) {
+        String fileName = createFileName(image.getContentType());
 
         try {
-            amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+            amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, image.getInputStream(), null)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return amazonS3Client.getUrl(bucket, fileName).toString();
         } catch (IOException e) {

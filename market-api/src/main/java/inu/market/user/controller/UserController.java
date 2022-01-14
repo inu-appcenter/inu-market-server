@@ -1,7 +1,6 @@
 package inu.market.user.controller;
 
 import inu.market.config.LoginUser;
-import inu.market.user.domain.User;
 import inu.market.user.dto.*;
 import inu.market.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -40,14 +39,14 @@ public class UserController {
     }
 
     @PostMapping("/api/users/imageUrls")
-    public ResponseEntity<Map<String, String>> convertToImageUrl(@RequestPart MultipartFile file) {
+    public ResponseEntity<Map<String, String>> convertToImageUrl(@RequestPart MultipartFile image) {
 
-        if (file == null || file.isEmpty()) {
+        if (image == null || image.isEmpty()) {
             throw new RuntimeException("업로드 할 이미지가 없습니다.");
         }
 
         Map<String, String> response = new HashMap<>();
-        String imageUrl = userService.getProfileImageUrl(file);
+        String imageUrl = userService.uploadImage(image);
         response.put("imageUrl", imageUrl);
         return ResponseEntity.ok(response);
     }
