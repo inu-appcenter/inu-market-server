@@ -1,4 +1,4 @@
-package inu.market.likeitem.domain;
+package inu.market.item.domain;
 
 import inu.market.common.BaseEntity;
 import inu.market.item.domain.Item;

@@ -33,6 +33,8 @@ public class Item extends BaseEntity {
 
     private int price;
 
+    private int likeCount;
+
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,6 +52,9 @@ public class Item extends BaseEntity {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemImage> itemImages = new ArrayList<>();
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikeItem> likeItems = new ArrayList<>();
+
     public static Item createItem(String title, String contents, String mainImageUrl,
                                   int price, Status status, User seller) {
         Item item = new Item();
@@ -57,6 +62,7 @@ public class Item extends BaseEntity {
         item.contents = contents;
         item.mainImageUrl = mainImageUrl;
         item.price = price;
+        item.likeCount = 0;
         item.status = status;
         item.seller = seller;
         return item;

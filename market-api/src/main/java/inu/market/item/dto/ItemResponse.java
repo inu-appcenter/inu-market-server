@@ -28,6 +28,8 @@ public class ItemResponse {
 
     private int price;
 
+    private int likeCount;
+
     private String status;
 
     private LocalDateTime createdAt;
@@ -49,6 +51,7 @@ public class ItemResponse {
         itemResponse.contents = item.getContents();
         itemResponse.mainImageUrl = item.getMainImageUrl();
         itemResponse.price = item.getPrice();
+        itemResponse.likeCount = item.getLikeCount();
         itemResponse.status = item.getStatus().name();
         itemResponse.createdAt = item.getCreatedAt();
         itemResponse.updatedAt = item.getUpdatedAt();
