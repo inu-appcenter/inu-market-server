@@ -6,6 +6,7 @@ import inu.market.item.dto.ItemResponse;
 import inu.market.item.dto.ItemUpdateRequest;
 import inu.market.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,5 +45,12 @@ public class ItemController {
                                                @PathVariable Long itemId,
                                                @RequestBody @Valid ItemUpdateRequest request) {
         return ResponseEntity.ok(itemService.update(userId, itemId, request));
+    }
+
+    @DeleteMapping("/api/items/{itemId}")
+    public ResponseEntity<Void> delete(@LoginUser Long userId,
+                                       @PathVariable Long itemId) {
+        itemService.delete(userId, itemId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

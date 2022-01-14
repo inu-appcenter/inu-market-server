@@ -85,4 +85,15 @@ public class ItemService {
 
         return ItemResponse.from(findItem, findItem.getItemImages());
     }
+
+    @Transactional
+    public void delete(Long userId, Long itemId) {
+        Item findItem = itemQueryRepository.findWithSellerAndItemImagesById(itemId);
+
+        if (!findItem.getSeller().getId().equals(userId)) {
+            throw new RuntimeException("상품 판매자가 아닙니다.");
+        }
+
+        itemRepository.delete(findItem);
+    }
 }
