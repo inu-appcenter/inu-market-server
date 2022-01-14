@@ -2,7 +2,6 @@ package inu.market.user.service;
 
 import inu.market.client.AwsClient;
 import inu.market.client.InuClient;
-import inu.market.common.Image;
 import inu.market.security.util.JwtUtil;
 import inu.market.user.domain.Role;
 import inu.market.user.domain.User;
@@ -62,5 +61,14 @@ public class UserService {
 
     public String getProfileImageUrl(MultipartFile file) {
         return awsClient.upload(file);
+    }
+
+    @Transactional
+    public UserResponse updateProfile(Long userId, UserUpdateProfileRequest request) {
+        User findUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+
+        findUser.changeProfile(request.getNickName(), request.getImageUrl());
+        return UserResponse.from(findUser);
     }
 }

@@ -1,6 +1,7 @@
 package inu.market.user.controller;
 
 import inu.market.config.LoginUser;
+import inu.market.user.domain.User;
 import inu.market.user.dto.*;
 import inu.market.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,13 @@ public class UserController {
         response.put("imageUrl", imageUrl);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/api/users/profile")
+    public ResponseEntity<UserResponse> updateProfile(@LoginUser Long userId,
+                                                      @RequestBody @Valid UserUpdateProfileRequest request) {
+        return ResponseEntity.ok(userService.updateProfile(userId, request));
+    }
+
 
     @PatchMapping("/api/users/notification")
     public ResponseEntity<UserResponse> updateNotification(@LoginUser Long userId,

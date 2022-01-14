@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserUpdateNickNameRequest {
+public class UserUpdateProfileRequest {
 
     private String nickName;
+
+    private String imageUrl;
+
 }
