@@ -15,6 +15,9 @@ public class Image {
 
     private String imageUrl;
 
-    private String storeName;
+    public static Image createImage(String imageUrl){
+        Image image = new Image(imageUrl);
+        return image;
+    }
 
 }
