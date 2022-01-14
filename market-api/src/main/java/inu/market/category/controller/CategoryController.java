@@ -1,6 +1,5 @@
 package inu.market.category.controller;
 
-import inu.market.category.domain.Category;
 import inu.market.category.dto.CategoryCreateRequest;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.category.dto.CategoryUpdateRequest;
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +33,11 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> delete(@PathVariable Long categoryId) {
         categoryService.delete(categoryId);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/api/categories")
+    public ResponseEntity<List<CategoryResponse>> findAll(){
+        return ResponseEntity.ok(categoryService.findAll());
     }
 
 

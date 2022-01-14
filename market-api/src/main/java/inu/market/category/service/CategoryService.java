@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -50,5 +53,12 @@ public class CategoryService {
                 .orElseThrow(() -> new RuntimeException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
 
         categoryRepository.delete(findCategory);
+    }
+
+    public List<CategoryResponse> findAll() {
+        List<Category> categories = categoryRepository.findAll();
+        return categories.stream()
+                .map(category -> CategoryResponse.of(category))
+                .collect(Collectors.toList());
     }
 }
