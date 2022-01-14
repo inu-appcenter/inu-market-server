@@ -56,4 +56,8 @@ public class User extends BaseEntity {
     public void changeImage(Image image) {
         this.image = image;
     }
+
+    public void changeNotification(Boolean notification) {
+        this.notification = notification;
+    }
 }

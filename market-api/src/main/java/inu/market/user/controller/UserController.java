@@ -1,10 +1,7 @@
 package inu.market.user.controller;
 
 import inu.market.config.LoginUser;
-import inu.market.user.dto.UserLoginRequest;
-import inu.market.user.dto.UserCreateRequest;
-import inu.market.user.dto.UserResponse;
-import inu.market.user.dto.UserUpdateNickNameRequest;
+import inu.market.user.dto.*;
 import inu.market.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -47,10 +44,15 @@ public class UserController {
 
     @PatchMapping("/api/users/image")
     public ResponseEntity<UserResponse> updateImage(@LoginUser Long userId,
-                                                    @RequestPart MultipartFile file){
+                                                    @RequestPart MultipartFile file) {
         return ResponseEntity.ok(userService.updateImage(userId, file));
     }
 
+    @PatchMapping("/api/users/notification")
+    public ResponseEntity<UserResponse> updateNotification(@LoginUser Long userId,
+                                                           @RequestBody @Valid UserUpdateNotificationRequest notificationRequest) {
+        return ResponseEntity.ok(userService.updateNotification(userId, notificationRequest));
+    }
 
 
 }

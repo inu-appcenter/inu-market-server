@@ -7,10 +7,7 @@ import inu.market.security.util.JwtUtil;
 import inu.market.user.domain.Role;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
-import inu.market.user.dto.UserCreateRequest;
-import inu.market.user.dto.UserLoginRequest;
-import inu.market.user.dto.UserResponse;
-import inu.market.user.dto.UserUpdateNickNameRequest;
+import inu.market.user.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserService  {
+public class UserService {
 
     private final UserRepository userRepository;
     private final InuClient inuClient;
@@ -69,6 +66,16 @@ public class UserService  {
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
 
         findUser.changeImage(Image.createImage(awsClient.upload(file)));
+
+        return UserResponse.of(findUser);
+    }
+
+    @Transactional
+    public UserResponse updateNotification(Long userId, UserUpdateNotificationRequest request) {
+        User findUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+
+        findUser.changeNotification(request.getNotification());
 
         return UserResponse.of(findUser);
     }
