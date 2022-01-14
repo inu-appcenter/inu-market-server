@@ -22,7 +22,7 @@ public class UserResponse {
 
     private boolean notification;
 
-    public static UserResponse of(User user) {
+    public static UserResponse from(User user) {
         UserResponse userResponse = new UserResponse(user.getId(), user.getInuId(), user.getNickName(), null,
                                                      user.getScore(), user.isNotification());
         if (user.getImage() != null) {

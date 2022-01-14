@@ -57,7 +57,7 @@ public class UserService {
 
         findUser.changeNickName(request.getNickName());
 
-        return UserResponse.of(findUser);
+        return UserResponse.from(findUser);
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class UserService {
 
         findUser.changeImage(Image.createImage(awsClient.upload(file)));
 
-        return UserResponse.of(findUser);
+        return UserResponse.from(findUser);
     }
 
     @Transactional
@@ -77,6 +77,6 @@ public class UserService {
 
         findUser.changeNotification(request.getNotification());
 
-        return UserResponse.of(findUser);
+        return UserResponse.from(findUser);
     }
 }
