@@ -9,6 +9,7 @@ jar {
 dependencies {
     implementation(project(":market-common"))
 
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
 }
 
