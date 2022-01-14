@@ -79,4 +79,8 @@ public class UserService {
 
         return UserResponse.from(findUser);
     }
+
+    public String getProfileImageUrl(MultipartFile file) {
+        return awsClient.upload(file);
+    }
 }

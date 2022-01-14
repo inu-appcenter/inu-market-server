@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +36,19 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtToken)
                 .build();
+    }
+
+    @PostMapping("/api/users/imageUrls")
+    public ResponseEntity<Map<String, String>> convertToImageUrl(@RequestPart MultipartFile file) {
+
+        if (file == null || file.isEmpty()) {
+            throw new RuntimeException("업로드 할 이미지가 없습니다.");
+        }
+
+        Map<String, String> response = new HashMap<>();
+        String imageUrl = userService.getProfileImageUrl(file);
+        response.put("imageUrl", imageUrl);
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/api/users/nickname")
