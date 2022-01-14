@@ -20,4 +20,10 @@ public class Major {
 
     private String name;
 
+    public static Major createMajor(String name){
+        Major major = new Major();
+        major.name = name;
+        return major;
+    }
+
 }
