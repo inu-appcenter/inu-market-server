@@ -29,7 +29,7 @@ public class CategoryService {
         Category category = Category.createCategory(request.getName());
         categoryRepository.save(category);
 
-        return CategoryResponse.of(category);
+        return CategoryResponse.from(category);
     }
 
     @Transactional
@@ -43,7 +43,7 @@ public class CategoryService {
         }
 
         findCategory.changeName(request.getName());
-        return CategoryResponse.of(findCategory);
+        return CategoryResponse.from(findCategory);
     }
 
     @Transactional
@@ -58,7 +58,7 @@ public class CategoryService {
     public List<CategoryResponse> findAll() {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
-                .map(category -> CategoryResponse.of(category))
+                .map(category -> CategoryResponse.from(category))
                 .collect(Collectors.toList());
     }
 }

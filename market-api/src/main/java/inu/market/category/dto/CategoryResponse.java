@@ -14,7 +14,7 @@ public class CategoryResponse {
 
     private String name;
 
-    public static CategoryResponse of(Category category) {
+    public static CategoryResponse from(Category category) {
         return new CategoryResponse(category.getId(), category.getName());
     }
 
