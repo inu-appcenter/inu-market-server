@@ -4,9 +4,12 @@ import inu.market.category.domain.Category;
 import inu.market.category.domain.CategoryRepository;
 import inu.market.client.AwsClient;
 import inu.market.item.domain.Item;
+import inu.market.item.domain.ItemQueryRepository;
 import inu.market.item.domain.ItemRepository;
+import inu.market.item.domain.Status;
 import inu.market.item.dto.ItemCreateRequest;
 import inu.market.item.dto.ItemResponse;
+import inu.market.item.dto.ItemUpdateRequest;
 import inu.market.major.domain.Major;
 import inu.market.major.domain.MajorRepository;
 import inu.market.user.domain.User;
@@ -24,10 +27,13 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ItemService {
 
-    private final UserRepository userRepository;
     private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final MajorRepository majorRepository;
+
+    private final ItemQueryRepository itemQueryRepository;
+
     private final AwsClient awsClient;
 
     public List<String> uploadImages(List<MultipartFile> images) {
@@ -48,7 +54,7 @@ public class ItemService {
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 카테고리입니다."));
 
         Item item = Item.createItem(request.getTitle(), request.getContents(), request.getImageUrls().get(0),
-                request.getPrice(), findUser);
+                request.getPrice(), Status.SALE, findUser);
 
         item.changeCategory(findCategory);
         item.changeMajor(findMajor);
@@ -56,5 +62,27 @@ public class ItemService {
 
         itemRepository.save(item);
         return ItemResponse.from(item, item.getItemImages());
+    }
+
+    @Transactional
+    public ItemResponse update(Long userId, Long itemId, ItemUpdateRequest request) {
+        Item findItem = itemQueryRepository.findWithSellerAndItemImagesById(itemId);
+
+        if (!findItem.getSeller().getId().equals(userId)) {
+            throw new RuntimeException("상품 판매자가 아닙니다.");
+        }
+
+        Category findCategory = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 카테고리입니다."));
+
+        Major findMajor = majorRepository.findById(request.getMajorId())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 카테고리입니다."));
+
+        findItem.changeTitleAndContentAndPrice(request.getTitle(), request.getContents(), request.getPrice());
+        findItem.changeCategory(findCategory);
+        findItem.changeMajor(findMajor);
+        findItem.changeItemImages(request.getImageUrls());
+
+        return ItemResponse.from(findItem, findItem.getItemImages());
     }
 }

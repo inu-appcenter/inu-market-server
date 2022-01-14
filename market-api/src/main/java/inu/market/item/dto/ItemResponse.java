@@ -28,6 +28,8 @@ public class ItemResponse {
 
     private int price;
 
+    private String status;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -47,6 +49,7 @@ public class ItemResponse {
         itemResponse.contents = item.getContents();
         itemResponse.mainImageUrl = item.getMainImageUrl();
         itemResponse.price = item.getPrice();
+        itemResponse.status = item.getStatus().name();
         itemResponse.createdAt = item.getCreatedAt();
         itemResponse.updatedAt = item.getUpdatedAt();
         itemResponse.major = MajorResponse.from(item.getMajor());

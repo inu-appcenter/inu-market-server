@@ -3,12 +3,11 @@ package inu.market.item.controller;
 import inu.market.config.LoginUser;
 import inu.market.item.dto.ItemCreateRequest;
 import inu.market.item.dto.ItemResponse;
+import inu.market.item.dto.ItemUpdateRequest;
 import inu.market.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -40,4 +39,10 @@ public class ItemController {
         return ResponseEntity.ok(itemService.create(userId, request));
     }
 
+    @PutMapping("/api/items/{itemId}")
+    public ResponseEntity<ItemResponse> update(@LoginUser Long userId,
+                                               @PathVariable Long itemId,
+                                               @RequestBody @Valid ItemUpdateRequest request) {
+        return ResponseEntity.ok(itemService.update(userId, itemId, request));
+    }
 }

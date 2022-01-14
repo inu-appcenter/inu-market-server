@@ -33,6 +33,8 @@ public class Item extends BaseEntity {
 
     private int price;
 
+    private Status status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "major_id")
     private Major major;
@@ -48,12 +50,14 @@ public class Item extends BaseEntity {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemImage> itemImages = new ArrayList<>();
 
-    public static Item createItem(String title, String contents, String mainImageUrl, int price, User seller) {
+    public static Item createItem(String title, String contents, String mainImageUrl,
+                                  int price, Status status, User seller) {
         Item item = new Item();
         item.title = title;
         item.contents = contents;
         item.mainImageUrl = mainImageUrl;
         item.price = price;
+        item.status = status;
         item.seller = seller;
         return item;
     }
@@ -73,5 +77,11 @@ public class Item extends BaseEntity {
 
         this.itemImages.clear();
         this.itemImages.addAll(itemImages);
+    }
+
+    public void changeTitleAndContentAndPrice(String title, String contents, int price) {
+        this.title = title;
+        this.contents = contents;
+        this.price = price;
     }
 }
