@@ -11,13 +11,14 @@ dependencyManagement {
 
 dependencies {
     implementation(project(":market-domain"))
+    implementation(project(":market-common"))
     implementation(project(":market-aws-client"))
     implementation(project(":market-firebase-client"))
     implementation(project(":market-inu-client"))
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'

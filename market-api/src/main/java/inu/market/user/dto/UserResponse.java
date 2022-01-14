@@ -1,9 +1,12 @@
 package inu.market.user.dto;
 
+import inu.market.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserResponse {
 
@@ -18,5 +21,14 @@ public class UserResponse {
     private Double score;
 
     private boolean notification;
+
+    public static UserResponse of(User user) {
+        UserResponse userResponse = new UserResponse(user.getId(), user.getInuId(), user.getNickName(), null,
+                                                     user.getScore(), user.isNotification());
+        if (user.getImage() != null) {
+            userResponse.profileUrl = user.getImage().getImageUrl();
+        }
+        return userResponse;
+    }
 
 }

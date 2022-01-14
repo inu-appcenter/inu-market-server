@@ -45,4 +45,11 @@ public class User extends BaseEntity {
         return user;
     }
 
+    public void changePushToken(String pushToken) {
+        this.pushToken = pushToken;
+    }
+
+    public void changeNickName(String nickName) {
+        this.nickName = nickName;
+    }
 }
