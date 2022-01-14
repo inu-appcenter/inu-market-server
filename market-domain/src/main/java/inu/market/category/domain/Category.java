@@ -20,4 +20,10 @@ public class Category {
 
     private String name;
 
+    public static Category createCategory(String name) {
+        Category category = new Category();
+        category.name = name;
+        return category;
+    }
+
 }
