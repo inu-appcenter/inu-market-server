@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,6 +33,11 @@ public class MajorController {
     public ResponseEntity<MajorResponse> delete(@PathVariable Long majorId) {
         majorService.delete(majorId);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/api/majors")
+    public ResponseEntity<List<MajorResponse>> findAll() {
+        return ResponseEntity.ok(majorService.findAll());
     }
 
 }

@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -50,4 +53,10 @@ public class MajorService {
         majorRepository.delete(findMajor);
     }
 
+    public List<MajorResponse> findAll() {
+        List<Major> majors = majorRepository.findAll();
+        return majors.stream()
+                .map(major -> MajorResponse.from(major))
+                .collect(Collectors.toList());
+    }
 }
