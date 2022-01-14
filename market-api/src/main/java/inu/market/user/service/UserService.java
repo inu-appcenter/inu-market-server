@@ -1,6 +1,8 @@
 package inu.market.user.service;
 
+import inu.market.client.AwsClient;
 import inu.market.client.InuClient;
+import inu.market.common.Image;
 import inu.market.security.util.JwtUtil;
 import inu.market.user.domain.Role;
 import inu.market.user.domain.User;
@@ -12,6 +14,7 @@ import inu.market.user.dto.UserUpdateNickNameRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class UserService  {
 
     private final UserRepository userRepository;
     private final InuClient inuClient;
+    private final AwsClient awsClient;
     private final JwtUtil jwtUtil;
 
     @Transactional
@@ -55,6 +59,16 @@ public class UserService  {
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
 
         findUser.changeNickName(request.getNickName());
+
+        return UserResponse.of(findUser);
+    }
+
+    @Transactional
+    public UserResponse updateImage(Long userId, MultipartFile file) {
+        User findUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+
+        findUser.changeImage(Image.createImage(awsClient.upload(file)));
 
         return UserResponse.of(findUser);
     }

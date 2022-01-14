@@ -10,10 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -46,6 +44,13 @@ public class UserController {
                                                        @RequestBody @Valid UserUpdateNickNameRequest request) {
         return ResponseEntity.ok(userService.updateNickName(userId, request));
     }
+
+    @PatchMapping("/api/users/image")
+    public ResponseEntity<UserResponse> updateImage(@LoginUser Long userId,
+                                                    @RequestPart MultipartFile file){
+        return ResponseEntity.ok(userService.updateImage(userId, file));
+    }
+
 
 
 }
