@@ -65,5 +65,9 @@ public class UserController {
         return ResponseEntity.ok(userService.updateNotification(userId, notificationRequest));
     }
 
+    @GetMapping("/api/users/profile")
+    public ResponseEntity<UserResponse> findByLoginId(@LoginUser Long userId) {
+        return ResponseEntity.ok(userService.findById(userId));
+    }
 
 }

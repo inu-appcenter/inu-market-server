@@ -71,4 +71,11 @@ public class UserService {
         findUser.changeProfile(request.getNickName(), request.getImageUrl());
         return UserResponse.from(findUser);
     }
+
+    public UserResponse findById(Long userId) {
+        User findUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+
+        return UserResponse.from(findUser);
+    }
 }
