@@ -1,7 +1,6 @@
 package inu.market.user.domain;
 
 import inu.market.common.BaseEntity;
-import inu.market.common.Image;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +23,7 @@ public class User extends BaseEntity {
 
     private String nickName;
 
-    @Embedded
-    private Image image;
+    private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -52,4 +50,10 @@ public class User extends BaseEntity {
     public void changeNotification(Boolean notification) {
         this.notification = notification;
     }
+
+    public void changeProfile(String nickName, String imageUrl) {
+        this.nickName = nickName;
+        this.imageUrl = imageUrl;
+    }
+
 }

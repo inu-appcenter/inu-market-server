@@ -1,7 +1,5 @@
 package inu.market.item.domain;
 
-import inu.market.common.Image;
-import inu.market.item.domain.Item;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +18,7 @@ public class ItemImage {
     @Column(name = "item_image_id")
     private Long id;
 
-    @Embedded
-    private Image image;
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")

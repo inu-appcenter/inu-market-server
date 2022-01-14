@@ -16,18 +16,15 @@ public class UserResponse {
 
     private String nickName;
 
-    private String profileUrl;
+    private String imageUrl;
 
     private Double score;
 
     private boolean notification;
 
     public static UserResponse from(User user) {
-        UserResponse userResponse = new UserResponse(user.getId(), user.getInuId(), user.getNickName(), null,
-                                                     user.getScore(), user.isNotification());
-        if (user.getImage() != null) {
-            userResponse.profileUrl = user.getImage().getImageUrl();
-        }
+        UserResponse userResponse = new UserResponse(user.getId(), user.getInuId(), user.getNickName(),
+                                                     user.getImageUrl(), user.getScore(), user.isNotification());
         return userResponse;
     }
 

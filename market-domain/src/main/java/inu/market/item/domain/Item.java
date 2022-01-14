@@ -26,6 +26,8 @@ public class Item {
 
     private String description;
 
+    private String imageUrl;
+
     private int price;
 
     @ManyToOne(fetch = FetchType.LAZY)
