@@ -24,4 +24,11 @@ public class ItemImage {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    public static ItemImage createItemImage(String imageUrl, Item item) {
+        ItemImage itemImage = new ItemImage();
+        itemImage.imageUrl = imageUrl;
+        itemImage.item = item;
+        return itemImage;
+    }
+
 }
