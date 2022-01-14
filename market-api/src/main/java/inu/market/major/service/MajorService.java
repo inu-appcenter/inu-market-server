@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.MissingResourceException;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -43,4 +41,13 @@ public class MajorService {
         findMajor.changeName(request.getName());
         return MajorResponse.from(findMajor);
     }
+
+    @Transactional
+    public void delete(Long majorId) {
+        Major findMajor = majorRepository.findById(majorId)
+                .orElseThrow(() -> new RuntimeException(majorId + "는 존재하지 않는 학과 ID 입니다."));
+
+        majorRepository.delete(findMajor);
+    }
+
 }

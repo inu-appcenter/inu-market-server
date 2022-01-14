@@ -5,6 +5,7 @@ import inu.market.major.dto.MajorResponse;
 import inu.market.major.dto.MajorUpdateRequest;
 import inu.market.major.service.MajorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,4 +27,11 @@ public class MajorController {
                                                 @RequestBody @Valid MajorUpdateRequest request) {
         return ResponseEntity.ok(majorService.update(majorId, request));
     }
+
+    @DeleteMapping("/api/majors/{majorId}")
+    public ResponseEntity<MajorResponse> delete(@PathVariable Long majorId) {
+        majorService.delete(majorId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }
