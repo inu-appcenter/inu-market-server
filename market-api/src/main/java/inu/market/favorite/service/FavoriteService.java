@@ -6,11 +6,15 @@ import inu.market.favorite.dto.FavoriteCreateRequest;
 import inu.market.favorite.dto.FavoriteDeleteRequest;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemRepository;
+import inu.market.item.dto.ItemResponse;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +44,12 @@ public class FavoriteService {
 
         findFavorite.getItem().decreaseFavoriteCount();
         favoriteRepository.delete(findFavorite);
+    }
+
+    public List<ItemResponse> findByUserId(Long userId) {
+        List<Favorite> favorites = favoriteRepository.findWithItemByUserId(userId);
+        return favorites.stream()
+                .map(favorite -> ItemResponse.from(favorite.getItem()))
+                .collect(Collectors.toList());
     }
 }
