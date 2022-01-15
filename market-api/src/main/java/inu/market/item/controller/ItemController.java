@@ -70,9 +70,8 @@ public class ItemController {
     }
 
     @GetMapping("/api/items")
-    public ResponseEntity<Slice<ItemResponse>> findBySearchRequest(@PageableDefault(size = 30, page = 0) Pageable pageable,
-                                                                   ItemSearchRequest request) {
-        return ResponseEntity.ok(itemService.findBySearchRequest(request, pageable));
+    public ResponseEntity<List<ItemResponse>> findBySearchRequest(ItemSearchRequest request) {
+        return ResponseEntity.ok(itemService.findBySearchRequest(request));
     }
 
     @GetMapping("/api/users/items")

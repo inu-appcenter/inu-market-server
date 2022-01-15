@@ -15,4 +15,8 @@ public class ItemSearchRequest {
 
     private String searchWord;
 
+    private Integer size;
+
+    private Long itemId;
+
 }

@@ -15,8 +15,6 @@ import inu.market.major.domain.MajorRepository;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -118,9 +116,12 @@ public class ItemService {
         return ItemResponse.from(findItem, findItem.getItemImages(), favorite.isPresent());
     }
 
-    public Slice<ItemResponse> findBySearchRequest(ItemSearchRequest request, Pageable pageable) {
-        Slice<Item> items = itemQueryRepository.findBySearchCondition(request.getCategoryId(), request.getMajorId(), request.getSearchWord(), pageable);
-        return items.map(item -> ItemResponse.from(item));
+    public List<ItemResponse> findBySearchRequest(ItemSearchRequest request) {
+        List<Item> items = itemQueryRepository.findBySearchCondition(request.getItemId(), request.getCategoryId(),
+                                                                     request.getMajorId(), request.getSearchWord(), request.getSize());
+        return items.stream()
+                .map(item -> ItemResponse.from(item))
+                .collect(Collectors.toList());
     }
 
     public List<ItemResponse> findBySeller(Long sellerId) {
