@@ -22,7 +22,7 @@ public class ChatRoomController {
         return ResponseEntity.ok(chatRoomService.create(userId, itemId));
     }
 
-    @GetMapping("/api/chat/Rooms")
+    @GetMapping("/api/chat/rooms")
     public ResponseEntity<List<ChatRoomResponse>> findBySellerOrBuyer(@LoginUser Long userId) {
         return ResponseEntity.ok(chatRoomService.findBySellerOrBuyer(userId));
     }
