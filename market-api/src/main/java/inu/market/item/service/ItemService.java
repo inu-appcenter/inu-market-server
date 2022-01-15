@@ -110,4 +110,11 @@ public class ItemService {
                 .map(item -> ItemResponse.from(item))
                 .collect(Collectors.toList());
     }
+
+    public List<ItemResponse> findBySeller(Long sellerId) {
+        List<Item> items = itemQueryRepository.findBySellerId(sellerId);
+        return items.stream()
+                .map(item -> ItemResponse.from(item))
+                .collect(Collectors.toList());
+    }
 }

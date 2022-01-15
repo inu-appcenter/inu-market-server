@@ -65,7 +65,9 @@ public class ItemController {
         return ResponseEntity.ok(itemService.findBySearchRequest(request));
     }
 
-
-
+    @GetMapping("/api/users/items")
+    public ResponseEntity<List<ItemResponse>> findBySeller(@LoginUser Long userId) {
+        return ResponseEntity.ok(itemService.findBySeller(userId));
+    }
 
 }

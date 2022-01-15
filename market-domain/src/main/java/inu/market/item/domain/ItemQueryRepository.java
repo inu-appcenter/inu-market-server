@@ -2,6 +2,7 @@ package inu.market.item.domain;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import inu.market.user.domain.QUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -19,6 +20,14 @@ import static inu.market.user.domain.QUser.user;
 public class ItemQueryRepository {
 
     private final JPAQueryFactory queryFactory;
+
+    public List<Item> findBySellerId(Long sellerId) {
+        return queryFactory
+                .selectFrom(item)
+                .where(item.seller.id.eq(sellerId))
+                .orderBy(item.id.desc())
+                .fetch();
+    }
 
     public Item findWithSellerAndItemImagesById(Long itemId) {
         Item findItem = queryFactory
