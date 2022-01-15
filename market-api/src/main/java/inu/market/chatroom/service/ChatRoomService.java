@@ -32,4 +32,12 @@ public class ChatRoomService {
         chatRoomRepository.save(chatRoom);
         return ChatRoomResponse.from(chatRoom);
     }
+
+    @Transactional
+    public void exit(Long userId, Long chatRoomId) {
+        ChatRoom findChatRoom = chatRoomRepository.findById(chatRoomId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 채팅방입니다."));
+
+        findChatRoom.exitUser(userId);
+    }
 }

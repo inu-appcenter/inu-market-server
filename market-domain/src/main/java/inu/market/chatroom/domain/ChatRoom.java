@@ -47,4 +47,12 @@ public class ChatRoom extends BaseEntity {
         return chatRoom;
     }
 
+    public void exitUser(Long userId) {
+        if(buyer.getId().equals(userId)){
+            this.buyerStatus = false;
+        }
+        if(seller.getId().equals(userId)){
+            this.sellerStatus = false;
+        }
+    }
 }

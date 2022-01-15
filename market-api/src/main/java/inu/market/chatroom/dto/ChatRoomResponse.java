@@ -21,11 +21,17 @@ public class ChatRoomResponse {
 
     private UserResponse buyer;
 
+    private boolean buyerStatus;
+
+    private boolean sellerStatus;
+
     public static ChatRoomResponse from(ChatRoom chatRoom) {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
         chatRoomResponse.item = ItemResponse.from(chatRoom.getItem());
         chatRoomResponse.seller = UserResponse.from(chatRoom.getSeller());
         chatRoomResponse.buyer = UserResponse.from(chatRoom.getBuyer());
+        chatRoomResponse.buyerStatus = chatRoom.getBuyerStatus();
+        chatRoomResponse.sellerStatus = chatRoom.getSellerStatus();
         return chatRoomResponse;
     }
 }
