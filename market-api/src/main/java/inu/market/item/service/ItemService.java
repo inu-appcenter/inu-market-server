@@ -96,4 +96,10 @@ public class ItemService {
 
         itemRepository.delete(findItem);
     }
+
+    @Transactional
+    public ItemResponse findById(Long itemId) {
+        Item findItem = itemQueryRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(itemId);
+        return ItemResponse.from(findItem, findItem.getItemImages());
+    }
 }

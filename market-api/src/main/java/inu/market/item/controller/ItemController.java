@@ -53,4 +53,9 @@ public class ItemController {
         itemService.delete(userId, itemId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/api/items/{itemId}")
+    public ResponseEntity<ItemResponse> findById(@PathVariable Long itemId) {
+        return ResponseEntity.ok(itemService.findById(itemId));
+    }
 }
