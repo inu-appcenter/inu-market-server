@@ -75,5 +75,10 @@ public class MajorService {
                 .collect(Collectors.toList());
     }
 
-
+    public List<MajorResponse> findChildrenById(Long majorId) {
+        List<Major> majors = majorRepository.findByParentId(majorId);
+        return majors.stream()
+                .map(major -> MajorResponse.from(major))
+                .collect(Collectors.toList());
+    }
 }

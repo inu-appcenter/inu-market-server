@@ -46,4 +46,9 @@ public class MajorController {
         return ResponseEntity.ok(majorService.findParents());
     }
 
+    @GetMapping("/api/majors/{majorId}/children")
+    public ResponseEntity<List<MajorResponse>> findChildrenById(@PathVariable Long majorId) {
+        return ResponseEntity.ok(majorService.findChildrenById(majorId));
+    }
+
 }
