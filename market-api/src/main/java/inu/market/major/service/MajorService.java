@@ -33,6 +33,21 @@ public class MajorService {
     }
 
     @Transactional
+    public MajorResponse createChildren(Long majorId, MajorCreateRequest request) {
+        Major findParent = majorRepository.findById(majorId)
+                .orElseThrow(() -> new RuntimeException(majorId + "는 존재하지 않는 학과 ID 입니다."));
+
+        if (majorRepository.findByName(request.getName()).isPresent()) {
+            throw new RuntimeException(request.getName() + "는 이미 존재하는 학과입니다.");
+        }
+
+        Major major = Major.createMajor(request.getName(), findParent);
+        majorRepository.save(major);
+
+        return MajorResponse.from(major);
+    }
+
+    @Transactional
     public MajorResponse update(Long majorId, MajorUpdateRequest request) {
         Major findMajor = majorRepository.findById(majorId)
                 .orElseThrow(() -> new RuntimeException(majorId + "는 존재하지 않는 학과 ID 입니다."));
@@ -59,4 +74,6 @@ public class MajorService {
                 .map(major -> MajorResponse.from(major))
                 .collect(Collectors.toList());
     }
+
+
 }

@@ -23,11 +23,11 @@ public class MajorController {
         return ResponseEntity.ok(majorService.createParent(request));
     }
 
-//    @PostMapping("/api/majors/{majorId}/children")
-//    public ResponseEntity<MajorResponse> createChild(@PathVariable Long majorId,
-//                                                     @RequestBody @Valid MajorCreateRequest request) {
-//        return ResponseEntity.ok(majorService.createChildren(majorId, request));
-//    }
+    @PostMapping("/api/majors/{majorId}/children")
+    public ResponseEntity<MajorResponse> createChild(@PathVariable Long majorId,
+                                                     @RequestBody @Valid MajorCreateRequest request) {
+        return ResponseEntity.ok(majorService.createChildren(majorId, request));
+    }
 
     @PutMapping("/api/majors/{majorId}")
     public ResponseEntity<MajorResponse> update(@PathVariable Long majorId,
