@@ -50,13 +50,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse updateNotification(Long userId, UserUpdateNotificationRequest request) {
+    public void updateNotification(Long userId, UserUpdateNotificationRequest request) {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
 
         findUser.changeNotification(request.getNotification());
-
-        return UserResponse.from(findUser);
     }
 
     public String uploadImage(MultipartFile image) {
@@ -64,12 +62,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse updateProfile(Long userId, UserUpdateProfileRequest request) {
+    public void updateProfile(Long userId, UserUpdateProfileRequest request) {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
 
         findUser.changeProfile(request.getNickName(), request.getImageUrl());
-        return UserResponse.from(findUser);
     }
 
     public UserResponse findById(Long userId) {

@@ -28,22 +28,20 @@ public class CategoryService {
 
         Category category = Category.createCategory(request.getName());
         categoryRepository.save(category);
-
         return CategoryResponse.from(category);
     }
 
     @Transactional
-    public CategoryResponse update(Long categoryId, CategoryUpdateRequest request) {
+    public void update(Long categoryId, CategoryUpdateRequest request) {
 
         Category findCategory = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
 
-        if(categoryRepository.findByName(request.getName()).isPresent()){
+        if (categoryRepository.findByName(request.getName()).isPresent()) {
             throw new RuntimeException(request.getName() + "는 이미 존재하는 카테고리입니다.");
         }
 
         findCategory.changeName(request.getName());
-        return CategoryResponse.from(findCategory);
     }
 
     @Transactional

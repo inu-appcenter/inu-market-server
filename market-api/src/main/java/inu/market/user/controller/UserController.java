@@ -52,16 +52,16 @@ public class UserController {
     }
 
     @PatchMapping("/api/users/profile")
-    public ResponseEntity<UserResponse> updateProfile(@LoginUser Long userId,
-                                                      @RequestBody @Valid UserUpdateProfileRequest request) {
-        return ResponseEntity.ok(userService.updateProfile(userId, request));
+    public ResponseEntity<Void> updateProfile(@LoginUser Long userId,
+                                              @RequestBody @Valid UserUpdateProfileRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
     @PatchMapping("/api/users/notification")
-    public ResponseEntity<UserResponse> updateNotification(@LoginUser Long userId,
-                                                           @RequestBody @Valid UserUpdateNotificationRequest notificationRequest) {
-        return ResponseEntity.ok(userService.updateNotification(userId, notificationRequest));
+    public ResponseEntity<Void> updateNotification(@LoginUser Long userId,
+                                                   @RequestBody @Valid UserUpdateNotificationRequest notificationRequest) {
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/api/users/profile")

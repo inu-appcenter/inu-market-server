@@ -48,7 +48,7 @@ public class MajorService {
     }
 
     @Transactional
-    public MajorResponse update(Long majorId, MajorUpdateRequest request) {
+    public void update(Long majorId, MajorUpdateRequest request) {
         Major findMajor = majorRepository.findById(majorId)
                 .orElseThrow(() -> new RuntimeException(majorId + "는 존재하지 않는 학과 ID 입니다."));
 
@@ -57,7 +57,6 @@ public class MajorService {
         }
 
         findMajor.changeName(request.getName());
-        return MajorResponse.from(findMajor);
     }
 
     @Transactional

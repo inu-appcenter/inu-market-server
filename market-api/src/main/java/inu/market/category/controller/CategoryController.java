@@ -24,19 +24,20 @@ public class CategoryController {
     }
 
     @PutMapping("/api/categories/{categoryId}")
-    public ResponseEntity<CategoryResponse> update(@PathVariable Long categoryId,
-                                                   @RequestBody @Valid CategoryUpdateRequest request) {
-        return ResponseEntity.ok(categoryService.update(categoryId, request));
+    public ResponseEntity<Void> update(@PathVariable Long categoryId,
+                                       @RequestBody @Valid CategoryUpdateRequest request) {
+        categoryService.update(categoryId, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/api/categories/{categoryId}")
-    public ResponseEntity<CategoryResponse> delete(@PathVariable Long categoryId) {
+    public ResponseEntity<Void> delete(@PathVariable Long categoryId) {
         categoryService.delete(categoryId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/api/categories")
-    public ResponseEntity<List<CategoryResponse>> findAll(){
+    public ResponseEntity<List<CategoryResponse>> findAll() {
         return ResponseEntity.ok(categoryService.findAll());
     }
 

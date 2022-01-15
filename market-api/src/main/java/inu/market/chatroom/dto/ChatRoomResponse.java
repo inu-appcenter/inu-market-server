@@ -15,12 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatRoomResponse {
 
+    private Long roomId;
+
     private ItemResponse item;
 
     private UserResponse user;
 
     public static ChatRoomResponse from(ChatRoom chatRoom, Long userId) {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
+        chatRoomResponse.roomId = chatRoomResponse.getRoomId();
         chatRoomResponse.item = ItemResponse.from(chatRoom.getItem());
 
         if (chatRoom.getBuyer().getId().equals(userId)) {

@@ -64,11 +64,11 @@ public class ItemService {
         item.changeItemImages(request.getImageUrls());
 
         itemRepository.save(item);
-        return ItemResponse.from(item, item.getItemImages());
+        return ItemResponse.from(item);
     }
 
     @Transactional
-    public ItemResponse update(Long userId, Long itemId, ItemUpdateRequest request) {
+    public void update(Long userId, Long itemId, ItemUpdateRequest request) {
         Item findItem = itemQueryRepository.findWithSellerAndItemImagesById(itemId);
 
         if (!findItem.getSeller().getId().equals(userId)) {
@@ -85,8 +85,6 @@ public class ItemService {
         findItem.changeCategory(findCategory);
         findItem.changeMajor(findMajor);
         findItem.changeItemImages(request.getImageUrls());
-
-        return ItemResponse.from(findItem, findItem.getItemImages());
     }
 
     @Transactional

@@ -25,18 +25,19 @@ public class MajorController {
 
     @PostMapping("/api/majors/{majorId}/children")
     public ResponseEntity<MajorResponse> createChild(@PathVariable Long majorId,
-                                                     @RequestBody @Valid MajorCreateRequest request) {
+                                            @RequestBody @Valid MajorCreateRequest request) {
         return ResponseEntity.ok(majorService.createChildren(majorId, request));
     }
 
     @PutMapping("/api/majors/{majorId}")
-    public ResponseEntity<MajorResponse> update(@PathVariable Long majorId,
-                                                @RequestBody @Valid MajorUpdateRequest request) {
-        return ResponseEntity.ok(majorService.update(majorId, request));
+    public ResponseEntity<Void> update(@PathVariable Long majorId,
+                                       @RequestBody @Valid MajorUpdateRequest request) {
+        majorService.update(majorId, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/api/majors/{majorId}")
-    public ResponseEntity<MajorResponse> delete(@PathVariable Long majorId) {
+    public ResponseEntity<Void> delete(@PathVariable Long majorId) {
         majorService.delete(majorId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

@@ -45,10 +45,11 @@ public class ItemController {
     }
 
     @PutMapping("/api/items/{itemId}")
-    public ResponseEntity<ItemResponse> update(@LoginUser Long userId,
+    public ResponseEntity<Void> update(@LoginUser Long userId,
                                                @PathVariable Long itemId,
                                                @RequestBody @Valid ItemUpdateRequest request) {
-        return ResponseEntity.ok(itemService.update(userId, itemId, request));
+        itemService.update(userId, itemId, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/api/items/{itemId}")
