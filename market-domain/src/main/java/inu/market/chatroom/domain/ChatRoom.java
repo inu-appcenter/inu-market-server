@@ -33,26 +33,12 @@ public class ChatRoom extends BaseEntity {
     @JoinColumn(name = "seller_id")
     private User seller;
 
-    private Boolean sellerStatus;
-
-    private Boolean buyerStatus;
-
     public static ChatRoom createChatRoom(Item item, User buyer, User seller) {
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.item = item;
         chatRoom.buyer = buyer;
         chatRoom.seller = seller;
-        chatRoom.sellerStatus = true;
-        chatRoom.buyerStatus = true;
         return chatRoom;
     }
 
-    public void exitUser(Long userId) {
-        if(buyer.getId().equals(userId)){
-            this.buyerStatus = false;
-        }
-        if(seller.getId().equals(userId)){
-            this.sellerStatus = false;
-        }
-    }
 }

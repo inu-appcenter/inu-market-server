@@ -1,6 +1,7 @@
 package inu.market.chatroom.service;
 
 import inu.market.chatroom.domain.ChatRoom;
+import inu.market.chatroom.domain.ChatRoomQueryRepository;
 import inu.market.chatroom.domain.ChatRoomRepository;
 import inu.market.chatroom.dto.ChatRoomResponse;
 import inu.market.item.domain.Item;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ChatRoomService {
 
+    private final ChatRoomQueryRepository chatRoomQueryRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
@@ -30,14 +32,7 @@ public class ChatRoomService {
 
         ChatRoom chatRoom = ChatRoom.createChatRoom(findItem, findUser, findItem.getSeller());
         chatRoomRepository.save(chatRoom);
-        return ChatRoomResponse.from(chatRoom);
+        return ChatRoomResponse.from(chatRoom, userId);
     }
 
-    @Transactional
-    public void exit(Long userId, Long chatRoomId) {
-        ChatRoom findChatRoom = chatRoomRepository.findById(chatRoomId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 채팅방입니다."));
-
-        findChatRoom.exitUser(userId);
-    }
 }

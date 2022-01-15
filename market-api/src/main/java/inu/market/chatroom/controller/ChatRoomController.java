@@ -22,15 +22,9 @@ public class ChatRoomController {
         return ResponseEntity.ok(chatRoomService.create(userId, itemId));
     }
 
-    @PatchMapping("/api/chatRooms/{chatRoomId}")
-    public ResponseEntity<Void> exit(@LoginUser Long userId, @PathVariable Long chatRoomId) {
-        chatRoomService.exit(userId, chatRoomId);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
 //    @GetMapping("/api/chatRooms")
 //    public ResponseEntity<List<ChatRoomResponse>> findBySellerOrBuyer(@LoginUser Long userId) {
-//
+//        return ResponseEntity.ok(chatRoomService.(userId));
 //    }
 
 

@@ -17,21 +17,17 @@ public class ChatRoomResponse {
 
     private ItemResponse item;
 
-    private UserResponse seller;
+    private UserResponse user;
 
-    private UserResponse buyer;
-
-    private boolean buyerStatus;
-
-    private boolean sellerStatus;
-
-    public static ChatRoomResponse from(ChatRoom chatRoom) {
+    public static ChatRoomResponse from(ChatRoom chatRoom, Long userId) {
         ChatRoomResponse chatRoomResponse = new ChatRoomResponse();
         chatRoomResponse.item = ItemResponse.from(chatRoom.getItem());
-        chatRoomResponse.seller = UserResponse.from(chatRoom.getSeller());
-        chatRoomResponse.buyer = UserResponse.from(chatRoom.getBuyer());
-        chatRoomResponse.buyerStatus = chatRoom.getBuyerStatus();
-        chatRoomResponse.sellerStatus = chatRoom.getSellerStatus();
+
+        if (chatRoom.getBuyer().getId().equals(userId)) {
+            chatRoomResponse.user = UserResponse.from(chatRoom.getSeller());
+        } else {
+            chatRoomResponse.user = UserResponse.from(chatRoom.getBuyer());
+        }
         return chatRoomResponse;
     }
 }
