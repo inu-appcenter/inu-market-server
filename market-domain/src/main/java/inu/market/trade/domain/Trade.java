@@ -28,8 +28,12 @@ public class Trade {
     @JoinColumn(name = "buyer_id")
     private User buyer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id")
-    private User seller;
+    public static Trade createTrade(Item item, User buyer){
+        Trade trade = new Trade();
+        trade.item = item;
+        trade.buyer = buyer;
+        buyer.addScore();
+        return trade;
+    }
 
 }

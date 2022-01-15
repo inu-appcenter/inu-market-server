@@ -56,4 +56,7 @@ public class User extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
+    public void addScore() {
+        this.score += 10;
+    }
 }
