@@ -57,7 +57,7 @@ public class ItemResponse {
         itemResponse.mainImageUrl = item.getMainImageUrl();
         itemResponse.price = item.getPrice();
         itemResponse.favoriteCount = item.getFavoriteCount();
-        itemResponse.status = item.getStatus().name();
+        itemResponse.status = item.getStatus().getStatus();
         itemResponse.active = item.isActive();
         itemResponse.favorite = favorite;
         itemResponse.createdAt = item.getCreatedAt();
@@ -78,7 +78,7 @@ public class ItemResponse {
         itemResponse.mainImageUrl = item.getMainImageUrl();
         itemResponse.price = item.getPrice();
         itemResponse.favoriteCount = item.getFavoriteCount();
-        itemResponse.status = item.getStatus().name();
+        itemResponse.status = item.getStatus().getStatus();
         itemResponse.active = item.isActive();
         itemResponse.createdAt = item.getCreatedAt();
         itemResponse.updatedAt = item.getUpdatedAt();
