@@ -4,6 +4,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import inu.market.user.domain.QUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -61,23 +64,25 @@ public class ItemQueryRepository {
         return findItem;
     }
 
-    public List<Item> findBySearchCondition(Long itemId, Long categoryId, Long majorId,
-                                            String searchWord, int size) {
-        return queryFactory
+    public Slice<Item> findBySearchCondition(Long categoryId, Long majorId, String searchWord, Pageable pageable) {
+        List<Item> items = queryFactory
                 .selectFrom(item)
                 .where(titleLike(searchWord),
                         categoryEq(categoryId),
                         majorEq(majorId),
-                        LtItemId(itemId),
                         item.status.eq(Status.SALE)
                 )
-                .orderBy(item.id.desc())
-                .limit(size)
+                .orderBy(item.updatedAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize() + 1)
                 .fetch();
-    }
 
-    private BooleanExpression LtItemId(Long itemId) {
-        return itemId != null ? item.id.lt(itemId) : null;
+        boolean hasNext = false;
+        if (items.size() > pageable.getPageSize()) {
+            items.remove(pageable.getPageSize());
+            hasNext = true;
+        }
+        return new SliceImpl<>(items, pageable, hasNext);
     }
 
     private BooleanExpression titleLike(String searchWord) {

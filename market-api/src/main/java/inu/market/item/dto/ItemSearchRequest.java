@@ -9,14 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemSearchRequest {
 
-    private Long itemId;
-
     private Long categoryId;
 
     private Long majorId;
 
     private String searchWord;
-
-    private Integer size;
 
 }
