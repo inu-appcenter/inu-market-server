@@ -19,9 +19,15 @@ public class MajorController {
     private final MajorService majorService;
 
     @PostMapping("/api/majors")
-    public ResponseEntity<MajorResponse> create(@RequestBody @Valid MajorCreateRequest request) {
-        return ResponseEntity.ok(majorService.create(request));
+    public ResponseEntity<MajorResponse> createParent(@RequestBody @Valid MajorCreateRequest request) {
+        return ResponseEntity.ok(majorService.createParent(request));
     }
+
+//    @PostMapping("/api/majors/{majorId}/children")
+//    public ResponseEntity<MajorResponse> createChild(@PathVariable Long majorId,
+//                                                     @RequestBody @Valid MajorCreateRequest request) {
+//        return ResponseEntity.ok(majorService.createChildren(majorId, request));
+//    }
 
     @PutMapping("/api/majors/{majorId}")
     public ResponseEntity<MajorResponse> update(@PathVariable Long majorId,

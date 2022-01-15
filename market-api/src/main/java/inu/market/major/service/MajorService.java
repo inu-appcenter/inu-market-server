@@ -20,13 +20,13 @@ public class MajorService {
     private final MajorRepository majorRepository;
 
     @Transactional
-    public MajorResponse create(MajorCreateRequest request) {
+    public MajorResponse createParent(MajorCreateRequest request) {
 
         if (majorRepository.findByName(request.getName()).isPresent()) {
             throw new RuntimeException(request.getName() + "는 이미 존재하는 학과입니다.");
         }
 
-        Major major = Major.createMajor(request.getName());
+        Major major = Major.createMajor(request.getName(), null);
         majorRepository.save(major);
 
         return MajorResponse.from(major);

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,9 +22,17 @@ public class Major {
 
     private String name;
 
-    public static Major createMajor(String name) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Major parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Major> children = new ArrayList<>();
+
+    public static Major createMajor(String name, Major parent) {
         Major major = new Major();
         major.name = name;
+        major.parent = parent;
         return major;
     }
 
