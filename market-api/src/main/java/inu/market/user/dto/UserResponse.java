@@ -22,9 +22,11 @@ public class UserResponse {
 
     private boolean notification;
 
+    private String pushToken;
+
     public static UserResponse from(User user) {
-        UserResponse userResponse = new UserResponse(user.getId(), user.getInuId(), user.getNickName(),
-                                                     user.getImageUrl(), user.getScore(), user.isNotification());
+        UserResponse userResponse = new UserResponse(user.getId(), user.getInuId(), user.getNickName(), user.getImageUrl(),
+                                                     user.getScore(), user.isNotification(), user.getPushToken());
         return userResponse;
     }
 
