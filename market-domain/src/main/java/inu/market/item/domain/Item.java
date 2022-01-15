@@ -97,4 +97,8 @@ public class Item extends BaseEntity {
     public void delete() {
         this.active = false;
     }
+
+    public void changeStatus(Status status) {
+        this.status = status;
+    }
 }

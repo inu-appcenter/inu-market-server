@@ -1,10 +1,7 @@
 package inu.market.item.controller;
 
 import inu.market.config.LoginUser;
-import inu.market.item.dto.ItemCreateRequest;
-import inu.market.item.dto.ItemResponse;
-import inu.market.item.dto.ItemSearchRequest;
-import inu.market.item.dto.ItemUpdateRequest;
+import inu.market.item.dto.*;
 import inu.market.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -46,9 +43,17 @@ public class ItemController {
 
     @PutMapping("/api/items/{itemId}")
     public ResponseEntity<Void> update(@LoginUser Long userId,
-                                               @PathVariable Long itemId,
-                                               @RequestBody @Valid ItemUpdateRequest request) {
+                                       @PathVariable Long itemId,
+                                       @RequestBody @Valid ItemUpdateRequest request) {
         itemService.update(userId, itemId, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PatchMapping("/api/items/{itemId}")
+    public ResponseEntity<Void> updateStatus(@LoginUser Long userId,
+                                             @PathVariable Long itemId,
+                                             @RequestBody @Valid ItemUpdateStatusRequest request) {
+        itemService.updateStatus(userId, itemId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

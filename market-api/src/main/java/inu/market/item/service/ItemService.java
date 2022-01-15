@@ -7,10 +7,7 @@ import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemQueryRepository;
 import inu.market.item.domain.ItemRepository;
 import inu.market.item.domain.Status;
-import inu.market.item.dto.ItemCreateRequest;
-import inu.market.item.dto.ItemResponse;
-import inu.market.item.dto.ItemSearchRequest;
-import inu.market.item.dto.ItemUpdateRequest;
+import inu.market.item.dto.*;
 import inu.market.major.domain.Major;
 import inu.market.major.domain.MajorRepository;
 import inu.market.user.domain.User;
@@ -88,6 +85,18 @@ public class ItemService {
     }
 
     @Transactional
+    public void updateStatus(Long userId, Long itemId, ItemUpdateStatusRequest request) {
+        Item findItem = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 상품입니다."));
+
+        if (!findItem.getSeller().getId().equals(userId)) {
+            throw new RuntimeException("상품 판매자가 아닙니다.");
+        }
+
+        findItem.changeStatus(Status.valueOf(request.getStatus()));
+    }
+
+    @Transactional
     public void delete(Long userId, Long itemId) {
         Item findItem = itemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 상품입니다."));
@@ -115,4 +124,5 @@ public class ItemService {
                 .map(item -> ItemResponse.from(item))
                 .collect(Collectors.toList());
     }
+
 }
