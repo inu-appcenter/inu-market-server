@@ -65,8 +65,8 @@ public class ItemController {
     }
 
     @GetMapping("/api/items/{itemId}")
-    public ResponseEntity<ItemResponse> findById(@PathVariable Long itemId) {
-        return ResponseEntity.ok(itemService.findById(itemId));
+    public ResponseEntity<ItemResponse> findById(@LoginUser Long userId, @PathVariable Long itemId) {
+        return ResponseEntity.ok(itemService.findById(userId, itemId));
     }
 
     @GetMapping("/api/items")
