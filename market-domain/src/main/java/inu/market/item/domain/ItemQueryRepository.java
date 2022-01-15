@@ -1,8 +1,12 @@
 package inu.market.item.domain;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 import static inu.market.category.domain.QCategory.category;
 import static inu.market.item.domain.QItem.item;
@@ -33,12 +37,12 @@ public class ItemQueryRepository {
 
     public Item findWithSellerAndItemImagesAndCategoryAndMajorById(Long itemId) {
         Item findItem = queryFactory
-                .selectFrom(QItem.item).distinct()
-                .leftJoin(QItem.item.seller, user).fetchJoin()
-                .leftJoin(QItem.item.category, category).fetchJoin()
-                .leftJoin(QItem.item.major, major).fetchJoin()
-                .leftJoin(QItem.item.itemImages, itemImage).fetchJoin()
-                .where(QItem.item.id.eq(itemId))
+                .selectFrom(item).distinct()
+                .leftJoin(item.seller, user).fetchJoin()
+                .leftJoin(item.category, category).fetchJoin()
+                .leftJoin(item.major, major).fetchJoin()
+                .leftJoin(item.itemImages, itemImage).fetchJoin()
+                .where(item.id.eq(itemId))
                 .fetchOne();
 
         if (findItem == null) {
@@ -47,4 +51,36 @@ public class ItemQueryRepository {
 
         return findItem;
     }
+
+    public List<Item> findBySearchCondition(Long itemId, Long categoryId, Long majorId,
+                                            String searchWord, int size) {
+        return queryFactory
+                .selectFrom(item)
+                .where(titleLike(searchWord),
+                        categoryEq(categoryId),
+                        majorEq(majorId),
+                        LtItemId(itemId),
+                        item.status.eq(Status.SALE)
+                )
+                .orderBy(item.id.desc())
+                .limit(size)
+                .fetch();
+    }
+
+    private BooleanExpression LtItemId(Long itemId) {
+        return itemId != null ? item.id.lt(itemId) : null;
+    }
+
+    private BooleanExpression titleLike(String searchWord) {
+        return StringUtils.hasText(searchWord) ? item.title.contains(searchWord) : null;
+    }
+
+    private BooleanExpression categoryEq(Long categoryId) {
+        return categoryId != null ? item.category.id.eq(categoryId) : null;
+    }
+
+    private BooleanExpression majorEq(Long majorId) {
+        return majorId != null ? item.major.id.eq(majorId) : null;
+    }
+
 }

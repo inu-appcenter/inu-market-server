@@ -3,6 +3,7 @@ package inu.market.item.controller;
 import inu.market.config.LoginUser;
 import inu.market.item.dto.ItemCreateRequest;
 import inu.market.item.dto.ItemResponse;
+import inu.market.item.dto.ItemSearchRequest;
 import inu.market.item.dto.ItemUpdateRequest;
 import inu.market.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
@@ -58,4 +59,13 @@ public class ItemController {
     public ResponseEntity<ItemResponse> findById(@PathVariable Long itemId) {
         return ResponseEntity.ok(itemService.findById(itemId));
     }
+
+    @GetMapping("/api/items")
+    public ResponseEntity<List<ItemResponse>> findBySearchRequest(ItemSearchRequest request) {
+        return ResponseEntity.ok(itemService.findBySearchRequest(request));
+    }
+
+
+
+
 }

@@ -9,6 +9,7 @@ import inu.market.item.domain.ItemRepository;
 import inu.market.item.domain.Status;
 import inu.market.item.dto.ItemCreateRequest;
 import inu.market.item.dto.ItemResponse;
+import inu.market.item.dto.ItemSearchRequest;
 import inu.market.item.dto.ItemUpdateRequest;
 import inu.market.major.domain.Major;
 import inu.market.major.domain.MajorRepository;
@@ -97,9 +98,16 @@ public class ItemService {
         itemRepository.delete(findItem);
     }
 
-    @Transactional
     public ItemResponse findById(Long itemId) {
         Item findItem = itemQueryRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(itemId);
         return ItemResponse.from(findItem, findItem.getItemImages());
+    }
+
+    public List<ItemResponse> findBySearchRequest(ItemSearchRequest request) {
+        List<Item> items = itemQueryRepository.findBySearchCondition(request.getItemId(), request.getCategoryId(),
+                                                                     request.getMajorId(), request.getSearchWord(), request.getSize());
+        return items.stream()
+                .map(item -> ItemResponse.from(item))
+                .collect(Collectors.toList());
     }
 }

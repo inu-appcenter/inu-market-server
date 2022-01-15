@@ -63,4 +63,17 @@ public class ItemResponse {
                 .collect(Collectors.toList());
         return itemResponse;
     }
+
+    public static ItemResponse from(Item item) {
+        ItemResponse itemResponse = new ItemResponse();
+        itemResponse.itemId = item.getId();
+        itemResponse.title = item.getTitle();
+        itemResponse.mainImageUrl = item.getMainImageUrl();
+        itemResponse.price = item.getPrice();
+        itemResponse.likeCount = item.getLikeCount();
+        itemResponse.status = item.getStatus().name();
+        itemResponse.createdAt = item.getCreatedAt();
+        itemResponse.updatedAt = item.getUpdatedAt();
+        return itemResponse;
+    }
 }
