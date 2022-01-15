@@ -1,4 +1,4 @@
-package inu.market.chatmessage.domain;
+package inu.market.message.domain;
 
 import inu.market.chatroom.domain.ChatRoom;
 import lombok.AccessLevel;
@@ -14,24 +14,35 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class ChatMessage {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_message_id")
     private Long id;
 
+    private Long roomId;
+
     private Long senderId;
 
-    private String sender;
+    private String nickName;
 
     private String content;
+
+    @Enumerated(EnumType.STRING)
+    private MessageType messageType;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_id")
-    private ChatRoom chatRoom;
+    public static Message createMessage(Long roomId, Long senderId, String nickName, String content, MessageType messageType) {
+        Message message = new Message();
+        message.roomId =roomId;
+        message.senderId = senderId;
+        message.nickName = nickName;
+        message.content = content;
+        message.messageType = messageType;
+        return message;
+    }
 
 }

@@ -9,6 +9,7 @@ jar {
 dependencies {
     implementation(project(":market-common"))
 
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'com.google.firebase:firebase-admin:6.8.1'
 }
 
