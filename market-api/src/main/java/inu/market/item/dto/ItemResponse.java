@@ -32,6 +32,8 @@ public class ItemResponse {
 
     private String status;
 
+    private boolean active;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -53,6 +55,7 @@ public class ItemResponse {
         itemResponse.price = item.getPrice();
         itemResponse.likeCount = item.getLikeCount();
         itemResponse.status = item.getStatus().name();
+        itemResponse.active = item.isActive();
         itemResponse.createdAt = item.getCreatedAt();
         itemResponse.updatedAt = item.getUpdatedAt();
         itemResponse.major = MajorResponse.from(item.getMajor());
@@ -72,6 +75,7 @@ public class ItemResponse {
         itemResponse.price = item.getPrice();
         itemResponse.likeCount = item.getLikeCount();
         itemResponse.status = item.getStatus().name();
+        itemResponse.active = item.isActive();
         itemResponse.createdAt = item.getCreatedAt();
         itemResponse.updatedAt = item.getUpdatedAt();
         return itemResponse;

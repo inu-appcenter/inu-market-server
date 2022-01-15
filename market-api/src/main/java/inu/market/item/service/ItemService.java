@@ -69,7 +69,7 @@ public class ItemService {
 
     @Transactional
     public void update(Long userId, Long itemId, ItemUpdateRequest request) {
-        Item findItem = itemQueryRepository.findWithSellerAndItemImagesById(itemId);
+        Item findItem = itemQueryRepository.findWithItemImagesById(itemId);
 
         if (!findItem.getSeller().getId().equals(userId)) {
             throw new RuntimeException("상품 판매자가 아닙니다.");
@@ -89,13 +89,14 @@ public class ItemService {
 
     @Transactional
     public void delete(Long userId, Long itemId) {
-        Item findItem = itemQueryRepository.findWithSellerAndItemImagesById(itemId);
+        Item findItem = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 상품입니다."));
 
         if (!findItem.getSeller().getId().equals(userId)) {
             throw new RuntimeException("상품 판매자가 아닙니다.");
         }
 
-        itemRepository.delete(findItem);
+        findItem.delete();
     }
 
     public ItemResponse findById(Long itemId) {

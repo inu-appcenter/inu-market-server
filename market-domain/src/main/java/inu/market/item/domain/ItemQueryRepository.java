@@ -27,17 +27,16 @@ public class ItemQueryRepository {
     public List<Item> findBySellerId(Long sellerId) {
         return queryFactory
                 .selectFrom(item)
-                .where(item.seller.id.eq(sellerId))
+                .where(item.seller.id.eq(sellerId), item.active.eq(true))
                 .orderBy(item.id.desc())
                 .fetch();
     }
 
-    public Item findWithSellerAndItemImagesById(Long itemId) {
+    public Item findWithItemImagesById(Long itemId) {
         Item findItem = queryFactory
                 .selectFrom(item).distinct()
-                .leftJoin(item.seller, user).fetchJoin()
                 .leftJoin(item.itemImages, itemImage).fetchJoin()
-                .where(item.id.eq(itemId))
+                .where(item.id.eq(itemId), item.active.eq(true))
                 .fetchOne();
 
         if (findItem == null) {
@@ -54,7 +53,7 @@ public class ItemQueryRepository {
                 .leftJoin(item.category, category).fetchJoin()
                 .leftJoin(item.major, major).fetchJoin()
                 .leftJoin(item.itemImages, itemImage).fetchJoin()
-                .where(item.id.eq(itemId))
+                .where(item.id.eq(itemId), item.active.eq(true))
                 .fetchOne();
 
         if (findItem == null) {
@@ -70,7 +69,8 @@ public class ItemQueryRepository {
                 .where(titleLike(searchWord),
                         categoryEq(categoryId),
                         majorEq(majorId),
-                        item.status.eq(Status.SALE)
+                        item.status.eq(Status.SALE),
+                        item.active.eq(true)
                 )
                 .orderBy(item.updatedAt.desc())
                 .offset(pageable.getOffset())

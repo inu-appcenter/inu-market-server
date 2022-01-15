@@ -37,6 +37,8 @@ public class Item extends BaseEntity {
 
     private Status status;
 
+    private boolean active;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "major_id")
     private Major major;
@@ -64,6 +66,7 @@ public class Item extends BaseEntity {
         item.price = price;
         item.likeCount = 0;
         item.status = status;
+        item.active = true;
         item.seller = seller;
         return item;
     }
@@ -89,5 +92,9 @@ public class Item extends BaseEntity {
         this.title = title;
         this.contents = contents;
         this.price = price;
+    }
+
+    public void delete() {
+        this.active = false;
     }
 }
