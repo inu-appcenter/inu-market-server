@@ -18,7 +18,7 @@ public class MajorController {
 
     private final MajorService majorService;
 
-    @PostMapping("/api/majors")
+    @PostMapping("/api/majors/parents")
     public ResponseEntity<MajorResponse> createParent(@RequestBody @Valid MajorCreateRequest request) {
         return ResponseEntity.ok(majorService.createParent(request));
     }
@@ -41,9 +41,9 @@ public class MajorController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/api/majors")
-    public ResponseEntity<List<MajorResponse>> findAll() {
-        return ResponseEntity.ok(majorService.findAll());
+    @GetMapping("/api/majors/parents")
+    public ResponseEntity<List<MajorResponse>> findParents() {
+        return ResponseEntity.ok(majorService.findParents());
     }
 
 }

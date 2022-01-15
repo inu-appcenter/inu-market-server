@@ -68,8 +68,8 @@ public class MajorService {
         majorRepository.delete(findMajor);
     }
 
-    public List<MajorResponse> findAll() {
-        List<Major> majors = majorRepository.findAll();
+    public List<MajorResponse> findParents() {
+        List<Major> majors = majorRepository.findByParentIsNull();
         return majors.stream()
                 .map(major -> MajorResponse.from(major))
                 .collect(Collectors.toList());
