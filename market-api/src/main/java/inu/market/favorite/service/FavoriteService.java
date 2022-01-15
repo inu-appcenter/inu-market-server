@@ -1,10 +1,11 @@
 package inu.market.favorite.service;
 
-import inu.market.item.domain.Item;
-import inu.market.item.domain.ItemRepository;
-import inu.market.favorite.dto.FavoriteCreateRequest;
 import inu.market.favorite.domain.Favorite;
 import inu.market.favorite.domain.FavoriteRepository;
+import inu.market.favorite.dto.FavoriteCreateRequest;
+import inu.market.favorite.dto.FavoriteDeleteRequest;
+import inu.market.item.domain.Item;
+import inu.market.item.domain.ItemRepository;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,14 @@ public class FavoriteService {
 
         Favorite favorite = Favorite.createFavorite(findUser, findItem);
         favoriteRepository.save(favorite);
+    }
+
+    @Transactional
+    public void delete(Long userId, FavoriteDeleteRequest request) {
+        Favorite findFavorite = favoriteRepository.findWithItemByUserIdAndItemId(userId, request.getItemId())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 찜입니다."));
+
+        findFavorite.getItem().decreaseFavoriteCount();
+        favoriteRepository.delete(findFavorite);
     }
 }

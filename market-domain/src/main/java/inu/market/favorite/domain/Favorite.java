@@ -33,7 +33,7 @@ public class Favorite extends BaseEntity {
         Favorite favorite = new Favorite();
         favorite.item = findItem;
         favorite.user = findUser;
-        findItem.addFavoriteCount();
+        findItem.increaseFavoriteCount();
         return favorite;
     }
 }

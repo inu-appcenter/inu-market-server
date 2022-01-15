@@ -103,7 +103,11 @@ public class Item extends BaseEntity {
         this.status = status;
     }
 
-    public void addFavoriteCount() {
+    public void increaseFavoriteCount() {
         this.favoriteCount++;
+    }
+
+    public void decreaseFavoriteCount() {
+        this.favoriteCount--;
     }
 }
