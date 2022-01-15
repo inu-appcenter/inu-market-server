@@ -34,6 +34,8 @@ public class ItemResponse {
 
     private boolean active;
 
+    private boolean favorite;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -46,7 +48,8 @@ public class ItemResponse {
 
     private List<String> imageUrls;
 
-    public static ItemResponse from(Item item, List<ItemImage> itemImages) {
+
+    public static ItemResponse from(Item item, List<ItemImage> itemImages, boolean favorite) {
         ItemResponse itemResponse = new ItemResponse();
         itemResponse.itemId = item.getId();
         itemResponse.title = item.getTitle();
@@ -56,6 +59,7 @@ public class ItemResponse {
         itemResponse.favoriteCount = item.getFavoriteCount();
         itemResponse.status = item.getStatus().name();
         itemResponse.active = item.isActive();
+        itemResponse.favorite = favorite;
         itemResponse.createdAt = item.getCreatedAt();
         itemResponse.updatedAt = item.getUpdatedAt();
         itemResponse.major = MajorResponse.from(item.getMajor());

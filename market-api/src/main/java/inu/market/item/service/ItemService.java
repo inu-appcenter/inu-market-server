@@ -3,6 +3,8 @@ package inu.market.item.service;
 import inu.market.category.domain.Category;
 import inu.market.category.domain.CategoryRepository;
 import inu.market.client.AwsClient;
+import inu.market.favorite.domain.Favorite;
+import inu.market.favorite.domain.FavoriteRepository;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemQueryRepository;
 import inu.market.item.domain.ItemRepository;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +34,7 @@ public class ItemService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final MajorRepository majorRepository;
+    private final FavoriteRepository favoriteRepository;
 
     private final ItemQueryRepository itemQueryRepository;
 
@@ -108,9 +112,10 @@ public class ItemService {
         findItem.delete();
     }
 
-    public ItemResponse findById(Long itemId) {
+    public ItemResponse findById(Long userId, Long itemId) {
         Item findItem = itemQueryRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(itemId);
-        return ItemResponse.from(findItem, findItem.getItemImages());
+        Optional<Favorite> favorite = favoriteRepository.findByUserIdAndItemId(userId, itemId);
+        return ItemResponse.from(findItem, findItem.getItemImages(), favorite.isPresent());
     }
 
     public Slice<ItemResponse> findBySearchRequest(ItemSearchRequest request, Pageable pageable) {
