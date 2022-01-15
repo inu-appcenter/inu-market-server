@@ -16,16 +16,21 @@ public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
 
-    @PostMapping("/api/items/{itemId}/chatRooms")
+    @PostMapping("/api/items/{itemId}/chat/rooms")
     public ResponseEntity<ChatRoomResponse> create(@LoginUser Long userId,
                                                    @PathVariable Long itemId) {
         return ResponseEntity.ok(chatRoomService.create(userId, itemId));
     }
 
-    @GetMapping("/api/chatRooms")
+    @GetMapping("/api/chat/Rooms")
     public ResponseEntity<List<ChatRoomResponse>> findBySellerOrBuyer(@LoginUser Long userId) {
         return ResponseEntity.ok(chatRoomService.findBySellerOrBuyer(userId));
     }
 
+    @DeleteMapping("/api/chat/rooms/{roomId}")
+    public ResponseEntity<Void> delete(@LoginUser Long userId, @PathVariable Long roomId) {
+        chatRoomService.delete(userId, roomId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 }

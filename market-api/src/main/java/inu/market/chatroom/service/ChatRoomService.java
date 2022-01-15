@@ -44,4 +44,16 @@ public class ChatRoomService {
                 .map(chatRoom -> ChatRoomResponse.from(chatRoom, userId))
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void delete(Long userId, Long chatRoomId) {
+        ChatRoom findChatRoom = chatRoomRepository.findById(chatRoomId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 채팅방입니다."));
+
+        if (!findChatRoom.getBuyer().getId().equals(userId) || !findChatRoom.getSeller().getId().equals(userId)) {
+            throw new RuntimeException("채팅방을 삭제할 수 없습니다.");
+        }
+
+        chatRoomRepository.delete(findChatRoom);
+    }
 }

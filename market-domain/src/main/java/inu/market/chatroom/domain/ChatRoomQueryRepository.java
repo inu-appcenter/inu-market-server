@@ -25,4 +25,5 @@ public class ChatRoomQueryRepository {
                 .where(chatRoom.buyer.id.eq(userId).or(chatRoom.seller.id.eq(userId)))
                 .fetch();
     }
+
 }
