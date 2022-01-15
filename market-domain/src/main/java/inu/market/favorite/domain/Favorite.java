@@ -1,4 +1,4 @@
-package inu.market.item.domain;
+package inu.market.favorite.domain;
 
 import inu.market.common.BaseEntity;
 import inu.market.item.domain.Item;
@@ -14,11 +14,11 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class LikeItem extends BaseEntity {
+public class Favorite extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "like_item_id")
+    @Column(name = "favorite_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,4 +29,11 @@ public class LikeItem extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public static Favorite createFavorite(User findUser, Item findItem) {
+        Favorite favorite = new Favorite();
+        favorite.item = findItem;
+        favorite.user = findUser;
+        findItem.addFavoriteCount();
+        return favorite;
+    }
 }

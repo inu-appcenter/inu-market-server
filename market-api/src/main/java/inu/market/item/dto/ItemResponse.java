@@ -28,7 +28,7 @@ public class ItemResponse {
 
     private int price;
 
-    private int likeCount;
+    private int favoriteCount;
 
     private String status;
 
@@ -53,7 +53,7 @@ public class ItemResponse {
         itemResponse.contents = item.getContents();
         itemResponse.mainImageUrl = item.getMainImageUrl();
         itemResponse.price = item.getPrice();
-        itemResponse.likeCount = item.getLikeCount();
+        itemResponse.favoriteCount = item.getFavoriteCount();
         itemResponse.status = item.getStatus().name();
         itemResponse.active = item.isActive();
         itemResponse.createdAt = item.getCreatedAt();
@@ -73,7 +73,7 @@ public class ItemResponse {
         itemResponse.title = item.getTitle();
         itemResponse.mainImageUrl = item.getMainImageUrl();
         itemResponse.price = item.getPrice();
-        itemResponse.likeCount = item.getLikeCount();
+        itemResponse.favoriteCount = item.getFavoriteCount();
         itemResponse.status = item.getStatus().name();
         itemResponse.active = item.isActive();
         itemResponse.createdAt = item.getCreatedAt();

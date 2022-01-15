@@ -2,6 +2,7 @@ package inu.market.item.domain;
 
 import inu.market.category.domain.Category;
 import inu.market.common.BaseEntity;
+import inu.market.favorite.domain.Favorite;
 import inu.market.major.domain.Major;
 import inu.market.user.domain.User;
 import lombok.AccessLevel;
@@ -33,7 +34,7 @@ public class Item extends BaseEntity {
 
     private int price;
 
-    private int likeCount;
+    private int favoriteCount;
 
     private Status status;
 
@@ -55,7 +56,7 @@ public class Item extends BaseEntity {
     private List<ItemImage> itemImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LikeItem> likeItems = new ArrayList<>();
+    private List<Favorite> likeItems = new ArrayList<>();
 
     public static Item createItem(String title, String contents, String mainImageUrl,
                                   int price, Status status, User seller) {
@@ -64,7 +65,7 @@ public class Item extends BaseEntity {
         item.contents = contents;
         item.mainImageUrl = mainImageUrl;
         item.price = price;
-        item.likeCount = 0;
+        item.favoriteCount = 0;
         item.status = status;
         item.active = true;
         item.seller = seller;
@@ -100,5 +101,9 @@ public class Item extends BaseEntity {
 
     public void changeStatus(Status status) {
         this.status = status;
+    }
+
+    public void addFavoriteCount() {
+        this.favoriteCount++;
     }
 }
