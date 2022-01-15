@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -35,4 +38,10 @@ public class ChatRoomService {
         return ChatRoomResponse.from(chatRoom, userId);
     }
 
+    public List<ChatRoomResponse> findBySellerOrBuyer(Long userId) {
+        List<ChatRoom> chatRooms = chatRoomQueryRepository.findWithItemAndBuyerAndSellerBySellerIdOrBuyerId(userId);
+        return chatRooms.stream()
+                .map(chatRoom -> ChatRoomResponse.from(chatRoom, userId))
+                .collect(Collectors.toList());
+    }
 }

@@ -22,10 +22,10 @@ public class ChatRoomController {
         return ResponseEntity.ok(chatRoomService.create(userId, itemId));
     }
 
-//    @GetMapping("/api/chatRooms")
-//    public ResponseEntity<List<ChatRoomResponse>> findBySellerOrBuyer(@LoginUser Long userId) {
-//        return ResponseEntity.ok(chatRoomService.(userId));
-//    }
+    @GetMapping("/api/chatRooms")
+    public ResponseEntity<List<ChatRoomResponse>> findBySellerOrBuyer(@LoginUser Long userId) {
+        return ResponseEntity.ok(chatRoomService.findBySellerOrBuyer(userId));
+    }
 
 
 }
