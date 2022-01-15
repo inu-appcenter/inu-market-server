@@ -7,10 +7,7 @@ import inu.market.favorite.service.FavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,17 +17,19 @@ public class FavoriteController {
 
     private final FavoriteService favoriteService;
 
-    @PostMapping("/favorite")
+    @PostMapping("/api/favorites")
     public ResponseEntity<Void> create(@LoginUser Long userId,
                                        @RequestBody @Valid FavoriteCreateRequest request) {
         favoriteService.create(userId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/favorite")
+    @DeleteMapping("/api/favorites")
     public ResponseEntity<Void> delete(@LoginUser Long userId,
                                        @RequestBody @Valid FavoriteDeleteRequest request) {
         favoriteService.delete(userId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+
 }
