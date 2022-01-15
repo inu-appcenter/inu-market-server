@@ -33,4 +33,12 @@ public class ChatRoom extends BaseEntity {
     @JoinColumn(name = "seller_id")
     private User seller;
 
+    public static ChatRoom createChatRoom(Item item, User buyer, User seller) {
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.item = item;
+        chatRoom.buyer = buyer;
+        chatRoom.seller = seller;
+        return chatRoom;
+    }
+
 }
