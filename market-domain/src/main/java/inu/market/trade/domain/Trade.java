@@ -1,5 +1,6 @@
 package inu.market.trade.domain;
 
+import inu.market.common.BaseEntity;
 import inu.market.item.domain.Item;
 import inu.market.user.domain.User;
 import lombok.AccessLevel;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class Trade {
+public class Trade extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

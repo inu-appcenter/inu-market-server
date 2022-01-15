@@ -2,6 +2,7 @@ package inu.market.trade.service;
 
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemRepository;
+import inu.market.item.dto.ItemResponse;
 import inu.market.trade.domain.Trade;
 import inu.market.trade.domain.TradeRepository;
 import inu.market.trade.dto.TradeCreateRequest;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -34,5 +36,12 @@ public class TradeService {
 
         Trade trade = Trade.createTrade(findItem, findUser);
         tradeRepository.save(trade);
+    }
+
+    public List<ItemResponse> findByBuyerId(Long userId) {
+        List<Trade> trades = tradeRepository.findWithItemByBuyerId(userId);
+        return trades.stream()
+                .map(trade -> ItemResponse.from(trade.getItem()))
+                .collect(Collectors.toList());
     }
 }
