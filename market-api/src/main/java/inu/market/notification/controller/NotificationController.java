@@ -22,9 +22,9 @@ public class NotificationController {
         return ResponseEntity.ok(notificationService.findByUserId(userId, notificationId));
     }
 
-    @PatchMapping("/api/notificiation/{notificationId}")
+    @PatchMapping("/api/notifications/{notificationId}")
     public ResponseEntity<Void> updateRead(@LoginUser Long userId, @PathVariable Long notificationId) {
-        notificationService.updateRead(userId, notificationId));
+        notificationService.updateRead(userId, notificationId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
