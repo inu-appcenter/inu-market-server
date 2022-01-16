@@ -5,9 +5,11 @@ import inu.market.category.domain.CategoryRepository;
 import inu.market.category.dto.CategoryCreateRequest;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.category.dto.CategoryUpdateRequest;
+import inu.market.client.AwsClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final AwsClient awsClient;
 
     @Transactional
     public CategoryResponse create(CategoryCreateRequest request) {
@@ -58,5 +61,9 @@ public class CategoryService {
         return categories.stream()
                 .map(category -> CategoryResponse.from(category))
                 .collect(Collectors.toList());
+    }
+
+    public String uploadImage(MultipartFile image) {
+        return awsClient.upload(image);
     }
 }
