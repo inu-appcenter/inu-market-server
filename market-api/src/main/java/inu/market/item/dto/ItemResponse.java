@@ -1,5 +1,7 @@
 package inu.market.item.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemImage;
@@ -32,20 +34,26 @@ public class ItemResponse {
 
     private String status;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private boolean favorite;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime updatedAt;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private MajorResponse major;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private CategoryResponse category;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private UserResponse seller;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<String> imageUrls;
-
 
     public static ItemResponse from(Item item, List<ItemImage> itemImages, boolean favorite) {
         ItemResponse itemResponse = new ItemResponse();
