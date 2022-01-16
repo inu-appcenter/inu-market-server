@@ -49,14 +49,6 @@ public class UserService {
         return jwtUtil.createToken(findUser.getId());
     }
 
-    @Transactional
-    public void updateNotification(Long userId, UserUpdateNotificationRequest request) {
-        User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
-
-        findUser.changeNotification(request.getNotification());
-    }
-
     public String uploadImage(MultipartFile image) {
         return awsClient.upload(image);
     }

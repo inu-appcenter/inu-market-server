@@ -54,13 +54,7 @@ public class UserController {
     @PatchMapping("/api/users/profile")
     public ResponseEntity<Void> updateProfile(@LoginUser Long userId,
                                               @RequestBody @Valid UserUpdateProfileRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-
-    @PatchMapping("/api/users/notification")
-    public ResponseEntity<Void> updateNotification(@LoginUser Long userId,
-                                                   @RequestBody @Valid UserUpdateNotificationRequest notificationRequest) {
+        userService.updateProfile(userId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
