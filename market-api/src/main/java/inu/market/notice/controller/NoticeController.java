@@ -1,6 +1,7 @@
 package inu.market.notice.controller;
 
 import inu.market.notice.dto.NoticeCreateRequest;
+import inu.market.notice.dto.NoticeResponse;
 import inu.market.notice.dto.NoticeUpdateRequest;
 import inu.market.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -39,4 +41,10 @@ public class NoticeController {
         noticeService.delete(noticeId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/api/notices")
+    public ResponseEntity<List<NoticeResponse>> findAll(){
+        return ResponseEntity.ok(noticeService.findAll());
+    }
+
 }

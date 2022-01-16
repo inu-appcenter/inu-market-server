@@ -3,10 +3,14 @@ package inu.market.notice.service;
 import inu.market.notice.domain.Notice;
 import inu.market.notice.domain.NoticeRepository;
 import inu.market.notice.dto.NoticeCreateRequest;
+import inu.market.notice.dto.NoticeResponse;
 import inu.market.notice.dto.NoticeUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +40,12 @@ public class NoticeService {
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 공지사항입니다."));
 
         noticeRepository.delete(findNotice);
+    }
+
+    public List<NoticeResponse> findAll() {
+        List<Notice> notices = noticeRepository.findAll();
+        return notices.stream()
+                .map(notice -> NoticeResponse.simpleFrom(notice))
+                .collect(Collectors.toList());
     }
 }
