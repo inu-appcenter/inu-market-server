@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,6 +21,13 @@ public class BlockController {
     public ResponseEntity<Void> create(@LoginUser Long userId,
                                        @RequestBody @Valid BlockCreateRequest request) {
         blockService.create(userId, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping("/api/blocks/{blockId}")
+    public ResponseEntity<Void> delete(@LoginUser Long userId,
+                                       @PathVariable Long blockId) {
+        blockService.delete(userId, blockId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

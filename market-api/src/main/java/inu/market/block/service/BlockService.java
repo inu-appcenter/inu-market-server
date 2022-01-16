@@ -32,4 +32,17 @@ public class BlockService {
         Block block = Block.createBlock(findUser, targetUser);
         blockRepository.save(block);
     }
+
+    @Transactional
+    public void delete(Long userId, Long blockId) {
+        Block findBlock = blockRepository.findById(blockId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 차단입니다."));
+
+        if(!findBlock.getUser().getId().equals(userId)){
+            throw new RuntimeException("권한이 없습니다.");
+        }
+
+        blockRepository.delete(findBlock);
+    }
+
 }
