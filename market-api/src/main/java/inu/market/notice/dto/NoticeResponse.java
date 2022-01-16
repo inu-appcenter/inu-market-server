@@ -28,4 +28,7 @@ public class NoticeResponse {
         return noticeResponse;
     }
 
+    public static NoticeResponse from(Notice notice) {
+        return new NoticeResponse(notice.getId(), notice.getTitle(), notice.getContent(), notice.getUpdatedAt());
+    }
 }

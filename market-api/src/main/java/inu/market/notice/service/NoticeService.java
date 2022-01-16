@@ -48,4 +48,10 @@ public class NoticeService {
                 .map(notice -> NoticeResponse.simpleFrom(notice))
                 .collect(Collectors.toList());
     }
+
+    public NoticeResponse findById(Long noticeId) {
+        Notice findNotice = noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 공지사항입니다."));
+        return NoticeResponse.from(findNotice);
+    }
 }

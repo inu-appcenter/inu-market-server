@@ -43,8 +43,14 @@ public class NoticeController {
     }
 
     @GetMapping("/api/notices")
-    public ResponseEntity<List<NoticeResponse>> findAll(){
+    public ResponseEntity<List<NoticeResponse>> findAll() {
         return ResponseEntity.ok(noticeService.findAll());
     }
+
+    @GetMapping("/api/notices/{noticeId}")
+    public ResponseEntity<NoticeResponse> findById(@PathVariable Long noticeId) {
+       return ResponseEntity.ok(noticeService.findById(noticeId));
+    }
+
 
 }
