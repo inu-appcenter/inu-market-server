@@ -35,8 +35,11 @@ public class CategoryController {
     }
 
     @PostMapping("/api/categories")
-    public ResponseEntity<CategoryResponse> create(@RequestBody @Valid CategoryCreateRequest request) {
-        return ResponseEntity.ok(categoryService.create(request));
+    public ResponseEntity<Map<String, Long>> create(@RequestBody @Valid CategoryCreateRequest request) {
+        Long categoryId = categoryService.create(request);
+        Map<String, Long> response = new HashMap<>();
+        response.put("categoryId", categoryId);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/api/categories/{categoryId}")

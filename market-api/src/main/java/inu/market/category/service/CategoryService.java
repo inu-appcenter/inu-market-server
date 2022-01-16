@@ -23,7 +23,7 @@ public class CategoryService {
     private final AwsClient awsClient;
 
     @Transactional
-    public CategoryResponse create(CategoryCreateRequest request) {
+    public Long create(CategoryCreateRequest request) {
 
         if (categoryRepository.findByName(request.getName()).isPresent()) {
             throw new RuntimeException(request.getName() + "는 이미 존재하는 카테고리입니다.");
@@ -31,7 +31,7 @@ public class CategoryService {
 
         Category category = Category.createCategory(request.getName(), request.getIconUrl());
         categoryRepository.save(category);
-        return CategoryResponse.from(category);
+        return category.getId();
     }
 
     @Transactional
