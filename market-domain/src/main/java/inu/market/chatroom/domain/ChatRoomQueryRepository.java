@@ -23,6 +23,7 @@ public class ChatRoomQueryRepository {
                 .leftJoin(chatRoom.seller, user).fetchJoin()
                 .leftJoin(chatRoom.item, item).fetchJoin()
                 .where(chatRoom.buyer.id.eq(userId).or(chatRoom.seller.id.eq(userId)))
+                .orderBy(chatRoom.id.desc())
                 .fetch();
     }
 
