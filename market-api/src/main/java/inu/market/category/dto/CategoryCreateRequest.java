@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class CategoryCreateRequest {
 
     private String name;
+
+    private String iconUrl;
 }

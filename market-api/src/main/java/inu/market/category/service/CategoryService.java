@@ -26,7 +26,7 @@ public class CategoryService {
             throw new RuntimeException(request.getName() + "는 이미 존재하는 카테고리입니다.");
         }
 
-        Category category = Category.createCategory(request.getName());
+        Category category = Category.createCategory(request.getName(), request.getIconUrl());
         categoryRepository.save(category);
         return CategoryResponse.from(category);
     }
@@ -41,7 +41,7 @@ public class CategoryService {
             throw new RuntimeException(request.getName() + "는 이미 존재하는 카테고리입니다.");
         }
 
-        findCategory.changeName(request.getName());
+        findCategory.changeNameAndIconUrl(request.getName(), request.getIconUrl());
     }
 
     @Transactional

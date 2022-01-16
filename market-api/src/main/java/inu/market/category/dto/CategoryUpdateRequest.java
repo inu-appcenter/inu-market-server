@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class CategoryUpdateRequest {
 
     private String name;
+
+    private String iconUrl;
 }

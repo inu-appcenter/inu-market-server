@@ -14,8 +14,10 @@ public class CategoryResponse {
 
     private String name;
 
+    private String iconUrl;
+
     public static CategoryResponse from(Category category) {
-        return new CategoryResponse(category.getId(), category.getName());
+        return new CategoryResponse(category.getId(), category.getName(), category.getIconUrl());
     }
 
 }

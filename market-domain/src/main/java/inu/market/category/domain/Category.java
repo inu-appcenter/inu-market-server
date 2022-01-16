@@ -20,13 +20,18 @@ public class Category {
 
     private String name;
 
-    public static Category createCategory(String name) {
+    private String iconUrl;
+
+    public static Category createCategory(String name, String iconUrl) {
         Category category = new Category();
         category.name = name;
+        category.iconUrl = iconUrl;
         return category;
     }
 
-    public void changeName(String name) {
+    public void changeNameAndIconUrl(String name, String iconUrl) {
         this.name = name;
+        this.iconUrl = iconUrl;
+
     }
 }
