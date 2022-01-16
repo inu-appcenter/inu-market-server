@@ -17,7 +17,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionResponse> handlerValidationExceptions(MethodArgumentNotValidException e) {
+    public ResponseEntity<ExceptionResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors()
                 .forEach(error -> errors.put(((FieldError) error).getField(), error.getDefaultMessage()));
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<ExceptionResponse> handlerValidationExceptions(BindException e) {
+    public ResponseEntity<ExceptionResponse> handleValidationExceptions(BindException e) {
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors()
                 .forEach(error -> errors.put(((FieldError) error).getField(), error.getDefaultMessage()));
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ExceptionResponse exceptionResponse(Exception e) {
+    public ExceptionResponse handleException(Exception e) {
         ExceptionResponse exceptionResponse = ExceptionResponse.from(e.getMessage());
         return exceptionResponse;
     }
