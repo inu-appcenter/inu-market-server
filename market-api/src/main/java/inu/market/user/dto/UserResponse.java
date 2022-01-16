@@ -12,21 +12,17 @@ public class UserResponse {
 
     private Long userId;
 
-    private int inuId;
-
     private String nickName;
 
     private String imageUrl;
 
     private Double score;
 
-    private boolean notification;
-
     private String pushToken;
 
     public static UserResponse from(User user) {
-        UserResponse userResponse = new UserResponse(user.getId(), user.getInuId(), user.getNickName(), user.getImageUrl(),
-                                                     user.getScore(), user.isNotification(), user.getPushToken());
+        UserResponse userResponse = new UserResponse(user.getId(), user.getNickName(), user.getImageUrl(),
+                                                     user.getScore(), user.getPushToken());
         return userResponse;
     }
 
