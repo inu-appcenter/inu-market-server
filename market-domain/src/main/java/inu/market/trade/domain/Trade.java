@@ -33,7 +33,8 @@ public class Trade extends BaseEntity {
         Trade trade = new Trade();
         trade.item = item;
         trade.buyer = buyer;
-        buyer.addScore();
+        buyer.increaseScore();
+        item.getSeller().increaseScore();
         return trade;
     }
 

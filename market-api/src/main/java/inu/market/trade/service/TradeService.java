@@ -28,7 +28,7 @@ public class TradeService {
 
     @Transactional
     public void create(TradeCreateRequest request) {
-        Item findItem = itemRepository.findById(request.getItemId())
+        Item findItem = itemRepository.findWithSellerById(request.getItemId())
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 상품입니다."));
 
         User findUser = userRepository.findById(request.getUserId())
