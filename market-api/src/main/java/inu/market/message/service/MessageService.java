@@ -1,5 +1,6 @@
 package inu.market.message.service;
 
+import inu.market.client.AwsClient;
 import inu.market.client.FirebaseClient;
 import inu.market.message.domain.Message;
 import inu.market.message.domain.MessageRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +24,7 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
     private final FirebaseClient firebaseClient;
+    private final AwsClient awsClient;
 
     @Transactional
     public MessageResponse create(MessageRequest request) {
@@ -46,5 +49,9 @@ public class MessageService {
         return messages.stream()
                 .map(message -> MessageResponse.from(message))
                 .collect(Collectors.toList());
+    }
+
+    public String uploadImage(MultipartFile image) {
+        return awsClient.upload(image);
     }
 }

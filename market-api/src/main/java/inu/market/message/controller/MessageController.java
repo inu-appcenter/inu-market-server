@@ -7,12 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +36,19 @@ public class MessageController {
     public ResponseEntity<List<MessageResponse>> findByRoomId(@PathVariable Long roomId,
                                                               @RequestParam int size, @RequestParam String lastMessageDate) {
         return ResponseEntity.ok(messageService.findByRoomId(roomId, size, lastMessageDate));
+    }
+
+    @PostMapping("/api/messages/imageUrls")
+    public ResponseEntity<Map<String, String>> convertToImageUrl(@RequestPart MultipartFile image) {
+
+        if (image == null || image.isEmpty()) {
+            throw new RuntimeException("업로드 할 이미지가 없습니다.");
+        }
+
+        Map<String, String> response = new HashMap<>();
+        String imageUrl = messageService.uploadImage(image);
+        response.put("imageUrl", imageUrl);
+        return ResponseEntity.ok(response);
     }
 
 }
