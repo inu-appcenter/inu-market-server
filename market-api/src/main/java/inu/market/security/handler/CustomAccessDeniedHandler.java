@@ -1,7 +1,7 @@
 package inu.market.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import inu.market.ExceptionResponse;
+import inu.market.common.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;

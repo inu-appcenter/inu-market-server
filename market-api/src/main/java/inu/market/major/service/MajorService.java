@@ -1,5 +1,7 @@
 package inu.market.major.service;
 
+import inu.market.common.DuplicateException;
+import inu.market.common.NotFoundException;
 import inu.market.major.domain.Major;
 import inu.market.major.domain.MajorRepository;
 import inu.market.major.dto.MajorCreateRequest;
@@ -23,7 +25,7 @@ public class MajorService {
     public Long createParent(MajorCreateRequest request) {
 
         if (majorRepository.findByName(request.getName()).isPresent()) {
-            throw new RuntimeException(request.getName() + "는 이미 존재하는 학과입니다.");
+            throw new DuplicateException(request.getName() + "는 이미 존재하는 학과입니다.");
         }
 
         Major major = Major.createMajor(request.getName(), null);
@@ -35,10 +37,10 @@ public class MajorService {
     @Transactional
     public Long createChildren(Long majorId, MajorCreateRequest request) {
         Major findParent = majorRepository.findById(majorId)
-                .orElseThrow(() -> new RuntimeException(majorId + "는 존재하지 않는 학과 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(majorId + "는 존재하지 않는 학과 ID 입니다."));
 
         if (majorRepository.findByName(request.getName()).isPresent()) {
-            throw new RuntimeException(request.getName() + "는 이미 존재하는 학과입니다.");
+            throw new DuplicateException(request.getName() + "는 이미 존재하는 학과입니다.");
         }
 
         Major major = Major.createMajor(request.getName(), findParent);
@@ -50,10 +52,10 @@ public class MajorService {
     @Transactional
     public void update(Long majorId, MajorUpdateRequest request) {
         Major findMajor = majorRepository.findById(majorId)
-                .orElseThrow(() -> new RuntimeException(majorId + "는 존재하지 않는 학과 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(majorId + "는 존재하지 않는 학과 ID 입니다."));
 
         if (majorRepository.findByName(request.getName()).isPresent()) {
-            throw new RuntimeException(request.getName() + "는 이미 존재하는 학과입니다.");
+            throw new DuplicateException(request.getName() + "는 이미 존재하는 학과입니다.");
         }
 
         findMajor.changeName(request.getName());
@@ -62,7 +64,7 @@ public class MajorService {
     @Transactional
     public void delete(Long majorId) {
         Major findMajor = majorRepository.findById(majorId)
-                .orElseThrow(() -> new RuntimeException(majorId + "는 존재하지 않는 학과 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(majorId + "는 존재하지 않는 학과 ID 입니다."));
 
         majorRepository.delete(findMajor);
     }

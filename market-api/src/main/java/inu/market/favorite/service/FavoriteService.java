@@ -1,6 +1,7 @@
 package inu.market.favorite.service;
 
 import inu.market.client.FirebaseClient;
+import inu.market.common.NotFoundException;
 import inu.market.favorite.domain.Favorite;
 import inu.market.favorite.domain.FavoriteRepository;
 import inu.market.favorite.dto.FavoriteCreateRequest;
@@ -34,10 +35,10 @@ public class FavoriteService {
     @Transactional
     public void create(Long userId, FavoriteCreateRequest request) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
 
         Item findItem = itemRepository.findWithSellerById(request.getItemId())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 상품입니다."));
+                .orElseThrow(() -> new NotFoundException(request.getItemId() + "는 존재하지 않는 상품 ID 입니다."));
         User seller = findItem.getSeller();
 
         Favorite favorite = Favorite.createFavorite(findUser, findItem);
@@ -53,7 +54,7 @@ public class FavoriteService {
     @Transactional
     public void delete(Long userId, FavoriteDeleteRequest request) {
         Favorite findFavorite = favoriteRepository.findWithItemByUserIdAndItemId(userId, request.getItemId())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 찜입니다."));
+                .orElseThrow(() -> new NotFoundException("찜 목록에 존재하지 않습니다."));
 
         findFavorite.getItem().decreaseFavoriteCount();
         favoriteRepository.delete(findFavorite);

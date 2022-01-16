@@ -1,5 +1,6 @@
 package inu.market.notice.service;
 
+import inu.market.common.NotFoundException;
 import inu.market.notice.domain.Notice;
 import inu.market.notice.domain.NoticeRepository;
 import inu.market.notice.dto.NoticeCreateRequest;
@@ -29,7 +30,7 @@ public class NoticeService {
     @Transactional
     public void update(Long noticeId, NoticeUpdateRequest request) {
         Notice findNotice = noticeRepository.findById(noticeId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 공지사항입니다."));
+                .orElseThrow(() -> new NotFoundException(noticeId + "는 존재하지 않는 공지사항 ID 입니다."));
 
         findNotice.changeTitleAndContent(request.getTitle(), request.getContent());
     }
@@ -37,7 +38,7 @@ public class NoticeService {
     @Transactional
     public void delete(Long noticeId) {
         Notice findNotice = noticeRepository.findById(noticeId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 공지사항입니다."));
+                .orElseThrow(() -> new NotFoundException(noticeId + "는 존재하지 않는 공지사항 ID 입니다."));
 
         noticeRepository.delete(findNotice);
     }
@@ -51,7 +52,7 @@ public class NoticeService {
 
     public NoticeResponse findById(Long noticeId) {
         Notice findNotice = noticeRepository.findById(noticeId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 공지사항입니다."));
+                .orElseThrow(() -> new NotFoundException(noticeId + "는 존재하지 않는 공지사항 ID 입니다."));
         return NoticeResponse.from(findNotice);
     }
 }

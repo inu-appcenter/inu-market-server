@@ -1,6 +1,7 @@
 package inu.market.chatroom.domain;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import inu.market.common.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -37,7 +38,7 @@ public class ChatRoomQueryRepository {
                 .fetchOne();
 
         if (findChatRoom == null) {
-            throw new RuntimeException("존재하지 않는 채팅방입니다.");
+            throw new NotFoundException(roomId + "는 존재하지 않는 채팅방 ID 입니다.");
         }
         return findChatRoom;
     }

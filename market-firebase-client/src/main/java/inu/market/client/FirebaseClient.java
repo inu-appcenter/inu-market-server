@@ -48,7 +48,6 @@ public class FirebaseClient {
             String response = FirebaseMessaging.getInstance().sendAsync(message).get();
             log.info("Sent message: " + response);
         } catch (Exception e) {
-            e.printStackTrace();
             log.error("푸쉬알림 전송 실패");
         }
     }

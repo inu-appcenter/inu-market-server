@@ -2,6 +2,8 @@ package inu.market.user.service;
 
 import inu.market.client.AwsClient;
 import inu.market.client.InuClient;
+import inu.market.common.DuplicateException;
+import inu.market.common.NotFoundException;
 import inu.market.security.util.JwtUtil;
 import inu.market.user.domain.Role;
 import inu.market.user.domain.User;
@@ -28,7 +30,7 @@ public class UserService {
         inuClient.login(request.getInuId(), request.getPassword());
 
         if (userRepository.findByInuId(request.getInuId()).isPresent()) {
-            throw new RuntimeException("이미 회원가입한 회원입니다.");
+            throw new DuplicateException("이미 회원가입한 회원입니다.");
         }
 
         User user = User.createUser(request.getInuId(), Role.ROLE_USER);
@@ -42,7 +44,7 @@ public class UserService {
         inuClient.login(request.getInuId(), request.getPassword());
 
         User findUser = userRepository.findByInuId(request.getInuId())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new NotFoundException(request.getInuId() + "는 존재하지 않는 학번입니다."));
 
         findUser.changePushToken(request.getPushToken());
 
@@ -56,14 +58,14 @@ public class UserService {
     @Transactional
     public void updateProfile(Long userId, UserUpdateProfileRequest request) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
 
         findUser.changeProfile(request.getNickName(), request.getImageUrl());
     }
 
     public UserResponse findById(Long userId) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
 
         return UserResponse.from(findUser);
     }

@@ -1,5 +1,7 @@
 package inu.market.client;
 
+import inu.market.common.NetworkException;
+import inu.market.common.NotMatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,11 +34,11 @@ public class InuClientImpl implements InuClient {
         if (response.getStatusCode().is3xxRedirection()) {
 
             if (response.getHeaders().get(HttpHeaders.SET_COOKIE).size() != 3) {
-                throw new RuntimeException("학번 혹은 비밀번호가 맞지 않습니다.");
+                throw new NotMatchException("학번 혹은 비밀번호가 맞지 않습니다.");
             }
 
         } else {
-            throw new RuntimeException("학교 서버와 통신 중 오류가 발생했습니다.");
+            throw new NetworkException("서버와 통신 중 오류가 발생했습니다.");
         }
     }
 }

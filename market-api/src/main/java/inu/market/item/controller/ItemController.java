@@ -1,5 +1,6 @@
 package inu.market.item.controller;
 
+import inu.market.common.NotExistException;
 import inu.market.config.LoginUser;
 import inu.market.item.dto.*;
 import inu.market.item.service.ItemService;
@@ -23,7 +24,7 @@ public class ItemController {
     @PostMapping("/api/items/imageUrls")
     public ResponseEntity<Map<String, List<String>>> convertToImageUrls(List<MultipartFile> images) {
         if (images == null || images.isEmpty()) {
-            throw new RuntimeException("파일이 존재하지 않습니다.");
+            throw new NotExistException("상품 이미지가 없습니다.");
         }
 
         Map<String, List<String>> response = new HashMap<>();

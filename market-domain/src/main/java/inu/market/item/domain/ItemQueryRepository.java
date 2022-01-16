@@ -40,7 +40,7 @@ public class ItemQueryRepository {
                 .fetchOne();
 
         if (findItem == null) {
-            throw new RuntimeException("존재하지 않는 상품입니다.");
+            throw new RuntimeException(itemId + "는 존재하지 않는 상품 ID 입니다.");
         }
 
         return findItem;
@@ -57,7 +57,7 @@ public class ItemQueryRepository {
                 .fetchOne();
 
         if (findItem == null) {
-            throw new RuntimeException("존재하지 않는 상품입니다.");
+            throw new RuntimeException(itemId + "는 존재하지 않는 상품 ID 입니다.");
         }
 
         return findItem;

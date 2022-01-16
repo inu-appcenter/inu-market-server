@@ -1,6 +1,7 @@
 package inu.market.trade.service;
 
 import inu.market.client.FirebaseClient;
+import inu.market.common.NotFoundException;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemRepository;
 import inu.market.item.dto.ItemResponse;
@@ -35,10 +36,10 @@ public class TradeService {
     @Transactional
     public void create(TradeCreateRequest request) {
         Item findItem = itemRepository.findWithSellerById(request.getItemId())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 상품입니다."));
+                .orElseThrow(() -> new NotFoundException(request.getItemId() + "는 존재하지 않는 상품 ID 입니다."));
 
         User findUser = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new NotFoundException(request.getUserId() + "는 존재하지 않는 회원 ID 입니다."));
 
         Trade trade = Trade.createTrade(findItem, findUser);
         tradeRepository.save(trade);

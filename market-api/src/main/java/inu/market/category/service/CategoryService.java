@@ -6,6 +6,8 @@ import inu.market.category.dto.CategoryCreateRequest;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.category.dto.CategoryUpdateRequest;
 import inu.market.client.AwsClient;
+import inu.market.common.DuplicateException;
+import inu.market.common.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +26,8 @@ public class CategoryService {
 
     @Transactional
     public Long create(CategoryCreateRequest request) {
-
         if (categoryRepository.findByName(request.getName()).isPresent()) {
-            throw new RuntimeException(request.getName() + "는 이미 존재하는 카테고리입니다.");
+            throw new DuplicateException(request.getName() + "는 이미 존재하는 카테고리입니다.");
         }
 
         Category category = Category.createCategory(request.getName(), request.getIconUrl());
@@ -36,12 +37,11 @@ public class CategoryService {
 
     @Transactional
     public void update(Long categoryId, CategoryUpdateRequest request) {
-
         Category findCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
 
         if (categoryRepository.findByName(request.getName()).isPresent()) {
-            throw new RuntimeException(request.getName() + "는 이미 존재하는 카테고리입니다.");
+            throw new DuplicateException(request.getName() + "는 이미 존재하는 카테고리입니다.");
         }
 
         findCategory.changeNameAndIconUrl(request.getName(), request.getIconUrl());
@@ -49,9 +49,8 @@ public class CategoryService {
 
     @Transactional
     public void delete(Long categoryId) {
-
         Category findCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
 
         categoryRepository.delete(findCategory);
     }

@@ -4,12 +4,14 @@ import inu.market.chatroom.domain.ChatRoom;
 import inu.market.chatroom.domain.ChatRoomQueryRepository;
 import inu.market.chatroom.domain.ChatRoomRepository;
 import inu.market.chatroom.dto.ChatRoomResponse;
+import inu.market.common.NotFoundException;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemRepository;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
 import inu.market.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,10 +31,10 @@ public class ChatRoomService {
     @Transactional
     public Long create(Long userId, Long itemId) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
 
         Item findItem = itemRepository.findWithSellerById(itemId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 상품입니다."));
+                .orElseThrow(() -> new NotFoundException(itemId + "는 존재하지 않는 상품 ID 입니다."));
 
         ChatRoom chatRoom = ChatRoom.createChatRoom(findItem, findUser, findItem.getSeller());
         chatRoomRepository.save(chatRoom);
@@ -47,12 +49,12 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public void delete(Long userId, Long chatRoomId) {
-        ChatRoom findChatRoom = chatRoomRepository.findById(chatRoomId)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 채팅방입니다."));
+    public void delete(Long userId, Long roomId) {
+        ChatRoom findChatRoom = chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new NotFoundException(roomId + "는 존재하지 않는 채팅방 ID 입니다."));
 
         if (!findChatRoom.getBuyer().getId().equals(userId) || !findChatRoom.getSeller().getId().equals(userId)) {
-            throw new RuntimeException("채팅방을 삭제할 수 없습니다.");
+            throw new AccessDeniedException("권한이 없습니다.");
         }
 
         chatRoomRepository.delete(findChatRoom);

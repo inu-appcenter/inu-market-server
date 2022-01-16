@@ -3,6 +3,7 @@ package inu.market.client;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import inu.market.common.NetworkException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ public class AwsClient {
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return amazonS3Client.getUrl(bucket, fileName).toString();
         } catch (IOException e) {
-            throw new RuntimeException("파일 업로드 중 오류가 발생했습니다.");
+            throw new NetworkException("파일 업로드 중 오류가 발생했습니다.");
         }
     }
 

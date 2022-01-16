@@ -4,6 +4,8 @@ import inu.market.category.dto.CategoryCreateRequest;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.category.dto.CategoryUpdateRequest;
 import inu.market.category.service.CategoryService;
+import inu.market.common.NotExistException;
+import inu.market.common.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class CategoryController {
     public ResponseEntity<Map<String, String>> convertToIconUrl(@RequestPart MultipartFile image) {
 
         if (image == null || image.isEmpty()) {
-            throw new RuntimeException("업로드 할 이미지가 없습니다.");
+            throw new NotExistException("이미지가 없습니다.");
         }
 
         Map<String, String> response = new HashMap<>();

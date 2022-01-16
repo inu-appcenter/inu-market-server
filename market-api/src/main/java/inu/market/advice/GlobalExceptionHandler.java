@@ -1,6 +1,6 @@
 package inu.market.advice;
 
-import inu.market.ExceptionResponse;
+import inu.market.common.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
