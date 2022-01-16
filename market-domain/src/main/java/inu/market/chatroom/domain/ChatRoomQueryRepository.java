@@ -27,4 +27,19 @@ public class ChatRoomQueryRepository {
                 .fetch();
     }
 
+    public ChatRoom findWithItemAndBuyerAndSellerById(Long roomId) {
+        ChatRoom findChatRoom = queryFactory
+                .selectFrom(chatRoom)
+                .leftJoin(chatRoom.buyer, user).fetchJoin()
+                .leftJoin(chatRoom.seller, user).fetchJoin()
+                .leftJoin(chatRoom.item, item).fetchJoin()
+                .where(chatRoom.id.eq(roomId))
+                .fetchOne();
+
+        if (findChatRoom == null) {
+            throw new RuntimeException("존재하지 않는 채팅방입니다.");
+        }
+        return findChatRoom;
+    }
+
 }

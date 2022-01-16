@@ -64,4 +64,9 @@ public class ChatRoomService {
                 .map(chatRoom -> UserResponse.from(chatRoom.getBuyer()))
                 .collect(Collectors.toList());
     }
+
+    public ChatRoomResponse findById(Long userId, Long roomId) {
+        ChatRoom findChatRoom = chatRoomQueryRepository.findWithItemAndBuyerAndSellerById(roomId);
+        return ChatRoomResponse.from(findChatRoom, userId);
+    }
 }
