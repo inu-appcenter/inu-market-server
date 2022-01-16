@@ -8,6 +8,7 @@ import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemRepository;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
+import inu.market.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,5 +56,12 @@ public class ChatRoomService {
         }
 
         chatRoomRepository.delete(findChatRoom);
+    }
+
+    public List<UserResponse> findByItemId(Long itemId) {
+        List<ChatRoom> chatRooms = chatRoomRepository.findWithBuyerByItemId(itemId);
+        return chatRooms.stream()
+                .map(chatRoom -> UserResponse.from(chatRoom.getBuyer()))
+                .collect(Collectors.toList());
     }
 }

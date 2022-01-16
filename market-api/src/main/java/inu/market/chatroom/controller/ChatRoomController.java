@@ -3,6 +3,7 @@ package inu.market.chatroom.controller;
 import inu.market.chatroom.dto.ChatRoomResponse;
 import inu.market.chatroom.service.ChatRoomService;
 import inu.market.config.LoginUser;
+import inu.market.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,11 @@ public class ChatRoomController {
     public ResponseEntity<Void> delete(@LoginUser Long userId, @PathVariable Long roomId) {
         chatRoomService.delete(userId, roomId);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/api/items/{itemId}/chat/rooms/buyers")
+    public ResponseEntity<List<UserResponse>> findByItemId(@PathVariable Long itemId) {
+        return ResponseEntity.ok(chatRoomService.findByItemId(itemId));
     }
 
 }
