@@ -20,7 +20,7 @@ public class MajorService {
     private final MajorRepository majorRepository;
 
     @Transactional
-    public MajorResponse createParent(MajorCreateRequest request) {
+    public Long createParent(MajorCreateRequest request) {
 
         if (majorRepository.findByName(request.getName()).isPresent()) {
             throw new RuntimeException(request.getName() + "는 이미 존재하는 학과입니다.");
@@ -29,11 +29,11 @@ public class MajorService {
         Major major = Major.createMajor(request.getName(), null);
         majorRepository.save(major);
 
-        return MajorResponse.from(major);
+        return major.getId();
     }
 
     @Transactional
-    public MajorResponse createChildren(Long majorId, MajorCreateRequest request) {
+    public Long createChildren(Long majorId, MajorCreateRequest request) {
         Major findParent = majorRepository.findById(majorId)
                 .orElseThrow(() -> new RuntimeException(majorId + "는 존재하지 않는 학과 ID 입니다."));
 
@@ -44,7 +44,7 @@ public class MajorService {
         Major major = Major.createMajor(request.getName(), findParent);
         majorRepository.save(major);
 
-        return MajorResponse.from(major);
+        return major.getId();
     }
 
     @Transactional

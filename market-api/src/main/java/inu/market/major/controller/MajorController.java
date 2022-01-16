@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,14 +21,22 @@ public class MajorController {
     private final MajorService majorService;
 
     @PostMapping("/api/majors/parents")
-    public ResponseEntity<MajorResponse> createParent(@RequestBody @Valid MajorCreateRequest request) {
-        return ResponseEntity.ok(majorService.createParent(request));
+    public ResponseEntity<Map<String, Long>> createParent(@RequestBody @Valid MajorCreateRequest request) {
+        Long majorId = majorService.createParent(request);
+
+        Map<String, Long> response = new HashMap<>();
+        response.put("majorId", majorId);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/api/majors/{majorId}/children")
-    public ResponseEntity<MajorResponse> createChild(@PathVariable Long majorId,
-                                            @RequestBody @Valid MajorCreateRequest request) {
-        return ResponseEntity.ok(majorService.createChildren(majorId, request));
+    public ResponseEntity<Map<String, Long>> createChild(@PathVariable Long majorId,
+                                                         @RequestBody @Valid MajorCreateRequest request) {
+        Long createMajorId = majorService.createChildren(majorId, request);
+
+        Map<String, Long> response = new HashMap<>();
+        response.put("majorId", createMajorId);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/api/majors/{majorId}")
