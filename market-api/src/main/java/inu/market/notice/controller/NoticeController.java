@@ -1,12 +1,12 @@
 package inu.market.notice.controller;
 
 import inu.market.notice.dto.NoticeCreateRequest;
+import inu.market.notice.dto.NoticeUpdateRequest;
 import inu.market.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -26,4 +26,12 @@ public class NoticeController {
         response.put("noticeId", noticeId);
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/api/notices/{noticeId}")
+    public ResponseEntity<Void> update(@PathVariable Long noticeId,
+                                       @RequestBody @Valid NoticeUpdateRequest request) {
+        noticeService.update(noticeId, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

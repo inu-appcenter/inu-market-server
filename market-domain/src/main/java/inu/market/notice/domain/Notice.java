@@ -29,4 +29,9 @@ public class Notice extends BaseEntity {
         notice.content = content;
         return notice;
     }
+
+    public void changeTitleAndContent(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
