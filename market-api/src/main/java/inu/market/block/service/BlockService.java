@@ -3,11 +3,15 @@ package inu.market.block.service;
 import inu.market.block.domain.Block;
 import inu.market.block.domain.BlockRepository;
 import inu.market.block.dto.BlockCreateRequest;
+import inu.market.block.dto.BlockResponse;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,4 +49,10 @@ public class BlockService {
         blockRepository.delete(findBlock);
     }
 
+    public List<BlockResponse> findByUserId(Long userId) {
+        List<Block> blocks = blockRepository.findByUserId(userId);
+        return blocks.stream()
+                .map(block -> BlockResponse.from(block))
+                .collect(Collectors.toList());
+    }
 }
