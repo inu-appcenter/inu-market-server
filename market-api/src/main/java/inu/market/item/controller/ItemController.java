@@ -33,9 +33,12 @@ public class ItemController {
     }
 
     @PostMapping("/api/items")
-    public ResponseEntity<ItemResponse> create(@LoginUser Long userId,
-                                               @RequestBody @Valid ItemCreateRequest request) {
-        return ResponseEntity.ok(itemService.create(userId, request));
+    public ResponseEntity<Map<String, Long>> create(@LoginUser Long userId,
+                                                    @RequestBody @Valid ItemCreateRequest request) {
+        Long itemId = itemService.create(userId, request);
+        Map<String, Long> response = new HashMap<>();
+        response.put("itemId", itemId);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/api/items/{itemId}")

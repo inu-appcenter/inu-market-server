@@ -48,7 +48,7 @@ public class ItemService {
     }
 
     @Transactional
-    public ItemResponse create(Long userId, ItemCreateRequest request) {
+    public Long create(Long userId, ItemCreateRequest request) {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
 
@@ -66,7 +66,7 @@ public class ItemService {
         item.changeItemImages(request.getImageUrls());
 
         itemRepository.save(item);
-        return ItemResponse.from(item);
+        return item.getId();
     }
 
     @Transactional
