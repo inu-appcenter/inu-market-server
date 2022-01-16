@@ -4,9 +4,6 @@ import inu.market.config.LoginUser;
 import inu.market.item.dto.*;
 import inu.market.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,8 +67,8 @@ public class ItemController {
     }
 
     @GetMapping("/api/items")
-    public ResponseEntity<List<ItemResponse>> findBySearchRequest(ItemSearchRequest request) {
-        return ResponseEntity.ok(itemService.findBySearchRequest(request));
+    public ResponseEntity<List<ItemResponse>> findBySearchRequest(@LoginUser Long userId, ItemSearchRequest request) {
+        return ResponseEntity.ok(itemService.findBySearchRequest(userId, request));
     }
 
     @GetMapping("/api/users/items")

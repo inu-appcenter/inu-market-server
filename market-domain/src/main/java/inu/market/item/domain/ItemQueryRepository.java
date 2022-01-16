@@ -1,13 +1,17 @@
 package inu.market.item.domain;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import inu.market.block.domain.QBlock;
+import inu.market.user.domain.QUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+import static inu.market.block.domain.QBlock.*;
 import static inu.market.category.domain.QCategory.category;
 import static inu.market.item.domain.QItem.item;
 import static inu.market.item.domain.QItemImage.itemImage;
@@ -59,7 +63,7 @@ public class ItemQueryRepository {
         return findItem;
     }
 
-    public List<Item> findBySearchCondition(Long itemId, Long categoryId, Long majorId,
+    public List<Item> findBySearchCondition(Long userId, Long itemId, Long categoryId, Long majorId,
                                             String searchWord, int size) {
         return queryFactory
                 .selectFrom(item)
@@ -67,7 +71,13 @@ public class ItemQueryRepository {
                         categoryEq(categoryId),
                         majorEq(majorId),
                         itemIdLt(itemId),
-                        item.status.eq(Status.SALE)
+                        item.status.eq(Status.SALE),
+                        item.seller.id.notIn(
+                                JPAExpressions
+                                        .select(block.target.id)
+                                        .from(block)
+                                        .where(block.user.id.eq(userId))
+                        )
                 )
                 .orderBy(item.id.desc())
                 .limit(size)

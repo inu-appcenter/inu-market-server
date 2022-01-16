@@ -122,8 +122,8 @@ public class ItemService {
         return ItemResponse.from(findItem, findItem.getItemImages(), favorite.isPresent());
     }
 
-    public List<ItemResponse> findBySearchRequest(ItemSearchRequest request) {
-        List<Item> items = itemQueryRepository.findBySearchCondition(request.getItemId(), request.getCategoryId(),
+    public List<ItemResponse> findBySearchRequest(Long userId, ItemSearchRequest request) {
+        List<Item> items = itemQueryRepository.findBySearchCondition(userId, request.getItemId(), request.getCategoryId(),
                 request.getMajorId(), request.getSearchWord(), request.getSize());
         return items.stream()
                 .map(item -> ItemResponse.from(item))
