@@ -70,7 +70,7 @@ public class ItemController {
     }
 
     @GetMapping("/api/items")
-    public ResponseEntity<List<ItemResponse>> findBySearchRequest(@LoginUser Long userId, ItemSearchRequest request) {
+    public ResponseEntity<List<ItemResponse>> findBySearchRequest(@LoginUser Long userId, @Valid ItemSearchRequest request) {
         return ResponseEntity.ok(itemService.findBySearchRequest(userId, request));
     }
 
