@@ -1,4 +1,4 @@
-package inu.market;
+package inu.market.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
