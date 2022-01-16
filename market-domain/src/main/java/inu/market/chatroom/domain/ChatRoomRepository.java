@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
-    @Query("select c from ChatRoom c left join fetch c.buyer where c.id=:itemId")
+    @Query("select c from ChatRoom c left join fetch c.buyer where c.id=:itemId order by c.id desc")
     List<ChatRoom> findWithBuyerByItemId(@Param("itemId") Long itemId);
 
     void deleteAllByItem(Item item);
