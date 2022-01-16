@@ -34,4 +34,9 @@ public class NoticeController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @DeleteMapping("/api/notices/{noticeId}")
+    public ResponseEntity<Void> delete(@PathVariable Long noticeId) {
+        noticeService.delete(noticeId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

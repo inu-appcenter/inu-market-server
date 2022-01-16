@@ -29,4 +29,12 @@ public class NoticeService {
 
         findNotice.changeTitleAndContent(request.getTitle(), request.getContent());
     }
+
+    @Transactional
+    public void delete(Long noticeId) {
+        Notice findNotice = noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 공지사항입니다."));
+
+        noticeRepository.delete(findNotice);
+    }
 }
