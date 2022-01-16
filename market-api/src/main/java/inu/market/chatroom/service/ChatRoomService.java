@@ -27,7 +27,7 @@ public class ChatRoomService {
     private final UserRepository userRepository;
 
     @Transactional
-    public ChatRoomResponse create(Long userId, Long itemId) {
+    public Long create(Long userId, Long itemId) {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
 
@@ -36,7 +36,7 @@ public class ChatRoomService {
 
         ChatRoom chatRoom = ChatRoom.createChatRoom(findItem, findUser, findItem.getSeller());
         chatRoomRepository.save(chatRoom);
-        return ChatRoomResponse.from(chatRoom, userId);
+        return chatRoom.getId();
     }
 
     public List<ChatRoomResponse> findBySellerOrBuyer(Long userId) {

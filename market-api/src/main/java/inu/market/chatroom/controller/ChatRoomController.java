@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,9 +20,12 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @PostMapping("/api/items/{itemId}/chat/rooms")
-    public ResponseEntity<ChatRoomResponse> create(@LoginUser Long userId,
-                                                   @PathVariable Long itemId) {
-        return ResponseEntity.ok(chatRoomService.create(userId, itemId));
+    public ResponseEntity<Map<String, Long>> create(@LoginUser Long userId,
+                                                    @PathVariable Long itemId) {
+        Long roomId = chatRoomService.create(userId, itemId);
+        Map<String, Long> response = new HashMap<>();
+        response.put("roomId", roomId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/api/chat/rooms")
