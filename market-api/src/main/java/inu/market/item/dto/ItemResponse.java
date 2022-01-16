@@ -32,8 +32,6 @@ public class ItemResponse {
 
     private String status;
 
-    private boolean active;
-
     private boolean favorite;
 
     private LocalDateTime createdAt;
@@ -58,7 +56,6 @@ public class ItemResponse {
         itemResponse.price = item.getPrice();
         itemResponse.favoriteCount = item.getFavoriteCount();
         itemResponse.status = item.getStatus().getStatus();
-        itemResponse.active = item.isActive();
         itemResponse.favorite = favorite;
         itemResponse.createdAt = item.getCreatedAt();
         itemResponse.updatedAt = item.getUpdatedAt();
@@ -79,7 +76,6 @@ public class ItemResponse {
         itemResponse.price = item.getPrice();
         itemResponse.favoriteCount = item.getFavoriteCount();
         itemResponse.status = item.getStatus().getStatus();
-        itemResponse.active = item.isActive();
         itemResponse.createdAt = item.getCreatedAt();
         itemResponse.updatedAt = item.getUpdatedAt();
         return itemResponse;

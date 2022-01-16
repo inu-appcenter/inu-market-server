@@ -1,5 +1,6 @@
 package inu.market.favorite.domain;
 
+import inu.market.item.domain.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,5 +18,7 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
     @Query("select f from Favorite f left join fetch f.item where f.user.id=:userId")
     List<Favorite> findWithItemByUserId(@Param("userId") Long userId);
+
+    void deleteAllByItem(Item item);
 
 }

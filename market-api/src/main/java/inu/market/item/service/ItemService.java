@@ -2,6 +2,7 @@ package inu.market.item.service;
 
 import inu.market.category.domain.Category;
 import inu.market.category.domain.CategoryRepository;
+import inu.market.chatroom.domain.ChatRoomRepository;
 import inu.market.client.AwsClient;
 import inu.market.favorite.domain.Favorite;
 import inu.market.favorite.domain.FavoriteRepository;
@@ -12,6 +13,7 @@ import inu.market.item.domain.Status;
 import inu.market.item.dto.*;
 import inu.market.major.domain.Major;
 import inu.market.major.domain.MajorRepository;
+import inu.market.trade.domain.TradeRepository;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +35,9 @@ public class ItemService {
     private final CategoryRepository categoryRepository;
     private final MajorRepository majorRepository;
     private final FavoriteRepository favoriteRepository;
-
+    private final ChatRoomRepository chatRoomRepository;
     private final ItemQueryRepository itemQueryRepository;
+    private final TradeRepository tradeRepository;
 
     private final AwsClient awsClient;
 
@@ -107,7 +110,10 @@ public class ItemService {
             throw new RuntimeException("상품 판매자가 아닙니다.");
         }
 
-        findItem.delete();
+        tradeRepository.deleteAllByItem(findItem);
+        favoriteRepository.deleteAllByItem(findItem);
+        chatRoomRepository.deleteAllByItem(findItem);
+        itemRepository.delete(findItem);
     }
 
     public ItemResponse findById(Long userId, Long itemId) {
@@ -118,7 +124,7 @@ public class ItemService {
 
     public List<ItemResponse> findBySearchRequest(ItemSearchRequest request) {
         List<Item> items = itemQueryRepository.findBySearchCondition(request.getItemId(), request.getCategoryId(),
-                                                                     request.getMajorId(), request.getSearchWord(), request.getSize());
+                request.getMajorId(), request.getSearchWord(), request.getSize());
         return items.stream()
                 .map(item -> ItemResponse.from(item))
                 .collect(Collectors.toList());

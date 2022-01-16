@@ -23,7 +23,7 @@ public class ItemQueryRepository {
     public List<Item> findBySellerId(Long sellerId) {
         return queryFactory
                 .selectFrom(item)
-                .where(item.seller.id.eq(sellerId), item.active.eq(true))
+                .where(item.seller.id.eq(sellerId))
                 .orderBy(item.id.desc())
                 .fetch();
     }
@@ -32,7 +32,7 @@ public class ItemQueryRepository {
         Item findItem = queryFactory
                 .selectFrom(item).distinct()
                 .leftJoin(item.itemImages, itemImage).fetchJoin()
-                .where(item.id.eq(itemId), item.active.eq(true))
+                .where(item.id.eq(itemId))
                 .fetchOne();
 
         if (findItem == null) {
@@ -49,7 +49,7 @@ public class ItemQueryRepository {
                 .leftJoin(item.category, category).fetchJoin()
                 .leftJoin(item.major, major).fetchJoin()
                 .leftJoin(item.itemImages, itemImage).fetchJoin()
-                .where(item.id.eq(itemId), item.active.eq(true))
+                .where(item.id.eq(itemId))
                 .fetchOne();
 
         if (findItem == null) {
@@ -67,8 +67,7 @@ public class ItemQueryRepository {
                         categoryEq(categoryId),
                         majorEq(majorId),
                         itemIdLt(itemId),
-                        item.status.eq(Status.SALE),
-                        item.active.eq(true)
+                        item.status.eq(Status.SALE)
                 )
                 .orderBy(item.id.desc())
                 .limit(size)
