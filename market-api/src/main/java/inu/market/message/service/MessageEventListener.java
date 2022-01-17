@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
-
 @RequiredArgsConstructor
-public class MessageSendListener {
+public class MessageEventListener {
 
     private final FirebaseClient firebaseClient;
 
