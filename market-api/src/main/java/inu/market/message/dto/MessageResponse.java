@@ -27,6 +27,6 @@ public class MessageResponse {
 
     public static MessageResponse from(Message message) {
         return new MessageResponse(message.getSenderId(), message.getNickName(), message.getContent(),
-                                   message.getMessageType().name(), message.getCreatedAt());
+                                   message.getMessageType().getType(), message.getCreatedAt());
     }
 }

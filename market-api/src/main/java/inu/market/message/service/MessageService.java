@@ -23,16 +23,13 @@ import java.util.stream.Collectors;
 public class MessageService {
 
     private final MessageRepository messageRepository;
-    private final FirebaseClient firebaseClient;
     private final AwsClient awsClient;
 
     @Transactional
     public MessageResponse create(MessageRequest request) {
         Message message = Message.createMessage(request.getRoomId(), request.getSenderId(), request.getNickName(),
                                                 request.getContent(), MessageType.valueOf(request.getMessageType()));
-
-        firebaseClient.send(request.getPushToken(), request.getNickName(), request.getContent());
-        messageRepository.save(message);
+        messageRepository.save(message.send(request.getPushToken()));
         return MessageResponse.from(message);
     }
 

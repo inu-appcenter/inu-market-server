@@ -2,8 +2,8 @@ package inu.market.message.domain;
 
 public enum MessageType {
 
-    TEXT("text"),
-    IMAGE("image");
+    TEXT("TEXT"),
+    IMAGE("IMAGE");
 
     private final String type;
 
