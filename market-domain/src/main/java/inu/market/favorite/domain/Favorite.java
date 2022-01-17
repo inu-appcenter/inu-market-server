@@ -1,6 +1,5 @@
 package inu.market.favorite.domain;
 
-import inu.market.common.BaseEntity;
 import inu.market.item.domain.Item;
 import inu.market.user.domain.User;
 import lombok.AccessLevel;
@@ -14,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class Favorite extends BaseEntity {
+public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +35,5 @@ public class Favorite extends BaseEntity {
         findItem.increaseFavoriteCount();
         return favorite;
     }
+
 }

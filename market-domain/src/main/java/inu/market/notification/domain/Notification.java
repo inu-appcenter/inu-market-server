@@ -1,20 +1,25 @@
 package inu.market.notification.domain;
 
-import com.sun.xml.bind.v2.schemagen.xmlschema.NoFixedFacet;
-import inu.market.common.BaseEntity;
+import inu.market.common.NotificationEvent;
 import inu.market.user.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.AbstractAggregateRoot;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @Getter
-public class Notification extends BaseEntity {
+public class Notification extends AbstractAggregateRoot<Notification> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +35,12 @@ public class Notification extends BaseEntity {
 
     private Long referenceId;
 
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -42,6 +53,11 @@ public class Notification extends BaseEntity {
         notification.referenceId = referenceId;
         notification.user = user;
         return notification;
+    }
+
+    public Notification create(){
+        this.registerEvent(NotificationEvent.create(this));
+        return this;
     }
 
 

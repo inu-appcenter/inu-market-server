@@ -1,6 +1,5 @@
 package inu.market.favorite.service;
 
-import inu.market.client.FirebaseClient;
 import inu.market.common.NotFoundException;
 import inu.market.favorite.domain.Favorite;
 import inu.market.favorite.domain.FavoriteRepository;
@@ -30,7 +29,6 @@ public class FavoriteService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final NotificationRepository notificationRepository;
-    private final FirebaseClient firebaseClient;
 
     @Transactional
     public void create(Long userId, FavoriteCreateRequest request) {
@@ -46,9 +44,7 @@ public class FavoriteService {
 
         Notification notification = Notification
                 .createNotification(makeFavoriteMessage(findUser.getNickName(), findItem.getTitle()), NotificationType.FAVORITE, findItem.getId(), seller);
-        notificationRepository.save(notification);
-
-        firebaseClient.send(seller.getPushToken(), "INOM", notification.getContent());
+        notificationRepository.save(notification.create());
     }
 
     @Transactional
