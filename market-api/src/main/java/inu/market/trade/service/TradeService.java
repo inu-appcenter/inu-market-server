@@ -30,7 +30,6 @@ public class TradeService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final TradeRepository tradeRepository;
-    private final FirebaseClient firebaseClient;
     private final NotificationRepository notificationRepository;
 
     @Transactional
@@ -46,9 +45,7 @@ public class TradeService {
 
         Notification notification = Notification
                 .createNotification(makeTradeMessage(findUser.getNickName()), NotificationType.TRADE, findItem.getId(), findUser);
-        notificationRepository.save(notification);
-
-        firebaseClient.send(findUser.getPushToken(), "INOM", notification.getContent());
+        notificationRepository.save(notification.create());
     }
 
 
