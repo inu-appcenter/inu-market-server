@@ -25,7 +25,7 @@ public class UserController {
         String jwtToken = userService.create(request);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtToken)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
                 .build();
     }
 
@@ -34,7 +34,7 @@ public class UserController {
         String jwtToken = userService.login(request);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .header(HttpHeaders.AUTHORIZATION, "bearer " + jwtToken)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
                 .build();
     }
 
