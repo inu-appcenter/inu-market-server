@@ -89,7 +89,6 @@ class CategoryControllerTest extends ControllerTest {
     void create() throws Exception {
         // given
         Map<String, Long> response = new HashMap<>();
-        ;
         response.put("categoryId", TEST_CATEGORY.getId());
 
         given(categoryService.create(any()))
