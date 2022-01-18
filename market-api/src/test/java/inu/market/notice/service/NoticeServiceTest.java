@@ -1,8 +1,6 @@
 package inu.market.notice.service;
 
-import inu.market.notice.NoticeFixture;
 import inu.market.notice.domain.NoticeRepository;
-import inu.market.notice.dto.NoticeCreateRequest;
 import inu.market.notice.dto.NoticeResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(NoticeController.class)
 class NoticeControllerTest extends ControllerTest {
-    
+
     @MockBean
     private NoticeService noticeService;
 
@@ -86,7 +86,7 @@ class NoticeControllerTest extends ControllerTest {
                 .update(any(), any());
 
         // when
-        mockMvc.perform(put("/api/notices/{noticeId}",TEST_NOTICE.getId())
+        mockMvc.perform(put("/api/notices/{noticeId}", TEST_NOTICE.getId())
                         .header(HttpHeaders.AUTHORIZATION, TEST_AUTHORIZATION)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -106,7 +106,7 @@ class NoticeControllerTest extends ControllerTest {
                 ));
 
         // then
-        then(noticeService).should(times(1)).update(any(),any());
+        then(noticeService).should(times(1)).update(any(), any());
     }
 
     @Test
@@ -118,7 +118,7 @@ class NoticeControllerTest extends ControllerTest {
                 .delete(any());
 
         // when
-        mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/notices/{noticeId}",TEST_NOTICE.getId())
+        mockMvc.perform(RestDocumentationRequestBuilders.delete("/api/notices/{noticeId}", TEST_NOTICE.getId())
                         .header(HttpHeaders.AUTHORIZATION, TEST_AUTHORIZATION))
                 .andExpect(status().isOk())
                 .andDo(document("notice/delete",
@@ -169,7 +169,7 @@ class NoticeControllerTest extends ControllerTest {
                 .willReturn(TEST_NOTICE_RESPONSE);
 
         // when
-        mockMvc.perform(get("/api/notices/{noticeId}",TEST_NOTICE.getId())
+        mockMvc.perform(get("/api/notices/{noticeId}", TEST_NOTICE.getId())
                         .header(HttpHeaders.AUTHORIZATION, TEST_AUTHORIZATION)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())

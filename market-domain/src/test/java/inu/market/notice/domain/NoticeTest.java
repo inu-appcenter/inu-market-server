@@ -26,10 +26,10 @@ class NoticeTest {
     @DisplayName("제목과 내용을 변경한다.")
     void changeTitleAndContent() {
         // given
-        Notice notice = Notice.createNotice(null,null);
+        Notice notice = Notice.createNotice(null, null);
 
         // when
-        notice.changeTitleAndContent("공지사항","공지사항");
+        notice.changeTitleAndContent("공지사항", "공지사항");
 
         // then
         assertThat(notice.getTitle()).isEqualTo("공지사항");
