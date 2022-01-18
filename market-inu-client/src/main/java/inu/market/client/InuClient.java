@@ -2,5 +2,5 @@ package inu.market.client;
 
 public interface InuClient {
 
-    void login(int inuId, String password);
+    void login(Integer inuId, String password);
 }

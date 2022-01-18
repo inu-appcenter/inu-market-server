@@ -19,7 +19,7 @@ public class InuClientImpl implements InuClient {
     public static final String INU_LOGIN_URL = "https://cyber.inu.ac.kr/login/index.php";
 
     @Override
-    public void login(int inuId, String password) {
+    public void login(Integer inuId, String password) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
