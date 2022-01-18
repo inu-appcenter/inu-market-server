@@ -20,6 +20,9 @@ public class UserFixture {
     public static final User TEST_USER
             = new User(1L, TEST_INU_ID, TEST_NICKNAME, TEST_IMAGE_URL, Role.ROLE_USER, TEST_SCORE, TEST_PUSH_TOKEN);
 
+    public static final User TEST_USER1
+            = new User(2L, TEST_INU_ID, TEST_NICKNAME, TEST_IMAGE_URL, Role.ROLE_USER, TEST_SCORE, TEST_PUSH_TOKEN);
+
     public static final UserCreateRequest TEST_USER_CREATE_REQUEST
             = new UserCreateRequest(TEST_INU_ID, TEST_PASSWORD);
 
