@@ -1,6 +1,7 @@
 package inu.market.advice;
 
 import inu.market.common.ExceptionResponse;
+import inu.market.common.NotExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -30,6 +31,11 @@ public class GlobalExceptionHandler {
         e.getBindingResult().getAllErrors()
                 .forEach(error -> errors.put(((FieldError) error).getField(), error.getDefaultMessage()));
         return ResponseEntity.badRequest().body(ExceptionResponse.from("잘못된 요청입니다.", errors));
+    }
+
+    @ExceptionHandler(NotExistException.class)
+    public ResponseEntity<ExceptionResponse> handleNoyExistExceptions(NotExistException e) {
+        return ResponseEntity.badRequest().body(ExceptionResponse.from(e.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
