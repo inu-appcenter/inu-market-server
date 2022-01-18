@@ -1,5 +1,6 @@
 package inu.market.user.controller;
 
+import inu.market.common.NotExistException;
 import inu.market.config.LoginUser;
 import inu.market.user.dto.*;
 import inu.market.user.service.UserService;
@@ -41,8 +42,8 @@ public class UserController {
     @PostMapping("/api/users/imageUrls")
     public ResponseEntity<Map<String, String>> convertToImageUrl(@RequestPart MultipartFile image) {
 
-        if (image == null || image.isEmpty()) {
-            throw new RuntimeException("업로드 할 이미지가 없습니다.");
+        if (image.isEmpty()) {
+            throw new NotExistException("업로드 할 이미지가 없습니다.");
         }
 
         Map<String, String> response = new HashMap<>();
