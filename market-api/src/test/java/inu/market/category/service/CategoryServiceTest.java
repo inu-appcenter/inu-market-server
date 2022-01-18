@@ -1,13 +1,9 @@
 package inu.market.category.service;
 
-import inu.market.CommonFixture;
-import inu.market.category.CategoryFixture;
-import inu.market.category.domain.Category;
 import inu.market.category.domain.CategoryRepository;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.client.AwsClient;
 import inu.market.common.DuplicateException;
-import inu.market.common.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,13 +15,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static inu.market.CommonFixture.*;
+import static inu.market.CommonFixture.TEST_IMAGE_FILE;
 import static inu.market.category.CategoryFixture.*;
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.times;
 
