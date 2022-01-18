@@ -12,6 +12,6 @@ public interface BlockRepository extends JpaRepository<Block, Long> {
 
     Optional<Block> findByUserAndTarget(User user, User target);
 
-    @Query("select b from Block b left join fetch b.target where b.id=:userId order by b.id desc")
+    @Query("select b from Block b left join fetch b.target where b.user.id=:userId order by b.id desc")
     List<Block> findByUserId(@Param("userId") Long userId);
 }
