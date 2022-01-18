@@ -23,8 +23,7 @@ public class NoticeService {
     @Transactional
     public Long create(NoticeCreateRequest request) {
         Notice notice = Notice.createNotice(request.getTitle(), request.getContent());
-        noticeRepository.save(notice);
-        return notice.getId();
+        return noticeRepository.save(notice).getId();
     }
 
     @Transactional
