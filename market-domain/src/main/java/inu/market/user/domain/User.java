@@ -19,7 +19,7 @@ public class User extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
-    private int inuId;
+    private Integer inuId;
 
     private String nickName;
 
@@ -30,8 +30,6 @@ public class User extends BaseEntity {
 
     private Double score;
 
-    private boolean notification;
-
     private String pushToken;
 
     public static User createUser(int inuId, Role role) {
@@ -39,16 +37,11 @@ public class User extends BaseEntity {
         user.inuId = inuId;
         user.role = role;
         user.score = 0.0;
-        user.notification = true;
         return user;
     }
 
     public void changePushToken(String pushToken) {
         this.pushToken = pushToken;
-    }
-
-    public void changeNotification(Boolean notification) {
-        this.notification = notification;
     }
 
     public void changeProfile(String nickName, String imageUrl) {
