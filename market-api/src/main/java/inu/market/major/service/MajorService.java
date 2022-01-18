@@ -29,9 +29,7 @@ public class MajorService {
         }
 
         Major major = Major.createMajor(request.getName(), null);
-        majorRepository.save(major);
-
-        return major.getId();
+        return majorRepository.save(major).getId();
     }
 
     @Transactional
@@ -44,9 +42,7 @@ public class MajorService {
         }
 
         Major major = Major.createMajor(request.getName(), findParent);
-        majorRepository.save(major);
-
-        return major.getId();
+        return  majorRepository.save(major).getId();
     }
 
     @Transactional

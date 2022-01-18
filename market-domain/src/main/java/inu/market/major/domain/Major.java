@@ -26,9 +26,6 @@ public class Major {
     @JoinColumn(name = "parent_id")
     private Major parent;
 
-    @OneToMany(mappedBy = "parent")
-    private List<Major> children = new ArrayList<>();
-
     public static Major createMajor(String name, Major parent) {
         Major major = new Major();
         major.name = name;
