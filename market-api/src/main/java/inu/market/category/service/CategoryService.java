@@ -31,8 +31,7 @@ public class CategoryService {
         }
 
         Category category = Category.createCategory(request.getName(), request.getIconUrl());
-        categoryRepository.save(category);
-        return category.getId();
+        return categoryRepository.save(category).getId();
     }
 
     @Transactional

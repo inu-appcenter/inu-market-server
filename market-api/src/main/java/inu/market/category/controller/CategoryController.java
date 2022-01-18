@@ -26,7 +26,7 @@ public class CategoryController {
     @PostMapping("/api/categories/iconUrls")
     public ResponseEntity<Map<String, String>> convertToIconUrl(@RequestPart MultipartFile image) {
 
-        if (image == null || image.isEmpty()) {
+        if (image.isEmpty()) {
             throw new NotExistException("이미지가 없습니다.");
         }
 
