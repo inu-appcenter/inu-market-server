@@ -32,6 +32,5 @@ public class Category {
     public void changeNameAndIconUrl(String name, String iconUrl) {
         this.name = name;
         this.iconUrl = iconUrl;
-
     }
 }
