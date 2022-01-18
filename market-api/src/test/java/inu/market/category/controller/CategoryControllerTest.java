@@ -53,8 +53,7 @@ class CategoryControllerTest extends ControllerTest {
         mockMvc.perform(multipart("/api/categories/iconUrls").file(TEST_IMAGE_FILE)
                         .header(HttpHeaders.AUTHORIZATION, TEST_AUTHORIZATION)
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(TEST_CATEGORY_CREATE_REQUEST)))
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(result)))
                 .andDo(document("category/iconUrls",
