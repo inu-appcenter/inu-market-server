@@ -3,15 +3,14 @@ package inu.market.item.domain;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import inu.market.block.domain.QBlock;
-import inu.market.user.domain.QUser;
+import inu.market.common.NotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static inu.market.block.domain.QBlock.*;
+import static inu.market.block.domain.QBlock.block;
 import static inu.market.category.domain.QCategory.category;
 import static inu.market.item.domain.QItem.item;
 import static inu.market.item.domain.QItemImage.itemImage;
@@ -40,7 +39,7 @@ public class ItemQueryRepository {
                 .fetchOne();
 
         if (findItem == null) {
-            throw new RuntimeException(itemId + "는 존재하지 않는 상품 ID 입니다.");
+            throw new NotExistException(itemId + "는 존재하지 않는 상품 ID 입니다.");
         }
 
         return findItem;
@@ -57,14 +56,14 @@ public class ItemQueryRepository {
                 .fetchOne();
 
         if (findItem == null) {
-            throw new RuntimeException(itemId + "는 존재하지 않는 상품 ID 입니다.");
+            throw new NotExistException(itemId + "는 존재하지 않는 상품 ID 입니다.");
         }
 
         return findItem;
     }
 
     public List<Item> findBySearchCondition(Long userId, Long itemId, Long categoryId, Long majorId,
-                                            String searchWord, int size) {
+                                            String searchWord, Integer size) {
         return queryFactory
                 .selectFrom(item)
                 .where(titleLike(searchWord),
