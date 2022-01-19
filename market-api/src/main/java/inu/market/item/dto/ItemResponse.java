@@ -2,6 +2,7 @@ package inu.market.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.querydsl.core.annotations.QueryProjection;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemImage;
@@ -57,6 +58,19 @@ public class ItemResponse {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<String> imageUrls;
 
+    @QueryProjection
+    public ItemResponse(Long itemId,String title, String mainImageUrl, int price,
+                        int favoriteCount, String status, LocalDateTime createdAt, LocalDateTime updatedAt){
+        this.itemId = itemId;
+        this.title = title;
+        this.mainImageUrl = mainImageUrl;
+        this.price = price;
+        this.favoriteCount = favoriteCount;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public static ItemResponse from(Item item, List<ItemImage> itemImages, boolean favorite) {
         ItemResponse itemResponse = new ItemResponse();
         itemResponse.itemId = item.getId();
@@ -77,16 +91,4 @@ public class ItemResponse {
         return itemResponse;
     }
 
-    public static ItemResponse from(Item item) {
-        ItemResponse itemResponse = new ItemResponse();
-        itemResponse.itemId = item.getId();
-        itemResponse.title = item.getTitle();
-        itemResponse.mainImageUrl = item.getMainImageUrl();
-        itemResponse.price = item.getPrice();
-        itemResponse.favoriteCount = item.getFavoriteCount();
-        itemResponse.status = item.getStatus().getStatus();
-        itemResponse.createdAt = item.getCreatedAt();
-        itemResponse.updatedAt = item.getUpdatedAt();
-        return itemResponse;
-    }
 }

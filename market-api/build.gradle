@@ -1,6 +1,11 @@
+plugins {
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
 ext {
     set('snippetsDir', file("build/generated-snippets"))
     set('springCloudVersion', "2021.0.0")
+    queryDslVersion = "5.0.0"
 }
 
 dependencyManagement {
@@ -15,6 +20,9 @@ dependencies {
     implementation(project(":market-aws-client"))
     implementation(project(":market-firebase-client"))
     implementation(project(":market-inu-client"))
+
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -66,4 +74,23 @@ bootJar {
         from "build/asciidoc/html5"
         into "src/main/resources/static/docs/"
     }
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }

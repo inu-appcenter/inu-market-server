@@ -8,7 +8,7 @@ import inu.market.common.NotFoundException;
 import inu.market.favorite.domain.Favorite;
 import inu.market.favorite.domain.FavoriteRepository;
 import inu.market.item.domain.Item;
-import inu.market.item.domain.ItemQueryRepository;
+import inu.market.item.query.ItemQueryRepository;
 import inu.market.item.domain.ItemRepository;
 import inu.market.item.domain.Status;
 import inu.market.item.dto.*;
@@ -72,7 +72,8 @@ public class ItemService {
 
     @Transactional
     public void update(Long userId, Long itemId, ItemUpdateRequest request) {
-        Item findItem = itemQueryRepository.findWithItemImagesById(itemId);
+        Item findItem = itemRepository.findWithItemImagesById(itemId)
+                .orElseThrow(() -> new NotFoundException(itemId + "는 존재하지 않는 상품 ID 입니다."));
 
         if (!findItem.getSeller().getId().equals(userId)) {
             throw new AccessDeniedException("권한이 없습니다.");
@@ -118,24 +119,19 @@ public class ItemService {
     }
 
     public ItemResponse findById(Long userId, Long itemId) {
-        Item findItem = itemQueryRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(itemId);
+        Item findItem = itemRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(itemId)
+                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 상품 ID 입니다."));
         Optional<Favorite> favorite = favoriteRepository.findByUserIdAndItemId(userId, itemId);
         return ItemResponse.from(findItem, findItem.getItemImages(), favorite.isPresent());
     }
 
     public List<ItemResponse> findBySearchRequest(Long userId, ItemSearchRequest request) {
-        List<Item> items = itemQueryRepository.findBySearchCondition(userId, request.getItemId(), request.getCategoryId(),
+        return itemQueryRepository.findBySearchCondition(userId, request.getItemId(), request.getCategoryId(),
                 request.getMajorId(), request.getSearchWord(), request.getSize());
-        return items.stream()
-                .map(item -> ItemResponse.from(item))
-                .collect(Collectors.toList());
     }
 
     public List<ItemResponse> findBySeller(Long sellerId) {
-        List<Item> items = itemQueryRepository.findBySellerId(sellerId);
-        return items.stream()
-                .map(item -> ItemResponse.from(item))
-                .collect(Collectors.toList());
+        return itemQueryRepository.findBySellerId(sellerId);
     }
 
 }

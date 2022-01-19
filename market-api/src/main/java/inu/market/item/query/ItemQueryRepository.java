@@ -1,9 +1,12 @@
-package inu.market.item.domain;
+package inu.market.item.query;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import inu.market.common.NotExistException;
+import inu.market.item.domain.Item;
+import inu.market.item.domain.Status;
+import inu.market.item.dto.ItemResponse;
+import inu.market.item.dto.QItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -11,11 +14,8 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 import static inu.market.block.domain.QBlock.block;
-import static inu.market.category.domain.QCategory.category;
 import static inu.market.item.domain.QItem.item;
-import static inu.market.item.domain.QItemImage.itemImage;
-import static inu.market.major.domain.QMajor.major;
-import static inu.market.user.domain.QUser.user;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -23,49 +23,22 @@ public class ItemQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<Item> findBySellerId(Long sellerId) {
+    public List<ItemResponse> findBySellerId(Long sellerId) {
         return queryFactory
-                .selectFrom(item)
+                .select(new QItemResponse(item.id,item.title, item.mainImageUrl, item.price, item.favoriteCount,
+                        item.status.stringValue(), item.createdAt, item.updatedAt))
+                .from(item)
                 .where(item.seller.id.eq(sellerId))
                 .orderBy(item.id.desc())
                 .fetch();
     }
 
-    public Item findWithItemImagesById(Long itemId) {
-        Item findItem = queryFactory
-                .selectFrom(item).distinct()
-                .leftJoin(item.itemImages, itemImage).fetchJoin()
-                .where(item.id.eq(itemId))
-                .fetchOne();
-
-        if (findItem == null) {
-            throw new NotExistException(itemId + "는 존재하지 않는 상품 ID 입니다.");
-        }
-
-        return findItem;
-    }
-
-    public Item findWithSellerAndItemImagesAndCategoryAndMajorById(Long itemId) {
-        Item findItem = queryFactory
-                .selectFrom(item).distinct()
-                .leftJoin(item.seller, user).fetchJoin()
-                .leftJoin(item.category, category).fetchJoin()
-                .leftJoin(item.major, major).fetchJoin()
-                .leftJoin(item.itemImages, itemImage).fetchJoin()
-                .where(item.id.eq(itemId))
-                .fetchOne();
-
-        if (findItem == null) {
-            throw new NotExistException(itemId + "는 존재하지 않는 상품 ID 입니다.");
-        }
-
-        return findItem;
-    }
-
-    public List<Item> findBySearchCondition(Long userId, Long itemId, Long categoryId, Long majorId,
-                                            String searchWord, Integer size) {
+    public List<ItemResponse> findBySearchCondition(Long userId, Long itemId, Long categoryId, Long majorId,
+                                                    String searchWord, Integer size) {
         return queryFactory
-                .selectFrom(item)
+                .select(new QItemResponse(item.id,item.title, item.mainImageUrl, item.price, item.favoriteCount,
+                                          item.status.stringValue(), item.createdAt, item.updatedAt))
+                .from(item)
                 .where(titleLike(searchWord),
                         categoryEq(categoryId),
                         majorEq(majorId),

@@ -17,7 +17,6 @@ ext {
 dependencies {
     implementation(project(":market-common"))
 
-
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
     api "com.querydsl:querydsl-jpa:${queryDslVersion}"
     api "com.querydsl:querydsl-apt:${queryDslVersion}"
