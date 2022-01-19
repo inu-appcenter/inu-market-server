@@ -7,7 +7,11 @@ import inu.market.item.domain.Item;
 import inu.market.item.domain.Status;
 import inu.market.item.dto.ItemResponse;
 import inu.market.item.dto.QItemResponse;
+import inu.market.trade.domain.QTrade;
+import inu.market.trade.domain.Trade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -15,6 +19,7 @@ import java.util.List;
 
 import static inu.market.block.domain.QBlock.block;
 import static inu.market.item.domain.QItem.item;
+import static inu.market.trade.domain.QTrade.*;
 
 
 @Repository
@@ -23,9 +28,20 @@ public class ItemQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
+    public List<ItemResponse> findByTradeBuyerId(Long buyerId) {
+        return queryFactory
+                .select(new QItemResponse(item.id, item.title, item.mainImageUrl, item.price, item.favoriteCount,
+                        item.status.stringValue(), item.createdAt, item.updatedAt))
+                .from(trade)
+                .join(trade.item, item)
+                .where(trade.buyer.id.eq(buyerId))
+                .orderBy(trade.id.desc())
+                .fetch();
+    }
+
     public List<ItemResponse> findBySellerId(Long sellerId) {
         return queryFactory
-                .select(new QItemResponse(item.id,item.title, item.mainImageUrl, item.price, item.favoriteCount,
+                .select(new QItemResponse(item.id, item.title, item.mainImageUrl, item.price, item.favoriteCount,
                         item.status.stringValue(), item.createdAt, item.updatedAt))
                 .from(item)
                 .where(item.seller.id.eq(sellerId))
@@ -36,8 +52,8 @@ public class ItemQueryRepository {
     public List<ItemResponse> findBySearchCondition(Long userId, Long itemId, Long categoryId, Long majorId,
                                                     String searchWord, Integer size) {
         return queryFactory
-                .select(new QItemResponse(item.id,item.title, item.mainImageUrl, item.price, item.favoriteCount,
-                                          item.status.stringValue(), item.createdAt, item.updatedAt))
+                .select(new QItemResponse(item.id, item.title, item.mainImageUrl, item.price, item.favoriteCount,
+                        item.status.stringValue(), item.createdAt, item.updatedAt))
                 .from(item)
                 .where(titleLike(searchWord),
                         categoryEq(categoryId),

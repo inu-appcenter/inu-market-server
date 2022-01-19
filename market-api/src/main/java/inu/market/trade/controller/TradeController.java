@@ -22,13 +22,14 @@ public class TradeController {
     private final TradeService tradeService;
 
     @PostMapping("/api/trades")
-    public ResponseEntity<Void> create(@RequestBody @Valid TradeCreateRequest request) {
-        tradeService.create(request);
+    public ResponseEntity<Void> create(@LoginUser Long userId,
+                                       @RequestBody @Valid TradeCreateRequest request) {
+        tradeService.create(userId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/api/trades")
-    public ResponseEntity<List<ItemResponse>> findByBuyerId(@LoginUser Long userId){
+    public ResponseEntity<List<ItemResponse>> findByBuyerId(@LoginUser Long userId) {
         return ResponseEntity.ok(tradeService.findByBuyerId(userId));
     }
 
