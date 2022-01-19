@@ -2,9 +2,9 @@ package inu.market.item.domain;
 
 public enum Status {
 
-    SALE("판매중"),
-    RESERVED("예약중"),
-    COMPLETED("판매 완료");
+    SALE("SALE"),
+    RESERVED("RESERVE"),
+    COMPLETED("COMPLETED");
 
     private final String status;
 
