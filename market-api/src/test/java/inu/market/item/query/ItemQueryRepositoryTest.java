@@ -9,6 +9,8 @@ import inu.market.item.domain.Status;
 import inu.market.item.dto.ItemResponse;
 import inu.market.major.domain.Major;
 import inu.market.major.domain.MajorRepository;
+import inu.market.trade.domain.Trade;
+import inu.market.trade.domain.TradeRepository;
 import inu.market.user.domain.Role;
 import inu.market.user.domain.User;
 import inu.market.user.domain.UserRepository;
@@ -42,6 +44,9 @@ class ItemQueryRepositoryTest {
     private UserRepository userRepository;
 
     @Autowired
+    private TradeRepository tradeRepository;
+
+    @Autowired
     private EntityManager em;
 
     private ItemQueryRepository itemQueryRepository;
@@ -49,6 +54,28 @@ class ItemQueryRepositoryTest {
     @BeforeEach
     void setUp() {
         itemQueryRepository = new ItemQueryRepository(new JPAQueryFactory(em));
+    }
+
+    @Test
+    @DisplayName("구매자의 상품을 조회한다.")
+    void findByTradeBuyerId() {
+        // given
+        User user = User.createUser(201601758, Role.ROLE_USER);
+        User seller = User.createUser(201601757, Role.ROLE_USER);
+        userRepository.save(user);
+        userRepository.save(seller);
+
+        Item item = Item.createItem("제목", "내용", "이미지 URL", 1000, Status.SALE, seller);
+        itemRepository.save(item);
+
+        Trade trade = Trade.createTrade(item, user);
+        tradeRepository.save(trade);
+
+        // when
+        List<ItemResponse> result = itemQueryRepository.findByTradeBuyerId(user.getId());
+
+        // then
+        assertThat(result.size()).isEqualTo(1);
     }
 
     @Test
