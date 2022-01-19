@@ -2,7 +2,6 @@ package inu.market.item.domain;
 
 import inu.market.category.domain.Category;
 import inu.market.common.BaseEntity;
-import inu.market.favorite.domain.Favorite;
 import inu.market.major.domain.Major;
 import inu.market.user.domain.User;
 import lombok.AccessLevel;
@@ -53,9 +52,6 @@ public class Item extends BaseEntity {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemImage> itemImages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Favorite> likeItems = new ArrayList<>();
-
     public static Item createItem(String title, String contents, String mainImageUrl,
                                   int price, Status status, User seller) {
         Item item = new Item();
@@ -82,6 +78,7 @@ public class Item extends BaseEntity {
                 .map(imageUrl -> ItemImage.createItemImage(imageUrl, this))
                 .collect(Collectors.toList());
 
+        this.mainImageUrl = itemImages.size() != 0 ? itemImages.get(0).getImageUrl() : null;
         this.itemImages.clear();
         this.itemImages.addAll(itemImages);
     }
