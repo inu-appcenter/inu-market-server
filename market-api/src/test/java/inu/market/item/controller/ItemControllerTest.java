@@ -146,7 +146,7 @@ class ItemControllerTest extends ControllerTest {
     }
 
     @Test
-    @DisplayName("상품 상태 ")
+    @DisplayName("상품 상태 수정 API")
     void updateStatus() throws Exception {
         // given
         willDoNothing()
