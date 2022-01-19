@@ -5,7 +5,7 @@ import inu.market.chatroom.domain.ChatRoomRepository;
 import inu.market.client.AwsClient;
 import inu.market.favorite.FavoriteFixture;
 import inu.market.favorite.domain.FavoriteRepository;
-import inu.market.item.domain.ItemQueryRepository;
+import inu.market.item.query.ItemQueryRepository;
 import inu.market.item.domain.ItemRepository;
 import inu.market.item.dto.ItemResponse;
 import inu.market.major.domain.MajorRepository;
@@ -113,8 +113,8 @@ class ItemServiceTest {
     @DisplayName("상품을 수정한다.")
     void update() {
         // given
-        given(itemQueryRepository.findWithItemImagesById(any()))
-                .willReturn(TEST_ITEM);
+        given(itemRepository.findWithItemImagesById(any()))
+                .willReturn(Optional.of(TEST_ITEM));
 
         given(categoryRepository.findById(any()))
                 .willReturn(Optional.of(TEST_CATEGORY));
@@ -126,7 +126,7 @@ class ItemServiceTest {
         itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST);
 
         // then
-        then(itemQueryRepository).should(times(1)).findWithItemImagesById(any());
+        then(itemRepository).should(times(1)).findWithItemImagesById(any());
         then(categoryRepository).should(times(1)).findById(any());
         then(majorRepository).should(times(1)).findById(any());
     }
@@ -135,14 +135,14 @@ class ItemServiceTest {
     @DisplayName("상품의 판매자가 아닌 회원이 상품을 수정하면 예외가 발생한다.")
     void updateNotOwner() {
         // given
-        given(itemQueryRepository.findWithItemImagesById(any()))
-                .willReturn(TEST_ITEM);
+        given(itemRepository.findWithItemImagesById(any()))
+                .willReturn(Optional.of(TEST_ITEM));
 
         // when
         assertThrows(AccessDeniedException.class, () -> itemService.update(TEST_USER1.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST));
 
         // then
-        then(itemQueryRepository).should(times(1)).findWithItemImagesById(any());
+        then(itemRepository).should(times(1)).findWithItemImagesById(any());
     }
 
     @Test
@@ -225,8 +225,8 @@ class ItemServiceTest {
     @DisplayName("상품을 상세 조회한다.")
     void findById() {
         // given
-        given(itemQueryRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(any()))
-                .willReturn(TEST_ITEM);
+        given(itemRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(any()))
+                .willReturn(Optional.of(TEST_ITEM));
 
         given(favoriteRepository.findByUserIdAndItemId(any(), any()))
                 .willReturn(Optional.of(FavoriteFixture.TEST_FAVORITE));
@@ -236,7 +236,7 @@ class ItemServiceTest {
 
         // then
         assertThat(result.getItemId()).isEqualTo(TEST_ITEM.getId());
-        then(itemQueryRepository).should(times(1)).findWithSellerAndItemImagesAndCategoryAndMajorById(any());
+        then(itemRepository).should(times(1)).findWithSellerAndItemImagesAndCategoryAndMajorById(any());
         then(favoriteRepository).should(times(1)).findByUserIdAndItemId(any(), any());
     }
 
@@ -245,7 +245,7 @@ class ItemServiceTest {
     void findBySearchRequest() {
         // given
         given(itemQueryRepository.findBySearchCondition(any(), any(), any(), any(), any(), any()))
-                .willReturn(Arrays.asList(TEST_ITEM));
+                .willReturn(Arrays.asList(TEST_ITEM_SIMPLE_RESPONSE));
 
         // when
         List<ItemResponse> result = itemService.findBySearchRequest(TEST_USER.getId(), TEST_ITEM_SEARCH_REQUEST);
@@ -260,7 +260,7 @@ class ItemServiceTest {
     void findBySeller() {
         // given
         given(itemQueryRepository.findBySellerId(any()))
-                .willReturn(Arrays.asList(TEST_ITEM));
+                .willReturn(Arrays.asList(TEST_ITEM_SIMPLE_RESPONSE));
 
         // when
         List<ItemResponse> result = itemService.findBySeller(any());
