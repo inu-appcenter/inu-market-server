@@ -2,6 +2,7 @@ package inu.market.item.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class ItemUpdateRequest {
 
@@ -30,6 +32,6 @@ public class ItemUpdateRequest {
     @Positive(message = "카테고리 ID는 양수이어야 합니다.")
     private Long categoryId;
 
-    @NotNull(message = "상품 사진은 필수입니다.")
+    @NotNull(message = "상품 이미지는 필수입니다.")
     private List<String> imageUrls;
 }

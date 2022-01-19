@@ -24,8 +24,10 @@ public class ItemResponse {
 
     private String title;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String contents;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String mainImageUrl;
 
     private int price;
@@ -35,7 +37,7 @@ public class ItemResponse {
     private String status;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private boolean favorite;
+    private Boolean favorite;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
@@ -60,7 +62,6 @@ public class ItemResponse {
         itemResponse.itemId = item.getId();
         itemResponse.title = item.getTitle();
         itemResponse.contents = item.getContents();
-        itemResponse.mainImageUrl = item.getMainImageUrl();
         itemResponse.price = item.getPrice();
         itemResponse.favoriteCount = item.getFavoriteCount();
         itemResponse.status = item.getStatus().getStatus();
