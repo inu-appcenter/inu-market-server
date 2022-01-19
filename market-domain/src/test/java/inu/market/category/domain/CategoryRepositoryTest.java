@@ -37,6 +37,6 @@ class CategoryRepositoryTest {
         Category result = categoryRepository.findByName("전자기기").get();
 
         // then
-        assertThat(result.getId()).isNotNull();
+        assertThat(result).isEqualTo(category);
     }
 }

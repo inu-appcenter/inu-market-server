@@ -34,7 +34,7 @@ class MajorRepositoryTest {
         Major result = majorRepository.findByName("정보기술대학").get();
 
         // then
-        assertThat(result.getId()).isNotNull();
+        assertThat(result).isEqualTo(major);
     }
 
     @Test
