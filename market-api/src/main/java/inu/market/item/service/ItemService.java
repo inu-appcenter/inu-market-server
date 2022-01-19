@@ -67,8 +67,7 @@ public class ItemService {
         item.changeMajor(findMajor);
         item.changeItemImages(request.getImageUrls());
 
-        itemRepository.save(item);
-        return item.getId();
+        return itemRepository.save(item).getId();
     }
 
     @Transactional
