@@ -8,6 +8,7 @@ import inu.market.favorite.dto.FavoriteDeleteRequest;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemRepository;
 import inu.market.item.dto.ItemResponse;
+import inu.market.item.query.ItemQueryRepository;
 import inu.market.notification.domain.Notification;
 import inu.market.notification.domain.NotificationRepository;
 import inu.market.notification.domain.NotificationType;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +29,7 @@ public class FavoriteService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
     private final NotificationRepository notificationRepository;
+    private final ItemQueryRepository itemQueryRepository;
 
     @Transactional
     public void create(Long userId, FavoriteCreateRequest request) {
@@ -57,10 +58,7 @@ public class FavoriteService {
     }
 
     public List<ItemResponse> findByUserId(Long userId) {
-        List<Favorite> favorites = favoriteRepository.findWithItemByUserId(userId);
-        return favorites.stream()
-                .map(favorite -> ItemResponse.from(favorite.getItem()))
-                .collect(Collectors.toList());
+        return itemQueryRepository.findByFavoriteUserId(userId);
     }
 
     private String makeFavoriteMessage(String nickName, String title) {

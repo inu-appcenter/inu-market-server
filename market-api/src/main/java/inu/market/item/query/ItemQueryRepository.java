@@ -3,23 +3,19 @@ package inu.market.item.query;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import inu.market.item.domain.Item;
 import inu.market.item.domain.Status;
 import inu.market.item.dto.ItemResponse;
 import inu.market.item.dto.QItemResponse;
-import inu.market.trade.domain.QTrade;
-import inu.market.trade.domain.Trade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 import static inu.market.block.domain.QBlock.block;
+import static inu.market.favorite.domain.QFavorite.favorite;
 import static inu.market.item.domain.QItem.item;
-import static inu.market.trade.domain.QTrade.*;
+import static inu.market.trade.domain.QTrade.trade;
 
 
 @Repository
@@ -27,6 +23,17 @@ import static inu.market.trade.domain.QTrade.*;
 public class ItemQueryRepository {
 
     private final JPAQueryFactory queryFactory;
+
+    public List<ItemResponse> findByFavoriteUserId(Long userId) {
+        return queryFactory
+                .select(new QItemResponse(item.id, item.title, item.mainImageUrl, item.price, item.favoriteCount,
+                        item.status.stringValue(), item.createdAt, item.updatedAt))
+                .from(favorite)
+                .join(favorite.item, item)
+                .where(favorite.user.id.eq(userId))
+                .orderBy(favorite.id.desc())
+                .fetch();
+    }
 
     public List<ItemResponse> findByTradeBuyerId(Long buyerId) {
         return queryFactory

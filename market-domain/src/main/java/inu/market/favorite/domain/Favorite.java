@@ -28,11 +28,11 @@ public class Favorite {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Favorite createFavorite(User findUser, Item findItem) {
+    public static Favorite createFavorite(User user, Item item) {
         Favorite favorite = new Favorite();
-        favorite.item = findItem;
-        favorite.user = findUser;
-        findItem.increaseFavoriteCount();
+        favorite.item = item;
+        favorite.user = user;
+        item.increaseFavoriteCount();
         return favorite;
     }
 
