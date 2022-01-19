@@ -3,6 +3,8 @@ package inu.market.item.query;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import inu.market.category.domain.Category;
 import inu.market.category.domain.CategoryRepository;
+import inu.market.favorite.domain.Favorite;
+import inu.market.favorite.domain.FavoriteRepository;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemRepository;
 import inu.market.item.domain.Status;
@@ -47,6 +49,9 @@ class ItemQueryRepositoryTest {
     private TradeRepository tradeRepository;
 
     @Autowired
+    private FavoriteRepository favoriteRepository;
+
+    @Autowired
     private EntityManager em;
 
     private ItemQueryRepository itemQueryRepository;
@@ -54,6 +59,26 @@ class ItemQueryRepositoryTest {
     @BeforeEach
     void setUp() {
         itemQueryRepository = new ItemQueryRepository(new JPAQueryFactory(em));
+    }
+
+    @Test
+    @DisplayName("회원의 찜 상품을 조회한다.")
+    void findByFavoriteUserId() {
+        // given
+        User user = User.createUser(201601758, Role.ROLE_USER);
+        userRepository.save(user);
+
+        Item item = Item.createItem("제목", "내용", "이미지 URL", 1000, Status.SALE, null);
+        itemRepository.save(item);
+
+        Favorite favorite = Favorite.createFavorite(user, item);
+        favoriteRepository.save(favorite);
+
+        // when
+        List<ItemResponse> result = itemQueryRepository.findByFavoriteUserId(user.getId());
+
+        // then
+        assertThat(result.size()).isEqualTo(1);
     }
 
     @Test
