@@ -184,10 +184,34 @@ include::{snippets}/item/findBySeller/response-fields.adoc[]
 
 === 찜
 ==== 찜 생성 API
+===== 요청
+include::{snippets}/favorite/create/http-request.adoc[]
+====== Header
+include::{snippets}/favorite/create/request-headers.adoc[]
+====== Body
+include::{snippets}/favorite/create/request-fields.adoc[]
+
+===== 응답
+include::{snippets}/favorite/create/http-response.adoc[]
 
 ==== 찜 취소 API
+===== 요청
+include::{snippets}/favorite/delete/http-request.adoc[]
+====== Header
+include::{snippets}/favorite/delete/request-headers.adoc[]
+====== Body
+include::{snippets}/favorite/delete/request-fields.adoc[]
 
 ==== 찜 상품 리스트 조회 API
+===== 요청
+include::{snippets}/favorite/find/http-request.adoc[]
+====== Header
+include::{snippets}/favorite/find/request-headers.adoc[]
+
+===== 응답
+include::{snippets}/favorite/find/http-response.adoc[]
+====== Body
+include::{snippets}/favorite/find/response-fields.adoc[]
 
 === 거래
 ==== 거래 생성 API
