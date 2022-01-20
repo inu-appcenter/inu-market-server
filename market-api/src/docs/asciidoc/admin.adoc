@@ -1,0 +1,149 @@
+:basedir: {docdir}
+:snippets: {basedir}/build/generated-snippets
+
+= INOM - ADMIN API
+:doctype: admin
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectnums:
+:sectlinks:
+:sectanchors:
+
+[[api]]
+=== 회원
+==== INU 로그인 API
+===== 요청
+include::{snippets}/user/login/http-request.adoc[]
+
+====== Body
+- 파이어베이스 PushToken 필요
+include::{snippets}/user/login/request-fields.adoc[]
+
+===== 응답
+include::{snippets}/user/login/http-response.adoc[]
+====== Header
+include::{snippets}/user/login/response-headers.adoc[]
+
+=== 카테고리
+==== 카테고리 아이콘 URL 생성 API
+===== 요청
+include::{snippets}/category/iconUrls/http-request.adoc[]
+====== Header
+include::{snippets}/category/iconUrls/request-headers.adoc[]
+====== Part
+include::{snippets}/category/iconUrls/request-parts.adoc[]
+
+===== 응답
+include::{snippets}/category/iconUrls/http-response.adoc[]
+====== Body
+include::{snippets}/category/iconUrls/response-fields.adoc[]
+
+
+==== 카테고리 생성 API
+===== 요청
+- 카테고리 아이콘 URL 생성 API 를 통해 얻은 아이콘 URL 필요
+include::{snippets}/category/create/http-request.adoc[]
+====== Header
+include::{snippets}/category/create/request-headers.adoc[]
+====== Body
+include::{snippets}/category/create/request-fields.adoc[]
+
+===== 응답
+include::{snippets}/category/create/http-response.adoc[]
+====== Body
+include::{snippets}/category/create/response-fields.adoc[]
+
+==== 카테고리 수정 API
+===== 요청
+- 카테고리 아이콘 URL 생성 API 를 통해 얻은 아이콘 URL 필요
+include::{snippets}/category/update/http-request.adoc[]
+====== Header
+include::{snippets}/category/update/request-headers.adoc[]
+====== Path
+include::{snippets}/category/update/path-parameters.adoc[]
+====== Body
+include::{snippets}/category/update/request-fields.adoc[]
+
+===== 응답
+include::{snippets}/category/update/http-response.adoc[]
+
+==== 카테고리 삭제 API
+===== 요청
+include::{snippets}/category/delete/http-request.adoc[]
+====== Header
+include::{snippets}/category/delete/request-headers.adoc[]
+====== Path
+include::{snippets}/category/delete/path-parameters.adoc[]
+
+===== 응답
+include::{snippets}/category/delete/http-response.adoc[]
+
+==== 카테고리 리스트 조회 API
+===== 요청
+include::{snippets}/category/findAll/http-request.adoc[]
+====== Header
+include::{snippets}/category/findAll/request-headers.adoc[]
+
+===== 응답
+include::{snippets}/category/findAll/http-response.adoc[]
+====== Body
+include::{snippets}/category/findAll/response-fields.adoc[]
+
+=== 학과
+==== 단과대 생성 API
+===== 요청
+
+===== 응답
+
+==== 하위 학과 생성 API
+===== 요청
+
+===== 응답
+
+==== 학과 수정 API
+===== 요청
+
+===== 응답
+
+==== 학과 삭제 API
+===== 요청
+
+===== 응답
+
+==== 단과대 리스트 조회 API
+===== 요청
+
+===== 응답
+
+==== 하위 학과 리스트 조회 API
+===== 요청
+
+===== 응답
+
+=== 공지사항
+==== 공지사항 생성 API
+===== 요청
+
+===== 응답
+
+==== 공지사항 수정 API
+===== 요청
+
+===== 응답
+
+==== 공지사항 삭제 API
+===== 요청
+
+===== 응답
+
+==== 공지사항 리스트 조회 API
+===== 요청
+
+===== 응답
+
+==== 공지사항 상세 API
+===== 요청
+
+===== 응답
