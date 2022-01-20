@@ -49,11 +49,13 @@ include::{snippets}/user/findProfile/response-fields.adoc[]
 ==== 회원 프로필 수정 API
 ===== 요청
 - 회원 프로필 이미지 URL 생성 API 를 통해 얻은 이미지 URL 필요
+
 include::{snippets}/user/update/http-request.adoc[]
 ====== Header
 include::{snippets}/user/update/request-headers.adoc[]
 ====== Body
 - 이미지 URL 필수 X
+
 include::{snippets}/user/update/request-fields.adoc[]
 
 ===== 응답
@@ -62,6 +64,7 @@ include::{snippets}/user/update/http-response.adoc[]
 ==== 회원 프로필 이미지 URL 생성 API
 ===== 요청
 - 이미지 파일 필요
+
 include::{snippets}/user/imageUrls/http-request.adoc[]
 ====== Header
 include::{snippets}/user/imageUrls/request-headers.adoc[]
@@ -78,6 +81,7 @@ include::{snippets}/user/imageUrls/response-fields.adoc[]
 ===== 요청
 - 이미지 파일 필요 (여러개 가능)
 - 이미지 파일 이름 images
+
 include::{snippets}/item/imageUrls/http-request.adoc[]
 ====== Header
 include::{snippets}/item/imageUrls/request-headers.adoc[]
@@ -92,11 +96,13 @@ include::{snippets}/item/imageUrls/response-fields.adoc[]
 ==== 상품 생성 API
 ===== 요청
 - 상품 이미지 URL 생성 API 를 통해 얻은 이미지 URL 필요
+
 include::{snippets}/item/create/http-request.adoc[]
 ====== Header
 include::{snippets}/item/create/request-headers.adoc[]
 ====== Body
 include::{snippets}/item/create/request-fields.adoc[]
+
 ===== 응답
 include::{snippets}/item/create/http-response.adoc[]
 ====== Body
@@ -105,6 +111,7 @@ include::{snippets}/item/create/response-fields.adoc[]
 ==== 상품 수정 API
 ===== 요청
 - 상품 이미지 URL 생성 API 를 통해 얻은 이미지 URL 필요
+
 include::{snippets}/item/update/http-request.adoc[]
 ====== Header
 include::{snippets}/item/update/request-headers.adoc[]
@@ -112,6 +119,7 @@ include::{snippets}/item/update/request-headers.adoc[]
 include::{snippets}/item/update/path-parameters.adoc[]
 ====== Body
 include::{snippets}/item/update/request-fields.adoc[]
+
 ===== 응답
 include::{snippets}/item/update/http-response.adoc[]
 
@@ -124,6 +132,7 @@ include::{snippets}/item/updateStatus/request-headers.adoc[]
 include::{snippets}/item/update/path-parameters.adoc[]
 ====== Body
 include::{snippets}/item/updateStatus/request-fields.adoc[]
+
 ===== 응답
 include::{snippets}/item/updateStatus/http-response.adoc[]
 
@@ -134,6 +143,7 @@ include::{snippets}/item/delete/http-request.adoc[]
 include::{snippets}/item/delete/request-headers.adoc[]
 ====== Path
 include::{snippets}/item/delete/path-parameters.adoc[]
+
 ===== 응답
 include::{snippets}/item/delete/http-response.adoc[]
 
@@ -151,6 +161,7 @@ include::{snippets}/item/findBySearch/request-headers.adoc[]
 * 카테고리 검색일 경우 카테고리 ID
 * 학과 검색일 경우 학과 ID
 * 검색어로 검색일 경우 검색어
+
 include::{snippets}/item/findBySearch/request-parameters.adoc[]
 
 ===== 응답
@@ -250,6 +261,7 @@ include::{snippets}/notification/find/request-headers.adoc[]
 * 마지막으로 받은 알림 ID 필요
 * 첫번째 페이지일 경우 알림 ID 파라미터 X
 * 다음 페이지부터 알림 ID 파라미터 O
+
 include::{snippets}/notification/find/request-parameters.adoc[]
 
 ===== 응답
@@ -391,8 +403,52 @@ include::{snippets}/chatRooms/findById/response-fields.adoc[]
 
 
 === 채팅
+==== 채팅 이미지 URL 생성 API
+===== 요청
+- 이미지 파일 필요
+
+include::{snippets}/message/imageUrls/http-request.adoc[]
+====== Header
+include::{snippets}/message/imageUrls/request-headers.adoc[]
+====== Part
+include::{snippets}/message/imageUrls/request-parts.adoc[]
+
+===== 응답
+include::{snippets}/message/imageUrls/http-response.adoc[]
+====== Body
+include::{snippets}/message/imageUrls/response-fields.adoc[]
+
 ==== 마지막 채팅 조회 API
+===== 요청
+include::{snippets}/message/findLast/http-request.adoc[]
+====== Header
+include::{snippets}/message/findLast/request-headers.adoc[]
+====== Path
+include::{snippets}/message/findLast/path-parameters.adoc[]
+
+===== 응답
+include::{snippets}/message/findLast/http-response.adoc[]
+====== Body
+include::{snippets}/message/findLast/response-fields.adoc[]
 
 ==== 채팅 조회 API
+===== 요청
+include::{snippets}/message/find/http-request.adoc[]
+====== Header
+include::{snippets}/message/find/request-headers.adoc[]
+====== Path
+include::{snippets}/message/find/path-parameters.adoc[]
+====== Param
+- 페이징
+* 마지막으로 받은 메세지 생성 시간 필요
+* 첫번째 페이지일 경우 메세지 생성 시간 파라미터 X
+* 다음 페이지부터 메세지 생성 시간 파라미터 O
+
+include::{snippets}/message/find/request-parameters.adoc[]
+
+===== 응답
+include::{snippets}/message/find/http-response.adoc[]
+====== Body
+include::{snippets}/message/find/response-fields.adoc[]
 
 
