@@ -34,8 +34,8 @@ class UserControllerTest extends ControllerTest {
     private UserService userService;
 
     @Test
-    @DisplayName("프로필 이미지 생성 API")
-    void convertToIconUrl() throws Exception {
+    @DisplayName("프로필 이미지 URL 생성 API")
+    void convertToImageUrl() throws Exception {
         // given
         Map<String, String> result = new HashMap<>();
         result.put("imageUrl", TEST_IMAGE_URL);
@@ -68,7 +68,7 @@ class UserControllerTest extends ControllerTest {
 
     @Test
     @DisplayName("프로필 이미지 URL 생성 API 예외")
-    void convertToIconUrlNotExist() throws Exception {
+    void convertToImageUrlNotExist() throws Exception {
         // when
         mockMvc.perform(multipart("/api/users/imageUrls").file(TEST_EMPTY_IMAGE_FILE)
                         .header(HttpHeaders.AUTHORIZATION, TEST_AUTHORIZATION)
