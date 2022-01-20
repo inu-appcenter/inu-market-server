@@ -329,14 +329,65 @@ include::{snippets}/notice/findById/response-fields.adoc[]
 
 === 채팅방
 ==== 채팅방 생성 API
+===== 요청
+include::{snippets}/chatRooms/create/http-request.adoc[]
+====== Header
+include::{snippets}/chatRooms/create/request-headers.adoc[]
+====== Path
+include::{snippets}/chatRooms/create/path-parameters.adoc[]
+
+===== 응답
+include::{snippets}/chatRooms/create/http-response.adoc[]
+====== Body
+include::{snippets}/chatRooms/create/response-fields.adoc[]
 
 ==== 채팅방 삭제 API
+===== 요청
+include::{snippets}/chatRooms/delete/http-request.adoc[]
+====== Header
+include::{snippets}/chatRooms/delete/request-headers.adoc[]
+====== Path
+include::{snippets}/chatRooms/delete/path-parameters.adoc[]
+
+===== 응답
+include::{snippets}/chatRooms/delete/http-response.adoc[]
 
 ==== 채팅방 리스트 조회 API
+===== 요청
+include::{snippets}/chatRooms/findBySellerOrBuyer/http-request.adoc[]
+====== Header
+include::{snippets}/chatRooms/findBySellerOrBuyer/request-headers.adoc[]
+
+===== 응답
+include::{snippets}/chatRooms/findBySellerOrBuyer/http-response.adoc[]
+====== Body
+include::{snippets}/chatRooms/findBySellerOrBuyer/response-fields.adoc[]
 
 ==== 채팅방 상품 구매자 리스트 조회 API
+===== 요청
+include::{snippets}/chatRooms/findByItemId/http-request.adoc[]
+====== Header
+include::{snippets}/chatRooms/findByItemId/request-headers.adoc[]
+====== Path
+include::{snippets}/chatRooms/findByItemId/path-parameters.adoc[]
+
+===== 응답
+include::{snippets}/chatRooms/findByItemId/http-response.adoc[]
+====== Body
+include::{snippets}/chatRooms/findByItemId/response-fields.adoc[]
 
 ==== 채팅방 상세 조회 API
+===== 요청
+include::{snippets}/chatRooms/findById/http-request.adoc[]
+====== Header
+include::{snippets}/chatRooms/findById/request-headers.adoc[]
+====== Path
+include::{snippets}/chatRooms/findById/path-parameters.adoc[]
+
+===== 응답
+include::{snippets}/chatRooms/findById/http-response.adoc[]
+====== Body
+include::{snippets}/chatRooms/findById/response-fields.adoc[]
 
 
 === 채팅
