@@ -171,25 +171,61 @@ include::{snippets}/major/findChildren/response-fields.adoc[]
 === 공지사항
 ==== 공지사항 생성 API
 ===== 요청
+include::{snippets}/notice/create/http-request.adoc[]
+====== Header
+include::{snippets}/notice/create/request-headers.adoc[]
+====== Body
+include::{snippets}/notice/create/request-fields.adoc[]
 
 ===== 응답
+include::{snippets}/notice/create/http-response.adoc[]
+====== Body
+include::{snippets}/notice/create/response-fields.adoc[]
 
 ==== 공지사항 수정 API
 ===== 요청
+include::{snippets}/notice/update/http-request.adoc[]
+====== Header
+include::{snippets}/notice/update/request-headers.adoc[]
+====== Path
+include::{snippets}/notice/update/path-parameters.adoc[]
+====== Body
+include::{snippets}/notice/update/request-fields.adoc[]
 
 ===== 응답
+include::{snippets}/notice/update/http-response.adoc[]
 
 ==== 공지사항 삭제 API
 ===== 요청
+include::{snippets}/notice/delete/http-response.adoc[]
+====== Header
+include::{snippets}/notice/delete/request-headers.adoc[]
+====== Path
+include::{snippets}/notice/delete/path-parameters.adoc[]
 
 ===== 응답
+include::{snippets}/notice/delete/http-response.adoc[]
 
 ==== 공지사항 리스트 조회 API
 ===== 요청
+include::{snippets}/notice/findAll/http-request.adoc[]
+====== Header
+include::{snippets}/notice/findAll/request-headers.adoc[]
 
 ===== 응답
+include::{snippets}/notice/findAll/http-response.adoc[]
+====== Body
+include::{snippets}/notice/findAll/response-fields.adoc[]
 
 ==== 공지사항 상세 API
 ===== 요청
+include::{snippets}/notice/findById/http-request.adoc[]
+====== Header
+include::{snippets}/notice/findById/request-headers.adoc[]
+====== Path
+include::{snippets}/notice/findById/path-parameters.adoc[]
 
 ===== 응답
+include::{snippets}/notice/findById/http-response.adoc[]
+====== Body
+include::{snippets}/notice/findById/response-fields.adoc[]
