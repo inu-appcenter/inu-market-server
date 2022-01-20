@@ -29,6 +29,7 @@ include::{snippets}/user/login/response-headers.adoc[]
 === 카테고리
 ==== 카테고리 아이콘 URL 생성 API
 ===== 요청
+- 이미지 파일 필요
 include::{snippets}/category/iconUrls/http-request.adoc[]
 ====== Header
 include::{snippets}/category/iconUrls/request-headers.adoc[]
