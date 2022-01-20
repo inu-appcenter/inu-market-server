@@ -1,5 +1,6 @@
 package inu.market.message.controller;
 
+import inu.market.common.NotExistException;
 import inu.market.message.dto.MessageRequest;
 import inu.market.message.dto.MessageResponse;
 import inu.market.message.service.MessageService;
@@ -41,8 +42,8 @@ public class MessageController {
     @PostMapping("/api/messages/imageUrls")
     public ResponseEntity<Map<String, String>> convertToImageUrl(@RequestPart MultipartFile image) {
 
-        if (image == null || image.isEmpty()) {
-            throw new RuntimeException("업로드 할 이미지가 없습니다.");
+        if (image.isEmpty()) {
+            throw new NotExistException("업로드 할 이미지가 없습니다.");
         }
 
         Map<String, String> response = new HashMap<>();

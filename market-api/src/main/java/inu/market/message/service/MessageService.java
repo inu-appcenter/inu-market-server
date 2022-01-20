@@ -1,7 +1,6 @@
 package inu.market.message.service;
 
 import inu.market.client.AwsClient;
-import inu.market.client.FirebaseClient;
 import inu.market.message.domain.Message;
 import inu.market.message.domain.MessageRepository;
 import inu.market.message.domain.MessageType;
@@ -35,11 +34,11 @@ public class MessageService {
 
     public MessageResponse findLastByRoomId(Long roomId) {
         Message findMessage = messageRepository.findTopByRoomIdOrderByCreatedAtDesc(roomId)
-                .orElse(Message.createMessage(0L, 0L, "", "", MessageType.TEXT));
+                .orElse(new Message(0L, 0L, 0L, "", "", MessageType.TEXT, LocalDateTime.now()));
         return MessageResponse.from(findMessage);
     }
 
-    public List<MessageResponse> findByRoomId(Long roomId, int size, String lastMessageDate) {
+    public List<MessageResponse> findByRoomId(Long roomId, Integer size, String lastMessageDate) {
         List<Message> messages = messageRepository
                 .findAllByRoomIdAndCreatedAtIsBeforeOrderByCreatedAtDesc(
                         roomId, LocalDateTime.parse(lastMessageDate), PageRequest.of(0, size));
