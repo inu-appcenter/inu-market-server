@@ -241,8 +241,32 @@ include::{snippets}/trade/find/response-fields.adoc[]
 
 === 알림
 ==== 알림 리스트 조회 API
+===== 요청
+include::{snippets}/notification/find/http-request.adoc[]
+====== Header
+include::{snippets}/notification/find/request-headers.adoc[]
+====== Param
+- 페이징
+* 마지막으로 받은 알림 ID 필요
+* 첫번째 페이지일 경우 알림 ID 파라미터 X
+* 다음 페이지부터 알림 ID 파라미터 O
+include::{snippets}/notification/find/request-parameters.adoc[]
+
+===== 응답
+include::{snippets}/notification/find/http-response.adoc[]
+====== Body
+include::{snippets}/notification/find/response-fields.adoc[]
 
 ==== 알림 읽기 처리 API
+===== 요청
+include::{snippets}/notification/update/http-request.adoc[]
+====== Header
+include::{snippets}/notification/update/request-headers.adoc[]
+====== Path
+include::{snippets}/notification/update/path-parameters.adoc[]
+
+===== 응답
+include::{snippets}/notification/update/http-response.adoc[]
 
 === 차단
 ==== 차단 생성 API
