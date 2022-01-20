@@ -1,7 +1,6 @@
 package inu.market.advice;
 
-import inu.market.common.ExceptionResponse;
-import inu.market.common.NotExistException;
+import inu.market.common.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +33,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(ExceptionResponse.from("잘못된 요청입니다.", errors));
     }
 
-    @ExceptionHandler(NotExistException.class)
-    public ResponseEntity<ExceptionResponse> handleNoyExistExceptions(NotExistException e) {
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ExceptionResponse> handleAccessDeniedExceptions(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ExceptionResponse.from(e.getMessage()));
+    }
+
+    @ExceptionHandler({NotExistException.class, NotMatchException.class, NotFoundException.class, DuplicateException.class})
+    public ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception e) {
         return ResponseEntity.badRequest().body(ExceptionResponse.from(e.getMessage()));
     }
 
