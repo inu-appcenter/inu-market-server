@@ -75,20 +75,112 @@ include::{snippets}/user/imageUrls/response-fields.adoc[]
 
 === 상품
 ==== 상품 이미지 URL 생성 API
+===== 요청
+- 이미지 파일 필요 (여러개 가능)
+- 이미지 파일 이름 images
+include::{snippets}/item/imageUrls/http-request.adoc[]
+====== Header
+include::{snippets}/item/imageUrls/request-headers.adoc[]
+====== Part
+include::{snippets}/item/imageUrls/request-parts.adoc[]
+
+===== 응답
+include::{snippets}/item/imageUrls/http-response.adoc[]
+====== Body
+include::{snippets}/item/imageUrls/response-fields.adoc[]
 
 ==== 상품 생성 API
+===== 요청
+- 상품 이미지 URL 생성 API 를 통해 얻은 이미지 URL 필요
+include::{snippets}/item/create/http-request.adoc[]
+====== Header
+include::{snippets}/item/create/request-headers.adoc[]
+====== Body
+include::{snippets}/item/create/request-fields.adoc[]
+===== 응답
+include::{snippets}/item/create/http-response.adoc[]
+====== Body
+include::{snippets}/item/create/response-fields.adoc[]
 
 ==== 상품 수정 API
+===== 요청
+- 상품 이미지 URL 생성 API 를 통해 얻은 이미지 URL 필요
+include::{snippets}/item/update/http-request.adoc[]
+====== Header
+include::{snippets}/item/update/request-headers.adoc[]
+====== Path
+include::{snippets}/item/update/path-parameters.adoc[]
+====== Body
+include::{snippets}/item/update/request-fields.adoc[]
+===== 응답
+include::{snippets}/item/update/http-response.adoc[]
 
 ==== 상품 상태 변경 API
+===== 요청
+include::{snippets}/item/updateStatus/http-request.adoc[]
+====== Header
+include::{snippets}/item/updateStatus/request-headers.adoc[]
+====== Path
+include::{snippets}/item/update/path-parameters.adoc[]
+====== Body
+include::{snippets}/item/updateStatus/request-fields.adoc[]
+===== 응답
+include::{snippets}/item/updateStatus/http-response.adoc[]
 
 ==== 상품 삭제 API
+===== 요청
+include::{snippets}/item/delete/http-request.adoc[]
+====== Header
+include::{snippets}/item/delete/request-headers.adoc[]
+====== Path
+include::{snippets}/item/delete/path-parameters.adoc[]
+===== 응답
+include::{snippets}/item/delete/http-response.adoc[]
 
 ==== 상품 검색 API
+===== 요청
+include::{snippets}/item/findBySearch/http-request.adoc[]
+====== Header
+include::{snippets}/item/findBySearch/request-headers.adoc[]
+====== Param
+- 페이징
+* 마지막 itemId를 필요
+* 첫번째 페이지일 경우 itemId 파라미터 X
+* 다음 페이지부터 itemId 파라미터 O
+- 검색 종류
+* 카테고리 검색일 경우 카테고리 ID
+* 학과 검색일 경우 학과 ID
+* 검색어로 검색일 경우 검색어
+include::{snippets}/item/findBySearch/request-parameters.adoc[]
+
+===== 응답
+include::{snippets}/item/findBySearch/http-response.adoc[]
+====== Body
+include::{snippets}/item/findBySearch/response-fields.adoc[]
 
 ==== 상품 상세 조회 API
+===== 요청
+include::{snippets}/item/findById/http-request.adoc[]
+====== Header
+include::{snippets}/item/findById/request-headers.adoc[]
+====== Path
+include::{snippets}/item/findById/path-parameters.adoc[]
+
+===== 응답
+include::{snippets}/item/findById/http-response.adoc[]
+====== Body
+include::{snippets}/item/findById/response-fields.adoc[]
 
 ==== 회원의 상품 조회 API
+===== 요청
+include::{snippets}/item/findBySeller/http-request.adoc[]
+====== Header
+include::{snippets}/item/findBySeller/request-headers.adoc[]
+
+===== 응답
+include::{snippets}/item/findBySeller/http-response.adoc[]
+====== Body
+include::{snippets}/item/findBySeller/response-fields.adoc[]
 
 === 찜
 ==== 찜 생성 API
