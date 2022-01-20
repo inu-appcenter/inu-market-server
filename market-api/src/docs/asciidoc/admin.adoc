@@ -94,33 +94,79 @@ include::{snippets}/category/findAll/response-fields.adoc[]
 === 학과
 ==== 단과대 생성 API
 ===== 요청
-
+include::{snippets}/major/parentCreate/http-request.adoc[]
+====== Header
+include::{snippets}/major/parentCreate/request-headers.adoc[]
+====== Body
+include::{snippets}/major/parentCreate/request-fields.adoc[]
 ===== 응답
+include::{snippets}/major/parentCreate/http-response.adoc[]
+====== Body
+include::{snippets}/major/parentCreate/response-fields.adoc[]
 
 ==== 하위 학과 생성 API
 ===== 요청
+- 단과대학 리스트 조회 API 를 통해 얻은 단과대학 ID 를 이용한다.
+include::{snippets}/major/childrenCreate/http-request.adoc[]
+====== Header
+include::{snippets}/major/childrenCreate/request-headers.adoc[]
+====== Path
+include::{snippets}/major/childrenCreate/path-parameters.adoc[]
+====== Body
+include::{snippets}/major/childrenCreate/request-fields.adoc[]
 
 ===== 응답
+include::{snippets}/major/childrenCreate/http-response.adoc[]
+====== Body
+include::{snippets}/major/childrenCreate/response-fields.adoc[]
 
 ==== 학과 수정 API
 ===== 요청
+include::{snippets}/major/update/http-request.adoc[]
+====== Header
+include::{snippets}/major/update/request-headers.adoc[]
+====== Path
+include::{snippets}/major/update/path-parameters.adoc[]
+====== Body
+include::{snippets}/major/update/request-fields.adoc[]
 
 ===== 응답
+include::{snippets}/major/update/http-response.adoc[]
 
 ==== 학과 삭제 API
 ===== 요청
+include::{snippets}/major/delete/http-request.adoc[]
+====== Header
+include::{snippets}/major/delete/request-headers.adoc[]
+====== Path
+include::{snippets}/major/delete/path-parameters.adoc[]
 
 ===== 응답
+include::{snippets}/major/delete/http-response.adoc[]
 
 ==== 단과대 리스트 조회 API
 ===== 요청
+include::{snippets}/major/findParents/http-request.adoc[]
+====== Header
+include::{snippets}/major/findParents/request-headers.adoc[]
 
 ===== 응답
+include::{snippets}/major/findParents/http-response.adoc[]
+====== Body
+include::{snippets}/major/findParents/response-fields.adoc[]
 
 ==== 하위 학과 리스트 조회 API
 ===== 요청
+include::{snippets}/major/findChildren/http-request.adoc[]
+====== Header
+include::{snippets}/major/findChildren/request-headers.adoc[]
+====== Path
+include::{snippets}/major/findChildren/path-parameters.adoc[]
 
 ===== 응답
+include::{snippets}/major/findChildren/http-response.adoc[]
+====== Body
+include::{snippets}/major/findChildren/response-fields.adoc[]
 
 === 공지사항
 ==== 공지사항 생성 API
