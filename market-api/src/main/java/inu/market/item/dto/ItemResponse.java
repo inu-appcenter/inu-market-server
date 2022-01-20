@@ -59,8 +59,8 @@ public class ItemResponse {
     private List<String> imageUrls;
 
     @QueryProjection
-    public ItemResponse(Long itemId,String title, String mainImageUrl, int price,
-                        int favoriteCount, String status, LocalDateTime createdAt, LocalDateTime updatedAt){
+    public ItemResponse(Long itemId, String title, String mainImageUrl, int price,
+                        int favoriteCount, String status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.itemId = itemId;
         this.title = title;
         this.mainImageUrl = mainImageUrl;
@@ -91,4 +91,16 @@ public class ItemResponse {
         return itemResponse;
     }
 
+    public static ItemResponse from(Item item) {
+        ItemResponse itemResponse = new ItemResponse();
+        itemResponse.itemId = item.getId();
+        itemResponse.title = item.getTitle();
+        itemResponse.mainImageUrl = item.getMainImageUrl();
+        itemResponse.price = item.getPrice();
+        itemResponse.favoriteCount = item.getFavoriteCount();
+        itemResponse.status = item.getStatus().getStatus();
+        itemResponse.createdAt = item.getCreatedAt();
+        itemResponse.updatedAt = item.getUpdatedAt();
+        return itemResponse;
+    }
 }

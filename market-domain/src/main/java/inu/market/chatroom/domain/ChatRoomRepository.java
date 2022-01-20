@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
@@ -13,4 +14,20 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     List<ChatRoom> findWithBuyerByItemId(@Param("itemId") Long itemId);
 
     void deleteAllByItem(Item item);
+
+    @Query("select c from ChatRoom c " +
+            "left join fetch c.buyer " +
+            "left join fetch c.seller " +
+            "left join fetch c.item " +
+            "where c.buyer.id=:userId or c.seller.id=:userId " +
+            "order by c.id desc ")
+    public List<ChatRoom> findWithItemAndBuyerAndSellerBySellerIdOrBuyerId(@Param("userId") Long userId);
+
+    @Query("select c from ChatRoom c " +
+            "left join fetch c.buyer " +
+            "left join fetch c.seller " +
+            "left join fetch c.item " +
+            "where c.id=:roomId")
+    Optional<ChatRoom> findWithItemAndBuyerAndSellerById(@Param("roomId") Long roomId);
+
 }
