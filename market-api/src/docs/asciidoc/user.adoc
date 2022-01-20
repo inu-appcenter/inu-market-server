@@ -1,0 +1,139 @@
+:basedir: {docdir}
+:snippets: {basedir}/build/generated-snippets
+
+= INOM API
+:doctype: user
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectnums:
+:sectlinks:
+:sectanchors:
+
+[[api]]
+=== 회원
+==== 회원가입 API
+===== 요청
+include::{snippets}/user/create/http-request.adoc[]
+====== Body
+include::{snippets}/user/create/request-fields.adoc[]
+
+===== 응답
+include::{snippets}/user/create/http-response.adoc[]
+====== Header
+include::{snippets}/user/create/response-headers.adoc[]
+
+==== 회원 로그인 API
+===== 요청
+include::{snippets}/user/login/http-request.adoc[]
+====== Body
+include::{snippets}/user/login/request-fields.adoc[]
+
+===== 응답
+include::{snippets}/user/login/http-response.adoc[]
+====== Header
+include::{snippets}/user/login/response-headers.adoc[]
+
+==== 회원 프로필 조회 API
+===== 요청
+include::{snippets}/user/findProfile/http-request.adoc[]
+====== Header
+include::{snippets}/user/findProfile/request-headers.adoc[]
+
+===== 응답
+include::{snippets}/user/findProfile/http-response.adoc[]
+====== Body
+include::{snippets}/user/findProfile/response-fields.adoc[]
+
+==== 회원 프로필 수정 API
+===== 요청
+- 회원 프로필 이미지 URL 생성 API 를 통해 얻은 이미지 URL 필요
+include::{snippets}/user/update/http-request.adoc[]
+====== Header
+include::{snippets}/user/update/request-headers.adoc[]
+====== Body
+- 이미지 URL 필수 X
+include::{snippets}/user/update/request-fields.adoc[]
+
+===== 응답
+include::{snippets}/user/update/http-response.adoc[]
+
+==== 회원 프로필 이미지 URL 생성 API
+===== 요청
+- 이미지 파일 필요
+include::{snippets}/user/imageUrls/http-request.adoc[]
+====== Header
+include::{snippets}/user/imageUrls/request-headers.adoc[]
+====== Part
+include::{snippets}/user/imageUrls/request-parts.adoc[]
+
+===== 응답
+include::{snippets}/user/imageUrls/http-response.adoc[]
+====== Body
+include::{snippets}/user/imageUrls/response-fields.adoc[]
+
+=== 상품
+==== 상품 이미지 URL 생성 API
+
+==== 상품 생성 API
+
+==== 상품 수정 API
+
+==== 상품 상태 변경 API
+
+==== 상품 삭제 API
+
+==== 상품 검색 API
+
+==== 상품 상세 조회 API
+
+==== 회원의 상품 조회 API
+
+=== 찜
+==== 찜 생성 API
+
+==== 찜 취소 API
+
+==== 찜 상품 리스트 조회 API
+
+=== 거래
+==== 거래 생성 API
+
+==== 거래 상품 리스트 조회 API
+
+=== 알림
+==== 알림 리스트 조회 API
+
+==== 알림 읽기 처리 API
+
+=== 차단
+==== 차단 생성 API
+
+==== 차단 삭제 API
+
+==== 차단 회원 리스트 조회 API
+
+=== 공지사항
+==== 공지사항 리스트 조회 API
+
+==== 공지사항 상세 조회
+
+=== 채팅방
+==== 채팅방 생성 API
+
+==== 채팅방 삭제 API
+
+==== 채팅방 리스트 조회 API
+
+==== 채팅방 상품 구매자 리스트 조회 API
+
+==== 채팅방 상세 조회 API
+
+
+=== 채팅
+==== 마지막 채팅 조회 API
+
+==== 채팅 조회 API
+
+
