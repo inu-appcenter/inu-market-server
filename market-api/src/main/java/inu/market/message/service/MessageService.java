@@ -27,7 +27,7 @@ public class MessageService {
     @Transactional
     public MessageResponse create(MessageRequest request) {
         Message message = Message.createMessage(request.getRoomId(), request.getSenderId(), request.getNickName(),
-                                                request.getContent(), MessageType.valueOf(request.getMessageType()));
+                                                request.getContent(), MessageType.from(request.getMessageType()));
         messageRepository.save(message.send(request.getPushToken()));
         return MessageResponse.from(message);
     }
