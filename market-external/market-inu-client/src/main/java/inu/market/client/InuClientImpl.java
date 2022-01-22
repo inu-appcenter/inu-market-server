@@ -36,8 +36,8 @@ public class InuClientImpl implements InuClient {
         HttpEntity<LinkedMultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(INU_LOGIN_URL, request, String.class);
 
-        if (response.getStatusCode().is3xxRedirection()) {
-            if (response.getHeaders().get(HttpHeaders.SET_COOKIE).size() != 3) {
+        if (response.getStatusCode().is2xxSuccessful()) {
+            if (response.getHeaders().size() == 17) {
                 throw new NotMatchException("학번 혹은 비밀번호가 맞지 않습니다.");
             }
         } else {

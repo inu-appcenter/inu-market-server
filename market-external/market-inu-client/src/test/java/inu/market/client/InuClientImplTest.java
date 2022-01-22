@@ -12,6 +12,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.client.MockRestServiceServer;
 
+import java.util.stream.IntStream;
+
 import static inu.market.client.InuClientImpl.INU_LOGIN_URL;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -36,13 +38,13 @@ class InuClientImplTest {
     void login() {
         // given
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.SET_COOKIE, "test1");
-        headers.add(HttpHeaders.SET_COOKIE, "test2");
-        headers.add(HttpHeaders.SET_COOKIE, "test3");
+        IntStream.range(0, 18).forEach(value -> {
+            headers.add("test" + value, "test" + value);
+        });
 
         mockServer.expect(requestTo(INU_LOGIN_URL))
                 .andExpect(method(HttpMethod.POST))
-                .andRespond(withStatus(HttpStatus.SEE_OTHER).headers(headers));
+                .andRespond(withStatus(HttpStatus.OK).headers(headers));
 
         // when
         inuClient.login(201601757, "password");
@@ -53,11 +55,13 @@ class InuClientImplTest {
     void loginNotMatch() {
         // given
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.SET_COOKIE, "test1");
+        IntStream.range(0, 17).forEach(value -> {
+            headers.add("test" + value, "test" + value);
+        });
 
         mockServer.expect(requestTo(INU_LOGIN_URL))
                 .andExpect(method(HttpMethod.POST))
-                .andRespond(withStatus(HttpStatus.SEE_OTHER).headers(headers));
+                .andRespond(withStatus(HttpStatus.OK).headers(headers));
 
         // when
         assertThrows(NotMatchException.class, () -> inuClient.login(201601757, "password"));
@@ -69,7 +73,7 @@ class InuClientImplTest {
         // given
         mockServer.expect(requestTo(INU_LOGIN_URL))
                 .andExpect(method(HttpMethod.POST))
-                .andRespond(withStatus(HttpStatus.OK));
+                .andRespond(withStatus(HttpStatus.SEE_OTHER));
 
         // when
         assertThrows(NetworkException.class, () -> inuClient.login(201601757, "password"));
