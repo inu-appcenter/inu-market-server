@@ -6,7 +6,6 @@ import com.querydsl.core.annotations.QueryProjection;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemImage;
-import inu.market.item.domain.Status;
 import inu.market.major.dto.MajorResponse;
 import inu.market.user.dto.UserResponse;
 import lombok.AllArgsConstructor;
