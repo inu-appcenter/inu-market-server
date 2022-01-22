@@ -1,9 +1,7 @@
 package inu.market.notification.service;
 
-import inu.market.CommonFixture;
 import inu.market.client.FirebaseClient;
 import inu.market.favorite.service.FavoriteService;
-import inu.market.item.ItemFixture;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemRepository;
 import inu.market.user.domain.Role;
@@ -18,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static inu.market.CommonFixture.*;
 import static inu.market.favorite.FavoriteFixture.TEST_FAVORITE_CREATE_REQUEST;
 import static inu.market.item.ItemFixture.*;
-import static inu.market.item.ItemFixture.TEST_ITEM;
 import static inu.market.user.UserFixture.TEST_USER;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;

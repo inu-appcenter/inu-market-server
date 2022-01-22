@@ -17,9 +17,9 @@ dependencyManagement {
 dependencies {
     implementation(project(":market-domain"))
     implementation(project(":market-common"))
-    implementation(project(":market-aws-client"))
-    implementation(project(":market-firebase-client"))
-    implementation(project(":market-inu-client"))
+    implementation(project(":market-external:market-aws-client"))
+    implementation(project(":market-external:market-firebase-client"))
+    implementation(project(":market-external:market-inu-client"))
 
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"

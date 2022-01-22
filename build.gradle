@@ -135,9 +135,9 @@ subprojects {
         }
     }
 
-    project(':market-api') {
-        dependencies {
-            compileOnly project(':market-domain')
+    project(':market-external') {
+        bootJar {
+            enabled = false
         }
     }
 
