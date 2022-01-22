@@ -21,20 +21,12 @@ public class FirebaseClient {
     private final String FIREBASE_CONFIG_PATH = "inu-market-firebase-adminsdk-yuqkp-f72006c43e.json";
 
     @PostConstruct
-    public void init() {
-        try {
-            InputStream fcmOptionsInputStream = FIREBASE_CONFIG_PATH.startsWith("/") ? new FileSystemResource(FIREBASE_CONFIG_PATH).getInputStream()
-                    : new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream();
-
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(fcmOptionsInputStream)).build();
-
-            if (FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options);
-                log.info("Firebase application has been initialized");
-            }
-        } catch (IOException e) {
-            log.error(e.getMessage());
+    public void init() throws IOException {
+        InputStream fcmOptionsInputStream = new ClassPathResource(FIREBASE_CONFIG_PATH).getInputStream();
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(fcmOptionsInputStream)).build();
+        if (FirebaseApp.getApps().isEmpty()) {
+            FirebaseApp.initializeApp(options);
         }
     }
 
@@ -46,7 +38,6 @@ public class FirebaseClient {
                 .build();
         try {
             String response = FirebaseMessaging.getInstance().sendAsync(message).get();
-            log.info("Sent message: " + response);
         } catch (Exception e) {
             log.error("푸쉬알림 전송 실패");
         }
