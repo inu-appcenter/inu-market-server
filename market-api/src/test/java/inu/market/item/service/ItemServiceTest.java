@@ -3,11 +3,12 @@ package inu.market.item.service;
 import inu.market.category.domain.CategoryRepository;
 import inu.market.chatroom.domain.ChatRoomRepository;
 import inu.market.client.AwsClient;
+import inu.market.common.NotFoundException;
 import inu.market.favorite.FavoriteFixture;
 import inu.market.favorite.domain.FavoriteRepository;
-import inu.market.item.query.ItemQueryRepository;
 import inu.market.item.domain.ItemRepository;
 import inu.market.item.dto.ItemResponse;
+import inu.market.item.query.ItemQueryRepository;
 import inu.market.major.domain.MajorRepository;
 import inu.market.trade.domain.TradeRepository;
 import inu.market.user.domain.UserRepository;
@@ -110,6 +111,60 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("상품을 생성할 때 회원이 존재하지 않으면 예외가 발생한다.")
+    void createCategoryNotFound() {
+        // given
+        given(userRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_CREATE_REQUEST));
+
+        // then
+        then(userRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("상품을 생성할 때 카테고리가 존재하지 않으면 예외가 발생한다.")
+    void createItemNotFound() {
+        // given
+        given(userRepository.findById(any()))
+                .willReturn(Optional.of(TEST_USER));
+
+        given(categoryRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_CREATE_REQUEST));
+
+        // then
+        then(userRepository).should(times(1)).findById(any());
+        then(categoryRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("상품을 생성할 때 전공이 존재하지 않으면 예외가 발생한다.")
+    void createMajorNotFound() {
+        // given
+        given(userRepository.findById(any()))
+                .willReturn(Optional.of(TEST_USER));
+
+        given(categoryRepository.findById(any()))
+                .willReturn(Optional.of(TEST_CATEGORY));
+
+        given(majorRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_CREATE_REQUEST));
+
+        // then
+        then(userRepository).should(times(1)).findById(any());
+        then(categoryRepository).should(times(1)).findById(any());
+        then(majorRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("상품을 수정한다.")
     void update() {
         // given
@@ -146,6 +201,60 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("상품을 수정할 때 상품이 존재하지 않으면 예외가 발생한다.")
+    void updateItemNotFound() {
+        // given
+        given(itemRepository.findWithItemImagesById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST));
+
+        // then
+        then(itemRepository).should(times(1)).findWithItemImagesById(any());
+    }
+
+    @Test
+    @DisplayName("상품을 수정할 때 카테고리가 존재하지 않으면 예외가 발생한다.")
+    void updateCategoryNotFound() {
+        // given
+        given(itemRepository.findWithItemImagesById(any()))
+                .willReturn(Optional.of(TEST_ITEM));
+
+        given(categoryRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST));
+
+        // then
+        then(itemRepository).should(times(1)).findWithItemImagesById(any());
+        then(categoryRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("상품을 수정할 때 카테고리가 존재하지 않으면 예외가 발생한다.")
+    void updateMajorNotFound() {
+        // given
+        given(itemRepository.findWithItemImagesById(any()))
+                .willReturn(Optional.of(TEST_ITEM));
+
+        given(categoryRepository.findById(any()))
+                .willReturn(Optional.of(TEST_CATEGORY));
+
+        given(majorRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST));
+
+        // then
+        then(itemRepository).should(times(1)).findWithItemImagesById(any());
+        then(categoryRepository).should(times(1)).findById(any());
+        then(majorRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("상품 상태를 수정한다.")
     void updateStatus() {
         // given
@@ -173,6 +282,19 @@ class ItemServiceTest {
         then(itemRepository).should(times(1)).findById(any());
     }
 
+    @Test
+    @DisplayName("상품 상태를 수정할 때 상품이 존재하지 않으면 예외가 발생한다.")
+    void updateStatusNotFound() {
+        // given
+        given(itemRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.updateStatus(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_STATUS_REQUEST));
+
+        // then
+        then(itemRepository).should(times(1)).findById(any());
+    }
 
     @Test
     @DisplayName("상품을 삭제한다.")
@@ -208,6 +330,20 @@ class ItemServiceTest {
     }
 
     @Test
+    @DisplayName("상품을 삭제할 때 상품이 존재하지 않으면 예외가 발생한다.")
+    void deleteNotFound() {
+        // given
+        given(itemRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.delete(TEST_USER.getId(), TEST_ITEM.getId()));
+
+        // then
+        then(itemRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("상품 판매자가 아닌 회원이 상품을 삭제하면 예외가 발생한다.")
     void deleteNotOwner() {
         // given
@@ -238,6 +374,20 @@ class ItemServiceTest {
         assertThat(result.getItemId()).isEqualTo(TEST_ITEM.getId());
         then(itemRepository).should(times(1)).findWithSellerAndItemImagesAndCategoryAndMajorById(any());
         then(favoriteRepository).should(times(1)).findByUserIdAndItemId(any(), any());
+    }
+
+    @Test
+    @DisplayName("상품을 상세 조회할 때 상품이 존재하지 않으면 예외가 발생한다.")
+    void findByIdNotFound() {
+        // given
+        given(itemRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> itemService.findById(TEST_USER.getId(), TEST_ITEM.getId()));
+
+        // then
+        then(itemRepository).should(times(1)).findWithSellerAndItemImagesAndCategoryAndMajorById(any());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package inu.market.major.service;
 
 import inu.market.common.DuplicateException;
+import inu.market.common.NotFoundException;
 import inu.market.major.domain.MajorRepository;
 import inu.market.major.dto.MajorResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -85,6 +86,20 @@ class MajorServiceTest {
     }
 
     @Test
+    @DisplayName("학과를 생성할 때 단과대학이 존재하지 않으면 예외가 발생한다.")
+    void createChildrenNotFound() {
+        // given
+        given(majorRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> majorService.createChildren(TEST_PARENT_MAJOR.getId(), TEST_MAJOR_CREATE_REQUEST));
+
+        // then
+        then(majorRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("중복된 학과를 생성하면 예외가 발생한다.")
     void createDuplicateChildren() {
         // given
@@ -121,6 +136,20 @@ class MajorServiceTest {
     }
 
     @Test
+    @DisplayName("학과를 수정할 때 학과가 존재하지 않으면 예외가 발생한다.")
+    void updateNotFound() {
+        // given
+        given(majorRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> majorService.update(TEST_MAJOR.getId(), TEST_MAJOR_UPDATE_REQUEST));
+
+        // then
+        then(majorRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("중복된 학과로 수정하면 예외가 발생한다.")
     void updateDuplicate() {
         // given
@@ -154,6 +183,20 @@ class MajorServiceTest {
         // then
         then(majorRepository).should(times(1)).findById(any());
         then(majorRepository).should(times(1)).delete(any());
+    }
+
+    @Test
+    @DisplayName("학과를 삭제할 때 학과가 존재하지 않으면 예외가 발생한다.")
+    void deleteNotFound() {
+        // given
+        given(majorRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> majorService.delete(TEST_MAJOR.getId()));
+
+        // then
+        then(majorRepository).should(times(1)).findById(any());
     }
 
     @Test

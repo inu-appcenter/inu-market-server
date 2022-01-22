@@ -3,6 +3,7 @@ package inu.market.user.service;
 import inu.market.client.AwsClient;
 import inu.market.client.InuClient;
 import inu.market.common.DuplicateException;
+import inu.market.common.NotFoundException;
 import inu.market.security.util.JwtUtil;
 import inu.market.user.domain.UserRepository;
 import inu.market.user.dto.UserResponse;
@@ -113,6 +114,25 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("회원 로그인을 할 때 회원이 없으면 예외가 발생한다.")
+    void loginNotFound() {
+        // given
+        willDoNothing()
+                .given(inuClient)
+                .login(any(), any());
+
+        given(userRepository.findByInuId(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> userService.login(TEST_USER_LOGIN_REQUEST));
+
+        // then
+        then(inuClient).should(times(1)).login(any(), any());
+        then(userRepository).should(times(1)).findByInuId(any());
+    }
+
+    @Test
     @DisplayName("이미지 업로드를 한다.")
     void uploadImage() {
         // given
@@ -143,6 +163,20 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("프로필을 수정할 때 회원이 존재하지 않으면 예외가 발생한다.")
+    void updateProfileNotFound() {
+        // given
+        given(userRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> userService.updateProfile(TEST_USER.getId(), TEST_USER_UPDATE_PROFILE_REQUEST));
+
+        // then
+        then(userRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("프로필을 조회한다.")
     void findById() {
         // given
@@ -159,6 +193,20 @@ class UserServiceTest {
         assertThat(result.getScore()).isEqualTo(TEST_USER.getScore());
         assertThat(result.getPushToken()).isEqualTo(TEST_USER.getPushToken());
 
+        then(userRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("프로필을 조회할 때 회원이 존재하지 않으면 예외가 발생한다.")
+    void findByIdNotFound() {
+        // given
+        given(userRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> userService.findById(TEST_USER.getId()));
+
+        // then
         then(userRepository).should(times(1)).findById(any());
     }
 }

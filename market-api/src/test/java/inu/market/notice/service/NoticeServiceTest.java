@@ -1,5 +1,6 @@
 package inu.market.notice.service;
 
+import inu.market.common.NotFoundException;
 import inu.market.notice.domain.NoticeRepository;
 import inu.market.notice.dto.NoticeResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 import static inu.market.notice.NoticeFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -60,6 +62,20 @@ class NoticeServiceTest {
     }
 
     @Test
+    @DisplayName("공지사항을 수정할 때 공지사항이 존재하지 않으면 예외가 발생한다..")
+    void updateNotFound() {
+        // given
+        given(noticeRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> noticeService.update(TEST_NOTICE.getId(), TEST_NOTICE_UPDATE_REQUEST));
+
+        // then
+        then(noticeRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("공지사항을 삭제한다.")
     void delete() {
         // given
@@ -68,6 +84,20 @@ class NoticeServiceTest {
 
         // when
         noticeService.delete(TEST_NOTICE.getId());
+
+        // then
+        then(noticeRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("공지사항을 삭제할 때 공지사항이 존재하지 않으면 예외가 발생한다..")
+    void deleteNotFound() {
+        // given
+        given(noticeRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> noticeService.delete(TEST_NOTICE.getId()));
 
         // then
         then(noticeRepository).should(times(1)).findById(any());
@@ -103,6 +133,20 @@ class NoticeServiceTest {
         assertThat(result.getTitle()).isEqualTo(TEST_NOTICE.getTitle());
         assertThat(result.getContent()).isEqualTo(TEST_NOTICE.getContent());
 
+        then(noticeRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("공지사항을 상세조회할 때 공지사항이 존재하지 않으면 예외가 발생한다.")
+    void findByIdNotFound() {
+        // given
+        given(noticeRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> noticeService.findById(TEST_NOTICE.getId()));
+
+        // then
         then(noticeRepository).should(times(1)).findById(any());
     }
 }

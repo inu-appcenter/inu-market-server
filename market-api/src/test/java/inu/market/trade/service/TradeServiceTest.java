@@ -1,5 +1,6 @@
 package inu.market.trade.service;
 
+import inu.market.common.NotFoundException;
 import inu.market.item.domain.ItemRepository;
 import inu.market.item.dto.ItemResponse;
 import inu.market.item.query.ItemQueryRepository;
@@ -78,7 +79,40 @@ class TradeServiceTest {
     }
 
     @Test
-    @DisplayName("거래를 생성한다.")
+    @DisplayName("거래를 생성할 때 상품이 존재하지 않으면 예외가 발생한다.")
+    void createItemNotFound() {
+        // given
+        given(itemRepository.findWithSellerById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> tradeService.create(TEST_USER.getId(), TEST_TRADE_CREATE_REQUEST));
+
+        // then
+        then(itemRepository).should(times(1)).findWithSellerById(any());
+    }
+
+
+    @Test
+    @DisplayName("거래를 생성할 때 회원이 존재하지 않으면 예외가 발생한다.")
+    void createUserNotFound() {
+        // given
+        given(itemRepository.findWithSellerById(any()))
+                .willReturn(Optional.of(TEST_ITEM));
+
+        given(userRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> tradeService.create(TEST_USER.getId(), TEST_TRADE_CREATE_REQUEST));
+
+        // then
+        then(itemRepository).should(times(1)).findWithSellerById(any());
+        then(userRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("거래를 생성할 때 판매자가 아니면 예외가 발생한다.")
     void createNotOwner() {
         // given
         given(itemRepository.findWithSellerById(any()))

@@ -2,6 +2,7 @@ package inu.market.chatroom.service;
 
 import inu.market.chatroom.domain.ChatRoomRepository;
 import inu.market.chatroom.dto.ChatRoomResponse;
+import inu.market.common.NotFoundException;
 import inu.market.item.domain.ItemRepository;
 import inu.market.user.domain.UserRepository;
 import inu.market.user.dto.UserResponse;
@@ -60,6 +61,41 @@ class ChatRoomServiceTest {
 
         // then
         assertThat(result).isEqualTo(TEST_CHAT_ROOM.getId());
+        then(userRepository).should(times(1)).findById(any());
+        then(itemRepository).should(times(1)).findWithSellerById(any());
+        then(chatRoomRepository).should(times(1)).save(any());
+    }
+
+    @Test
+    @DisplayName("채팅방을 생성할때 회원이 존재하지 않으면 예외가 발생한다.")
+    void createUserNotFound() {
+        // given
+        given(userRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> chatRoomService.create(TEST_USER.getId(), TEST_ITEM.getId()));
+
+        // then
+        then(userRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("채팅방을 생성할때 상품이 존재하지 않으면 예외가 발생한다.")
+    void createItemNotFound() {
+        // given
+        given(userRepository.findById(any()))
+                .willReturn(Optional.of(TEST_USER));
+
+        given(itemRepository.findWithSellerById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> chatRoomService.create(TEST_USER.getId(), TEST_ITEM.getId()));
+
+        // then
+        then(userRepository).should(times(1)).findById(any());
+        then(itemRepository).should(times(1)).findWithSellerById(any());
     }
 
     @Test
@@ -115,6 +151,20 @@ class ChatRoomServiceTest {
     }
 
     @Test
+    @DisplayName("채팅방을 삭제할때 채팅방이 존재하지 않으면 예외가 발생한다.")
+    void deleteNotFound() {
+        // given
+        given(chatRoomRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> chatRoomService.delete(TEST_USER.getId(), TEST_CHAT_ROOM.getId()));
+
+        // then
+        then(chatRoomRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("구매자/판매자가 아닌 회원이 채팅방을 삭제하면 예외가 발생한다.")
     void deleteNotBySellerOrBuyer() {
         // given
@@ -156,6 +206,20 @@ class ChatRoomServiceTest {
         // then
         assertThat(result.getItem().getItemId()).isEqualTo(TEST_ITEM.getId());
         assertThat(result.getUser().getUserId()).isEqualTo(TEST_USER1.getId());
+        then(chatRoomRepository).should(times(1)).findWithItemAndBuyerAndSellerById(any());
+    }
+
+    @Test
+    @DisplayName("채팅방을 상세 조회할 때 채팅방이 존재하지 않으면 예외가 발생한다.")
+    void findByIdNotFound() {
+        // given
+        given(chatRoomRepository.findWithItemAndBuyerAndSellerById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> chatRoomService.findById(TEST_USER.getId(), TEST_CHAT_ROOM.getId()));
+
+        // then
         then(chatRoomRepository).should(times(1)).findWithItemAndBuyerAndSellerById(any());
     }
 }

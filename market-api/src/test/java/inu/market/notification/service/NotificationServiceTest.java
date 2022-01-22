@@ -1,5 +1,6 @@
 package inu.market.notification.service;
 
+import inu.market.common.NotFoundException;
 import inu.market.notification.domain.NotificationRepository;
 import inu.market.notification.dto.NotificationResponse;
 import inu.market.notification.query.NotificationQueryRepository;
@@ -61,6 +62,20 @@ class NotificationServiceTest {
 
         // when
         notificationService.updateRead(UserFixture.TEST_USER.getId(), TEST_NOTIFICATION.getId());
+
+        // then
+        then(notificationRepository).should(times(1)).findById(any());
+    }
+
+    @Test
+    @DisplayName("알림을 읽음 처리할 때 알림이 존재하지 않으면 예외가 발생한다.")
+    void updateReadNotFound() {
+        // given
+        given(notificationRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> notificationService.updateRead(UserFixture.TEST_USER.getId(), TEST_NOTIFICATION.getId()));
 
         // then
         then(notificationRepository).should(times(1)).findById(any());

@@ -4,6 +4,7 @@ import inu.market.category.domain.CategoryRepository;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.client.AwsClient;
 import inu.market.common.DuplicateException;
+import inu.market.common.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -92,6 +93,20 @@ class CategoryServiceTest {
     }
 
     @Test
+    @DisplayName("카테고리를 수정할 때 카테고리가 존재하지 않으면 예외가 발생한다.")
+    void updateNotFound() {
+        // given
+        given(categoryRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> categoryService.update(TEST_CATEGORY.getId(), TEST_CATEGORY_UPDATE_REQUEST));
+
+        // then
+        then(categoryRepository).should(times(1)).findById(any());
+    }
+
+    @Test
     @DisplayName("중복된 카테고리로 수정하면 예외가 발생한다.")
     void updateDuplicate() {
         // given
@@ -125,6 +140,20 @@ class CategoryServiceTest {
         // then
         then(categoryRepository).should(times(1)).findById(any());
         then(categoryRepository).should(times(1)).delete(any());
+    }
+
+    @Test
+    @DisplayName("카테고리를 삭제할때 카테고리가 존재하지 않으면 예외가 발생한다.")
+    void deleteNotFound() {
+        // given
+        given(categoryRepository.findById(any()))
+                .willReturn(Optional.empty());
+
+        // when
+        assertThrows(NotFoundException.class, () -> categoryService.delete(TEST_CATEGORY.getId()));
+
+        // then
+        then(categoryRepository).should(times(1)).findById(any());
     }
 
     @Test
