@@ -6,6 +6,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import inu.market.category.dto.CategoryResponse;
 import inu.market.item.domain.Item;
 import inu.market.item.domain.ItemImage;
+import inu.market.item.domain.Status;
 import inu.market.major.dto.MajorResponse;
 import inu.market.user.dto.UserResponse;
 import lombok.AllArgsConstructor;
@@ -60,13 +61,13 @@ public class ItemResponse {
 
     @QueryProjection
     public ItemResponse(Long itemId, String title, String mainImageUrl, int price,
-                        int favoriteCount, String status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+                        int favoriteCount, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.itemId = itemId;
         this.title = title;
         this.mainImageUrl = mainImageUrl;
         this.price = price;
         this.favoriteCount = favoriteCount;
-        this.status = status;
+        this.status = status.getStatus();
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

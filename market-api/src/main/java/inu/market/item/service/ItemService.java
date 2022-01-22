@@ -100,7 +100,7 @@ public class ItemService {
             throw new AccessDeniedException("권한이 없습니다.");
         }
 
-        findItem.changeStatus(Status.valueOf(request.getStatus()));
+        findItem.changeStatus(Status.from(request.getStatus()));
     }
 
     @Transactional

@@ -27,7 +27,7 @@ public class ItemQueryRepository {
     public List<ItemResponse> findByFavoriteUserId(Long userId) {
         return queryFactory
                 .select(new QItemResponse(item.id, item.title, item.mainImageUrl, item.price, item.favoriteCount,
-                        item.status.stringValue(), item.createdAt, item.updatedAt))
+                        item.status, item.createdAt, item.updatedAt))
                 .from(favorite)
                 .join(favorite.item, item)
                 .where(favorite.user.id.eq(userId))
@@ -38,7 +38,7 @@ public class ItemQueryRepository {
     public List<ItemResponse> findByTradeBuyerId(Long buyerId) {
         return queryFactory
                 .select(new QItemResponse(item.id, item.title, item.mainImageUrl, item.price, item.favoriteCount,
-                        item.status.stringValue(), item.createdAt, item.updatedAt))
+                        item.status, item.createdAt, item.updatedAt))
                 .from(trade)
                 .join(trade.item, item)
                 .where(trade.buyer.id.eq(buyerId))
@@ -49,7 +49,7 @@ public class ItemQueryRepository {
     public List<ItemResponse> findBySellerId(Long sellerId) {
         return queryFactory
                 .select(new QItemResponse(item.id, item.title, item.mainImageUrl, item.price, item.favoriteCount,
-                        item.status.stringValue(), item.createdAt, item.updatedAt))
+                        item.status, item.createdAt, item.updatedAt))
                 .from(item)
                 .where(item.seller.id.eq(sellerId))
                 .orderBy(item.id.desc())
@@ -60,7 +60,7 @@ public class ItemQueryRepository {
                                                     String searchWord, Integer size) {
         return queryFactory
                 .select(new QItemResponse(item.id, item.title, item.mainImageUrl, item.price, item.favoriteCount,
-                        item.status.stringValue(), item.createdAt, item.updatedAt))
+                        item.status, item.createdAt, item.updatedAt))
                 .from(item)
                 .where(titleLike(searchWord),
                         categoryEq(categoryId),
