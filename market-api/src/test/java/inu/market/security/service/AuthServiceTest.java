@@ -41,11 +41,11 @@ class AuthServiceTest {
 
         // then
         assertThat(result.getUsername()).isEqualTo(String.valueOf(TEST_USER.getId()));
-        assertThat(result.getAuthorities().size()).isEqualTo(1);
+        assertThat(result.getAuthorities()).hasSize(1);
         then(userRepository).should(times(1)).findById(any());
     }
 
-    @Test
+    @Test()
     @DisplayName("회원을 조회하고 없으면 예외가 발생한다.")
     void loadUserByUsernameNotFound() {
         // given

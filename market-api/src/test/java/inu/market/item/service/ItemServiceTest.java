@@ -100,7 +100,7 @@ class ItemServiceTest {
         given(itemRepository.save(any()))
                 .willReturn(TEST_ITEM);
         // when
-        Long result = itemService.create(TEST_USER.getId(), TEST_ITEM_CREATE_REQUEST);
+        Long result = itemService.create(TEST_USER.getId(), TEST_ITEM_REQUEST);
 
         // then
         assertThat(result).isEqualTo(TEST_ITEM.getId());
@@ -118,7 +118,7 @@ class ItemServiceTest {
                 .willReturn(Optional.empty());
 
         // when
-        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_CREATE_REQUEST));
+        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_REQUEST));
 
         // then
         then(userRepository).should(times(1)).findById(any());
@@ -135,7 +135,7 @@ class ItemServiceTest {
                 .willReturn(Optional.empty());
 
         // when
-        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_CREATE_REQUEST));
+        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_REQUEST));
 
         // then
         then(userRepository).should(times(1)).findById(any());
@@ -156,7 +156,7 @@ class ItemServiceTest {
                 .willReturn(Optional.empty());
 
         // when
-        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_CREATE_REQUEST));
+        assertThrows(NotFoundException.class, () -> itemService.create(TEST_USER.getId(), TEST_ITEM_REQUEST));
 
         // then
         then(userRepository).should(times(1)).findById(any());
@@ -178,7 +178,7 @@ class ItemServiceTest {
                 .willReturn(Optional.of(TEST_MAJOR));
 
         // when
-        itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST);
+        itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_REQUEST);
 
         // then
         then(itemRepository).should(times(1)).findWithItemImagesById(any());
@@ -194,7 +194,7 @@ class ItemServiceTest {
                 .willReturn(Optional.of(TEST_ITEM));
 
         // when
-        assertThrows(AccessDeniedException.class, () -> itemService.update(TEST_USER1.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST));
+        assertThrows(AccessDeniedException.class, () -> itemService.update(TEST_USER1.getId(), TEST_ITEM.getId(), TEST_ITEM_REQUEST));
 
         // then
         then(itemRepository).should(times(1)).findWithItemImagesById(any());
@@ -208,7 +208,7 @@ class ItemServiceTest {
                 .willReturn(Optional.empty());
 
         // when
-        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST));
+        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_REQUEST));
 
         // then
         then(itemRepository).should(times(1)).findWithItemImagesById(any());
@@ -225,7 +225,7 @@ class ItemServiceTest {
                 .willReturn(Optional.empty());
 
         // when
-        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST));
+        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_REQUEST));
 
         // then
         then(itemRepository).should(times(1)).findWithItemImagesById(any());
@@ -246,7 +246,7 @@ class ItemServiceTest {
                 .willReturn(Optional.empty());
 
         // when
-        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_UPDATE_REQUEST));
+        assertThrows(NotFoundException.class, () -> itemService.update(TEST_USER.getId(), TEST_ITEM.getId(), TEST_ITEM_REQUEST));
 
         // then
         then(itemRepository).should(times(1)).findWithItemImagesById(any());

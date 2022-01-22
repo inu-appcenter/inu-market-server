@@ -44,7 +44,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class WebSocketTest {
+class WebSocketTest {
 
     @LocalServerPort
     private int port;

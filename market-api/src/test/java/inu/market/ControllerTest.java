@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @AutoConfigureRestDocs
 @ExtendWith(RestDocumentationExtension.class)
-public class ControllerTest {
+public abstract class ControllerTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
@@ -62,5 +62,6 @@ public class ControllerTest {
                         .withRequestDefaults(prettyPrint())
                         .withResponseDefaults(prettyPrint()))
                 .build();
+
     }
 }

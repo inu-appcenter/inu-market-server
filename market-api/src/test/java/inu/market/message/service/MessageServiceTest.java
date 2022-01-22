@@ -84,9 +84,9 @@ class MessageServiceTest {
         MessageResponse result = messageService.findLastByRoomId(TEST_CHAT_ROOM.getId());
 
         // then
-        assertThat(result.getNickName()).isEqualTo("");
-        assertThat(result.getContent()).isEqualTo("");
-        assertThat(result.getSenderId()).isEqualTo(0L);
+        assertThat(result.getNickName()).isEmpty();
+        assertThat(result.getContent()).isEmpty();
+        assertThat(result.getSenderId()).isZero();
         assertThat(result.getMessageType()).isEqualTo(TEST_MESSAGE_TYPE.getType());
         then(messageRepository).should(times(1)).findTopByRoomIdOrderByCreatedAtDesc(any());
     }

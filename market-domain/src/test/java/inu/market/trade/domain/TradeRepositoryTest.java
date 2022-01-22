@@ -56,6 +56,6 @@ class TradeRepositoryTest {
 
         // then
         List<Trade> result = tradeRepository.findAll();
-        assertThat(result.size()).isEqualTo(0);
+        assertThat(result.size()).isZero();
     }
 }

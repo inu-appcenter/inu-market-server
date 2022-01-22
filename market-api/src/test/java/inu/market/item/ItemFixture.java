@@ -32,11 +32,8 @@ public class ItemFixture {
 
     public static final ItemImage TEST_ITEM_IMAGE = new ItemImage(1L, TEST_IMAGE_URL, TEST_ITEM);
 
-    public static final ItemCreateRequest TEST_ITEM_CREATE_REQUEST
-            = new ItemCreateRequest(TEST_ITEM_TITLE, TEST_ITEM_CONTENTS, TEST_ITEM_PRICE, TEST_MAJOR.getId(), TEST_CATEGORY.getId(), Arrays.asList(TEST_IMAGE_URL));
-
-    public static final ItemUpdateRequest TEST_ITEM_UPDATE_REQUEST
-            = new ItemUpdateRequest(TEST_ITEM_TITLE, TEST_ITEM_CONTENTS, TEST_ITEM_PRICE, TEST_MAJOR.getId(), TEST_CATEGORY.getId(), Arrays.asList(TEST_IMAGE_URL));
+    public static final ItemRequest TEST_ITEM_REQUEST
+            = new ItemRequest(TEST_ITEM_TITLE, TEST_ITEM_CONTENTS, TEST_ITEM_PRICE, TEST_MAJOR.getId(), TEST_CATEGORY.getId(), Arrays.asList(TEST_IMAGE_URL));
 
     public static final ItemUpdateStatusRequest TEST_ITEM_UPDATE_STATUS_REQUEST
             = new ItemUpdateStatusRequest(TEST_ITEM_STATUS.getStatus());

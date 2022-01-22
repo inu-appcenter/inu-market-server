@@ -94,6 +94,6 @@ class FavoriteRepositoryTest {
 
         // then
         List<Favorite> result = favoriteRepository.findAll();
-        assertThat(result.size()).isEqualTo(0);
+        assertThat(result.size()).isZero();
     }
 }

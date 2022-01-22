@@ -86,7 +86,7 @@ class ItemControllerTest extends ControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, TEST_AUTHORIZATION)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(TEST_ITEM_CREATE_REQUEST)))
+                        .content(objectMapper.writeValueAsString(TEST_ITEM_REQUEST)))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(response)))
                 .andDo(document("item/create",
@@ -122,7 +122,7 @@ class ItemControllerTest extends ControllerTest {
         mockMvc.perform(RestDocumentationRequestBuilders.put("/api/items/{itemId}", TEST_ITEM.getId())
                         .header(HttpHeaders.AUTHORIZATION, TEST_AUTHORIZATION)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(TEST_ITEM_UPDATE_REQUEST)))
+                        .content(objectMapper.writeValueAsString(TEST_ITEM_REQUEST)))
                 .andExpect(status().isOk())
                 .andDo(document("item/update",
                         requestHeaders(

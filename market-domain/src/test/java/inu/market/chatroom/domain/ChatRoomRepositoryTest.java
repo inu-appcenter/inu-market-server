@@ -78,7 +78,7 @@ class ChatRoomRepositoryTest {
 
         // then
         List<ChatRoom> result = chatRoomRepository.findAll();
-        assertThat(result.size()).isEqualTo(0);
+        assertThat(result.size()).isZero();
     }
 
     @Test
