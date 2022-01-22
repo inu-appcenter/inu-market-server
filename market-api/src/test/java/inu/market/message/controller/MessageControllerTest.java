@@ -113,7 +113,7 @@ class MessageControllerTest extends ControllerTest {
                                 fieldWithPath("senderId").type(JsonFieldType.NUMBER).description("회원 ID"),
                                 fieldWithPath("nickName").type(JsonFieldType.STRING).description("회원 닉네임"),
                                 fieldWithPath("content").type(JsonFieldType.STRING).description("메세지 내용"),
-                                fieldWithPath("messageType").type(JsonFieldType.STRING).description("메세지 타입"),
+                                fieldWithPath("messageType").type(JsonFieldType.STRING).description("메세지 타입 문자/이미지"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("메세지 생성 시간")
                         )
                 ));
@@ -153,7 +153,7 @@ class MessageControllerTest extends ControllerTest {
                                 fieldWithPath("[].senderId").type(JsonFieldType.NUMBER).description("회원 ID"),
                                 fieldWithPath("[].nickName").type(JsonFieldType.STRING).description("회원 닉네임"),
                                 fieldWithPath("[].content").type(JsonFieldType.STRING).description("메세지 내용"),
-                                fieldWithPath("[].messageType").type(JsonFieldType.STRING).description("메세지 타입"),
+                                fieldWithPath("[].messageType").type(JsonFieldType.STRING).description("메세지 타입 문자/이미지"),
                                 fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("메세지 생성 시간")
                         )
                 ));

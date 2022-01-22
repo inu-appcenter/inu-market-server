@@ -64,7 +64,7 @@ class NotificationControllerTest extends ControllerTest {
                                 fieldWithPath("[].notificationId").type(JsonFieldType.NUMBER).description("알림 ID"),
                                 fieldWithPath("[].content").type(JsonFieldType.STRING).description("알림 내용"),
                                 fieldWithPath("[].read").type(JsonFieldType.BOOLEAN).description("알림 읽음 여부"),
-                                fieldWithPath("[].notificationType").type(JsonFieldType.STRING).description("알림 메세지 타입"),
+                                fieldWithPath("[].notificationType").type(JsonFieldType.STRING).description("알림 메세지 타입 찜/거래"),
                                 fieldWithPath("[].referenceId").type(JsonFieldType.NUMBER).description("알림 참조 ID"),
                                 fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("알림 생성 시간")
                         )

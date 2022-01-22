@@ -167,7 +167,7 @@ class ItemControllerTest extends ControllerTest {
                                 parameterWithName("itemId").description("상품 ID")
                         ),
                         requestFields(
-                                fieldWithPath("status").type(JsonFieldType.STRING).description("상품 상태")
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상품 상태 판매중/예약중/판매완료")
                         )
                 ));
 
@@ -225,7 +225,7 @@ class ItemControllerTest extends ControllerTest {
                                 fieldWithPath("contents").type(JsonFieldType.STRING).description("상품 설명"),
                                 fieldWithPath("price").type(JsonFieldType.NUMBER).description("상품 가격"),
                                 fieldWithPath("favoriteCount").type(JsonFieldType.NUMBER).description("상품 찜 회수"),
-                                fieldWithPath("status").type(JsonFieldType.STRING).description("상품 상태"),
+                                fieldWithPath("status").type(JsonFieldType.STRING).description("상품 상태 판매중/예약중/판매완료"),
                                 fieldWithPath("favorite").type(JsonFieldType.BOOLEAN).description("상품 좋아요 여부"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("상품 등록 시간"),
                                 fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("상품 수정 시간"),
@@ -282,7 +282,7 @@ class ItemControllerTest extends ControllerTest {
                                 fieldWithPath("[].mainImageUrl").type(JsonFieldType.STRING).description("상품 대표 이미지 URL"),
                                 fieldWithPath("[].price").type(JsonFieldType.NUMBER).description("상품 가격"),
                                 fieldWithPath("[].favoriteCount").type(JsonFieldType.NUMBER).description("상품 찜 회수"),
-                                fieldWithPath("[].status").type(JsonFieldType.STRING).description("상품 상태"),
+                                fieldWithPath("[].status").type(JsonFieldType.STRING).description("상품 상태 판매중/예약중/판매완료"),
                                 fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("상품 등록 시간"),
                                 fieldWithPath("[].updatedAt").type(JsonFieldType.STRING).description("상품 수정 시간")
                         )
@@ -316,7 +316,7 @@ class ItemControllerTest extends ControllerTest {
                                 fieldWithPath("[].mainImageUrl").type(JsonFieldType.STRING).description("상품 대표 이미지 URL"),
                                 fieldWithPath("[].price").type(JsonFieldType.NUMBER).description("상품 가격"),
                                 fieldWithPath("[].favoriteCount").type(JsonFieldType.NUMBER).description("상품 찜 회수"),
-                                fieldWithPath("[].status").type(JsonFieldType.STRING).description("상품 상태"),
+                                fieldWithPath("[].status").type(JsonFieldType.STRING).description("상품 상태 판매중/예약중/판매완료"),
                                 fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("상품 등록 시간"),
                                 fieldWithPath("[].updatedAt").type(JsonFieldType.STRING).description("상품 수정 시간")
                         )
