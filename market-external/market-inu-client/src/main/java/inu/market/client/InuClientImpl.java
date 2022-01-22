@@ -3,6 +3,7 @@ package inu.market.client;
 import inu.market.common.NetworkException;
 import inu.market.common.NotMatchException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,11 +13,15 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-@RequiredArgsConstructor
 public class InuClientImpl implements InuClient {
 
-    private final RestTemplate restTemplate;
     public static final String INU_LOGIN_URL = "https://cyber.inu.ac.kr/login/index.php";
+
+    private final RestTemplate restTemplate;
+
+    public InuClientImpl(RestTemplateBuilder restTemplateBuilder) {
+        this.restTemplate = restTemplateBuilder.build();
+    }
 
     @Override
     public void login(Integer inuId, String password) {
