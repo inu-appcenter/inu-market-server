@@ -21,6 +21,6 @@ public class NotificationFixture {
 
     public static final NotificationResponse TEST_NOTIFICATION_RESPONSE
             = new NotificationResponse(TEST_NOTIFICATION.getId(), TEST_NOTIFICATION.getContent(),
-            TEST_NOTIFICATION.isRead(), TEST_NOTIFICATION.getNotificationType().toString(),
+            TEST_NOTIFICATION.isRead(), TEST_NOTIFICATION.getNotificationType(),
             TEST_NOTIFICATION.getReferenceId(), TEST_NOTIFICATION.getCreatedAt());
 }
