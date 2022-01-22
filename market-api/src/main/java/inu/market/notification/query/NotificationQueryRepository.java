@@ -21,7 +21,7 @@ public class NotificationQueryRepository {
     public List<NotificationResponse> findByUserId(Long userId, Long notificationId) {
         return queryFactory
                 .select(new QNotificationResponse(notification.id, notification.content,
-                                                  notification.read, notification.notificationType.stringValue(),
+                                                  notification.read, notification.notificationType,
                                                   notification.referenceId, notification.createdAt))
                 .from(notification)
                 .where(notification.user.id.eq(userId),

@@ -2,8 +2,8 @@ package inu.market.notification.domain;
 
 public enum NotificationType {
 
-    FAVORITE("FAVORITE"),
-    TRADE("TRADE");
+    FAVORITE("찜"),
+    TRADE("거래");
 
     private final String type;
 
