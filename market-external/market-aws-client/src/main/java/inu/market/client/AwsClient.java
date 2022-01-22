@@ -28,7 +28,7 @@ public class AwsClient {
             amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, image.getInputStream(), null)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return amazonS3Client.getUrl(bucket, fileName).toString();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new NetworkException("파일 업로드 중 오류가 발생했습니다.");
         }
     }
