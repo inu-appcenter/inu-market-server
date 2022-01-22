@@ -8,8 +8,11 @@ import java.nio.charset.StandardCharsets;
 public class CommonFixture {
 
     public static final String TEST_AUTHORIZATION = "Bearer **";
-    public static  final String TEST_IMAGE_URL = "이미지 URL";
+
+    public static final String TEST_IMAGE_URL = "이미지 URL";
     public static final Integer TEST_SIZE = 10;
+
+    public static final String TEST_EXPIRATION_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjQyNTc3NjMyLCJleHAiOjE2NDI2NjQwMzJ9.nzIasjShYVOAVnPACqUmJMiHLpHyN26vJo4q6NuePg0";
 
     public static final MockMultipartFile TEST_IMAGE_FILE = new MockMultipartFile(
             "image", "이미지.png",

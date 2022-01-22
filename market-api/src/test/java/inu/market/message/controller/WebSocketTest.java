@@ -1,6 +1,7 @@
 package inu.market.message.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import inu.market.CommonFixture;
 import inu.market.message.dto.MessageResponse;
 import inu.market.message.service.MessageService;
 import inu.market.security.util.JwtUtil;
@@ -120,7 +121,23 @@ public class WebSocketTest {
         // when
         assertThrows(ExecutionException.class,
                 () -> webSocketStompClient.connect("ws://localhost:" + port + "/ws-stomp", null, null, new StompSessionHandlerAdapter() {
-                }, new Object[0]).get(60, SECONDS));
+                        },
+                        new Object[0]).get(60, SECONDS));
+    }
+
+    @Test
+    @DisplayName("예외 테스트: 비회원이 채팅 메세지를 전송하면 예외가 발생한다.")
+    void sendMessageNotBearerToken() throws Exception {
+
+        // given
+        StompHeaders stompHeaders = new StompHeaders();
+        stompHeaders.add(HttpHeaders.AUTHORIZATION, CommonFixture.TEST_EXPIRATION_TOKEN);
+
+        // when
+        assertThrows(ExecutionException.class,
+                () -> webSocketStompClient.connect("ws://localhost:" + port + "/ws-stomp", null, stompHeaders, new StompSessionHandlerAdapter() {
+                        },
+                        new Object[0]).get(60, SECONDS));
     }
 
     static class StompFrameHandlerImpl<T> implements StompFrameHandler {
