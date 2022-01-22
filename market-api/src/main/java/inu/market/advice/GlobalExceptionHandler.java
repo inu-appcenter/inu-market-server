@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ExceptionResponse> handleAccessDeniedExceptions(AccessDeniedException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ExceptionResponse.from(e.getMessage()));
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ExceptionResponse.from("권한이 없스빈다."));
     }
 
     @ExceptionHandler({NotExistException.class, NotMatchException.class, NotFoundException.class, DuplicateException.class})

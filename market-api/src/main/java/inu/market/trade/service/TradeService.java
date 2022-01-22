@@ -20,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static inu.market.common.NotFoundException.ITEM_NOT_FOUND;
+import static inu.market.common.NotFoundException.USER_NOT_FOUND;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -34,14 +37,14 @@ public class TradeService {
     @Transactional
     public void create(Long userId, TradeCreateRequest request) {
         Item findItem = itemRepository.findWithSellerById(request.getItemId())
-                .orElseThrow(() -> new NotFoundException(request.getItemId() + "는 존재하지 않는 상품 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
 
         if (!findItem.getSeller().getId().equals(userId)) {
-            throw new AccessDeniedException("권한이 없습니다.");
+            throw new AccessDeniedException("");
         }
 
         User findUser = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new NotFoundException(request.getUserId() + "는 존재하지 않는 회원 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         Trade trade = Trade.createTrade(findItem, findUser);
         tradeRepository.save(trade);
@@ -56,7 +59,7 @@ public class TradeService {
     }
 
     private String makeTradeMessage(String nickName) {
-        return nickName + "님과의 거래가 완료되었습니다.";
+        return String.format("%s님과 거래가 완료되었습니다.", nickName);
     }
 
 }

@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static inu.market.common.NotFoundException.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -27,10 +29,10 @@ public class NotificationService {
     @Transactional
     public void updateRead(Long userId, Long notificationId) {
         Notification findNotification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new NotFoundException(notificationId + "는 존재하지 않는 알림 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(NOTIFICATION_NOT_FOUND));
 
         if (!findNotification.getUser().getId().equals(userId)) {
-            throw new AccessDeniedException("권한이 없습니다.");
+            throw new AccessDeniedException("");
         }
 
         findNotification.changeRead();

@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static inu.market.common.NotFoundException.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -34,10 +36,10 @@ public class FavoriteService {
     @Transactional
     public void create(Long userId, FavoriteCreateRequest request) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         Item findItem = itemRepository.findWithSellerById(request.getItemId())
-                .orElseThrow(() -> new NotFoundException(request.getItemId() + "는 존재하지 않는 상품 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
         User seller = findItem.getSeller();
 
         Favorite favorite = Favorite.createFavorite(findUser, findItem);
@@ -51,7 +53,7 @@ public class FavoriteService {
     @Transactional
     public void delete(Long userId, FavoriteDeleteRequest request) {
         Favorite findFavorite = favoriteRepository.findWithItemByUserIdAndItemId(userId, request.getItemId())
-                .orElseThrow(() -> new NotFoundException("찜 목록에 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException(FAVORITE_NOT_FOUND));
 
         findFavorite.getItem().decreaseFavoriteCount();
         favoriteRepository.delete(findFavorite);
@@ -62,6 +64,6 @@ public class FavoriteService {
     }
 
     private String makeFavoriteMessage(String nickName, String title) {
-        return nickName + "님이 " + title + "를 찜 목록에 추가했습니다.";
+        return String.format("%s님이 %s를 찜 목록에 추가했습니다.", nickName, title);
     }
 }

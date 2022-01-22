@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static inu.market.common.NotFoundException.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -52,13 +54,13 @@ public class ItemService {
     @Transactional
     public Long create(Long userId, ItemCreateRequest request) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         Category findCategory = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new NotFoundException(request.getCategoryId() + "는 존재하지 않는 카테고리 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
 
         Major findMajor = majorRepository.findById(request.getMajorId())
-                .orElseThrow(() -> new NotFoundException(request.getMajorId() + "는 존재하지 않는 학과 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(MAJOR_NOT_FOUND));
 
         Item item = Item.createItem(request.getTitle(), request.getContents(), request.getImageUrls().get(0),
                 request.getPrice(), Status.SALE, findUser);
@@ -73,17 +75,17 @@ public class ItemService {
     @Transactional
     public void update(Long userId, Long itemId, ItemUpdateRequest request) {
         Item findItem = itemRepository.findWithItemImagesById(itemId)
-                .orElseThrow(() -> new NotFoundException(itemId + "는 존재하지 않는 상품 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
 
         if (!findItem.getSeller().getId().equals(userId)) {
-            throw new AccessDeniedException("권한이 없습니다.");
+            throw new AccessDeniedException("");
         }
 
         Category findCategory = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new NotFoundException(request.getCategoryId() + "는 존재하지 않는 카테고리 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
 
         Major findMajor = majorRepository.findById(request.getMajorId())
-                .orElseThrow(() -> new NotFoundException(request.getMajorId() + "는 존재하지 않는 학과 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(MAJOR_NOT_FOUND));
 
         findItem.changeTitleAndContentAndPrice(request.getTitle(), request.getContents(), request.getPrice());
         findItem.changeCategory(findCategory);
@@ -94,10 +96,10 @@ public class ItemService {
     @Transactional
     public void updateStatus(Long userId, Long itemId, ItemUpdateStatusRequest request) {
         Item findItem = itemRepository.findById(itemId)
-                .orElseThrow(() -> new NotFoundException(itemId + "는 존재하지 않는 상품 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
 
         if (!findItem.getSeller().getId().equals(userId)) {
-            throw new AccessDeniedException("권한이 없습니다.");
+            throw new AccessDeniedException("");
         }
 
         findItem.changeStatus(Status.from(request.getStatus()));
@@ -106,10 +108,10 @@ public class ItemService {
     @Transactional
     public void delete(Long userId, Long itemId) {
         Item findItem = itemRepository.findById(itemId)
-                .orElseThrow(() -> new NotFoundException(itemId + "는 존재하지 않는 상품 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
 
         if (!findItem.getSeller().getId().equals(userId)) {
-            throw new AccessDeniedException("권한이 없습니다.");
+            throw new AccessDeniedException("");
         }
 
         tradeRepository.deleteAllByItem(findItem);
@@ -120,7 +122,7 @@ public class ItemService {
 
     public ItemResponse findById(Long userId, Long itemId) {
         Item findItem = itemRepository.findWithSellerAndItemImagesAndCategoryAndMajorById(itemId)
-                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 상품 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
         Optional<Favorite> favorite = favoriteRepository.findByUserIdAndItemId(userId, itemId);
         return ItemResponse.from(findItem, findItem.getItemImages(), favorite.isPresent());
     }

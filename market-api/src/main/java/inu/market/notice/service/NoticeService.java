@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static inu.market.common.NotFoundException.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -29,7 +31,7 @@ public class NoticeService {
     @Transactional
     public void update(Long noticeId, NoticeUpdateRequest request) {
         Notice findNotice = noticeRepository.findById(noticeId)
-                .orElseThrow(() -> new NotFoundException(noticeId + "는 존재하지 않는 공지사항 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(NOTICE_NOT_FOUND));
 
         findNotice.changeTitleAndContent(request.getTitle(), request.getContent());
     }
@@ -37,7 +39,7 @@ public class NoticeService {
     @Transactional
     public void delete(Long noticeId) {
         Notice findNotice = noticeRepository.findById(noticeId)
-                .orElseThrow(() -> new NotFoundException(noticeId + "는 존재하지 않는 공지사항 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(NOTICE_NOT_FOUND));
 
         noticeRepository.delete(findNotice);
     }
@@ -51,7 +53,7 @@ public class NoticeService {
 
     public NoticeResponse findById(Long noticeId) {
         Notice findNotice = noticeRepository.findById(noticeId)
-                .orElseThrow(() -> new NotFoundException(noticeId + "는 존재하지 않는 공지사항 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(NOTICE_NOT_FOUND));
         return NoticeResponse.from(findNotice);
     }
 }

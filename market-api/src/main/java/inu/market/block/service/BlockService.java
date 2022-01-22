@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static inu.market.common.NotFoundException.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -27,10 +29,10 @@ public class BlockService {
     @Transactional
     public void create(Long userId, BlockCreateRequest request) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         User targetUser = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         if (blockRepository.findByUserAndTarget(findUser, targetUser).isPresent()) {
             throw new DuplicateException("이미 차단한 회원입니다.");
@@ -43,7 +45,7 @@ public class BlockService {
     @Transactional
     public void delete(Long userId, Long blockId) {
         Block findBlock = blockRepository.findById(blockId)
-                .orElseThrow(() -> new NotFoundException(blockId + "는 존재하지 않는 차단 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(BLOCK_NOT_FOUND));
 
         if(!findBlock.getUser().getId().equals(userId)){
             throw new AccessDeniedException("권한이 없습니다.");

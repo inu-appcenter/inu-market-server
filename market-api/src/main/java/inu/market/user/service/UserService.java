@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import static inu.market.common.NotFoundException.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -44,7 +46,7 @@ public class UserService {
         inuClient.login(request.getInuId(), request.getPassword());
 
         User findUser = userRepository.findByInuId(request.getInuId())
-                .orElseThrow(() -> new NotFoundException(request.getInuId() + "는 존재하지 않는 학번입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         findUser.changePushToken(request.getPushToken());
 
@@ -58,14 +60,14 @@ public class UserService {
     @Transactional
     public void updateProfile(Long userId, UserUpdateProfileRequest request) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         findUser.changeProfile(request.getNickName(), request.getImageUrl());
     }
 
     public UserResponse findById(Long userId) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         return UserResponse.from(findUser);
     }

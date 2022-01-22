@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static inu.market.common.NotFoundException.*;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -29,10 +31,10 @@ public class ChatRoomService {
     @Transactional
     public Long create(Long userId, Long itemId) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(userId + "는 존재하지 않는 회원 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
         Item findItem = itemRepository.findWithSellerById(itemId)
-                .orElseThrow(() -> new NotFoundException(itemId + "는 존재하지 않는 상품 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
 
         ChatRoom chatRoom = ChatRoom.createChatRoom(findItem, findUser, findItem.getSeller());
         return chatRoomRepository.save(chatRoom).getId();
@@ -48,10 +50,10 @@ public class ChatRoomService {
     @Transactional
     public void delete(Long userId, Long roomId) {
         ChatRoom findChatRoom = chatRoomRepository.findById(roomId)
-                .orElseThrow(() -> new NotFoundException(roomId + "는 존재하지 않는 채팅방 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(CHAT_ROOM_NOT_FOUND));
 
         if (!findChatRoom.getBuyer().getId().equals(userId) && !findChatRoom.getSeller().getId().equals(userId)) {
-            throw new AccessDeniedException("권한이 없습니다.");
+            throw new AccessDeniedException("");
         }
 
         chatRoomRepository.delete(findChatRoom);
@@ -66,7 +68,7 @@ public class ChatRoomService {
 
     public ChatRoomResponse findById(Long userId, Long roomId) {
         ChatRoom findChatRoom = chatRoomRepository.findWithItemAndBuyerAndSellerById(roomId)
-                .orElseThrow(() -> new NotFoundException(roomId + "는 존재하지 않는 채팅방 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(CHAT_ROOM_NOT_FOUND));
         return ChatRoomResponse.from(findChatRoom, userId);
     }
 }

@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static inu.market.common.NotFoundException.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -27,7 +29,7 @@ public class CategoryService {
     @Transactional
     public Long create(CategoryCreateRequest request) {
         if (categoryRepository.findByName(request.getName()).isPresent()) {
-            throw new DuplicateException(request.getName() + "는 이미 존재하는 카테고리입니다.");
+            throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.", request.getName()));
         }
 
         Category category = Category.createCategory(request.getName(), request.getIconUrl());
@@ -37,10 +39,10 @@ public class CategoryService {
     @Transactional
     public void update(Long categoryId, CategoryUpdateRequest request) {
         Category findCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new NotFoundException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
 
         if (categoryRepository.findByName(request.getName()).isPresent()) {
-            throw new DuplicateException(request.getName() + "는 이미 존재하는 카테고리입니다.");
+            throw new DuplicateException(String.format("%s는 이미 존재하는 카테고리입니다.", request.getName()));
         }
 
         findCategory.changeNameAndIconUrl(request.getName(), request.getIconUrl());
@@ -49,7 +51,7 @@ public class CategoryService {
     @Transactional
     public void delete(Long categoryId) {
         Category findCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new NotFoundException(categoryId + "는 존재하지 않는 카테고리 ID 입니다."));
+                .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND));
 
         categoryRepository.delete(findCategory);
     }

@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
+import static inu.market.common.NotExistException.*;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -43,7 +45,7 @@ public class UserController {
     public ResponseEntity<Map<String, String>> convertToImageUrl(@RequestPart MultipartFile image) {
 
         if (image.isEmpty()) {
-            throw new NotExistException("업로드 할 이미지가 없습니다.");
+            throw new NotExistException(IMAGE_NOT_EXIST);
         }
 
         Map<String, String> response = new HashMap<>();
