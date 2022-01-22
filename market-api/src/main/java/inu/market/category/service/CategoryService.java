@@ -59,7 +59,7 @@ public class CategoryService {
     public List<CategoryResponse> findAll() {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
-                .map(category -> CategoryResponse.from(category))
+                .map(CategoryResponse::from)
                 .collect(Collectors.toList());
     }
 

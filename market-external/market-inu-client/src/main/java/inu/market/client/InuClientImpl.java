@@ -37,11 +37,9 @@ public class InuClientImpl implements InuClient {
         ResponseEntity<String> response = restTemplate.postForEntity(INU_LOGIN_URL, request, String.class);
 
         if (response.getStatusCode().is3xxRedirection()) {
-
             if (response.getHeaders().get(HttpHeaders.SET_COOKIE).size() != 3) {
                 throw new NotMatchException("학번 혹은 비밀번호가 맞지 않습니다.");
             }
-
         } else {
             throw new NetworkException("서버와 통신 중 오류가 발생했습니다.");
         }

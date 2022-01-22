@@ -7,7 +7,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +17,7 @@ import java.io.InputStream;
 @Component
 public class FirebaseClient {
 
-    private final String FIREBASE_CONFIG_PATH = "inu-market-firebase-adminsdk-yuqkp-f72006c43e.json";
+    private static final String FIREBASE_CONFIG_PATH = "inu-market-firebase-adminsdk-yuqkp-f72006c43e.json";
 
     @PostConstruct
     public void init() throws IOException {
@@ -36,11 +35,8 @@ public class FirebaseClient {
                 .putData("title", title)
                 .putData("content", content)
                 .build();
-        try {
-            String response = FirebaseMessaging.getInstance().sendAsync(message).get();
-        } catch (Exception e) {
-            log.error("푸쉬알림 전송 실패");
-        }
+
+        FirebaseMessaging.getInstance().sendAsync(message);
     }
 
 }

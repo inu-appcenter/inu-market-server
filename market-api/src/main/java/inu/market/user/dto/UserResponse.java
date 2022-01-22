@@ -21,9 +21,8 @@ public class UserResponse {
     private String pushToken;
 
     public static UserResponse from(User user) {
-        UserResponse userResponse = new UserResponse(user.getId(), user.getNickName(), user.getImageUrl(),
+        return new UserResponse(user.getId(), user.getNickName(), user.getImageUrl(),
                                                      user.getScore(), user.getPushToken());
-        return userResponse;
     }
 
 }

@@ -60,16 +60,15 @@ public class ItemResponse {
     private List<String> imageUrls;
 
     @QueryProjection
-    public ItemResponse(Long itemId, String title, String mainImageUrl, int price,
-                        int favoriteCount, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.itemId = itemId;
-        this.title = title;
-        this.mainImageUrl = mainImageUrl;
-        this.price = price;
-        this.favoriteCount = favoriteCount;
-        this.status = status.getStatus();
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    public ItemResponse(Item item) {
+        this.itemId = item.getId();
+        this.title = item.getTitle();
+        this.mainImageUrl = item.getMainImageUrl();
+        this.price = item.getPrice();
+        this.favoriteCount = item.getFavoriteCount();
+        this.status = item.getStatus().getStatus();
+        this.createdAt = item.getCreatedAt();
+        this.updatedAt = item.getUpdatedAt();
     }
 
     public static ItemResponse from(Item item, List<ItemImage> itemImages, boolean favorite) {
@@ -87,7 +86,7 @@ public class ItemResponse {
         itemResponse.category = CategoryResponse.from(item.getCategory());
         itemResponse.seller = UserResponse.from(item.getSeller());
         itemResponse.imageUrls = itemImages.stream()
-                .map(itemImage -> itemImage.getImageUrl())
+                .map(ItemImage::getImageUrl)
                 .collect(Collectors.toList());
         return itemResponse;
     }

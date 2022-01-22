@@ -47,7 +47,7 @@ public class NoticeService {
     public List<NoticeResponse> findAll() {
         List<Notice> notices = noticeRepository.findAll();
         return notices.stream()
-                .map(notice -> NoticeResponse.simpleFrom(notice))
+                .map(NoticeResponse::simpleFrom)
                 .collect(Collectors.toList());
     }
 

@@ -74,13 +74,13 @@ public class Item extends BaseEntity {
     }
 
     public void changeItemImages(List<String> imageUrls) {
-        List<ItemImage> itemImages = imageUrls.stream()
+        List<ItemImage> requestItemImages = imageUrls.stream()
                 .map(imageUrl -> ItemImage.createItemImage(imageUrl, this))
                 .collect(Collectors.toList());
 
-        this.mainImageUrl = itemImages.size() != 0 ? itemImages.get(0).getImageUrl() : null;
+        this.mainImageUrl = requestItemImages.size() != 0 ? requestItemImages.get(0).getImageUrl() : null;
         this.itemImages.clear();
-        this.itemImages.addAll(itemImages);
+        this.itemImages.addAll(requestItemImages);
     }
 
     public void changeTitleAndContentAndPrice(String title, String contents, int price) {

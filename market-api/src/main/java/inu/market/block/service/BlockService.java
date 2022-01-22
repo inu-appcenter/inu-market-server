@@ -16,7 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static inu.market.common.NotFoundException.*;
+import static inu.market.common.NotFoundException.BLOCK_NOT_FOUND;
+import static inu.market.common.NotFoundException.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +58,7 @@ public class BlockService {
     public List<BlockResponse> findByUserId(Long userId) {
         List<Block> blocks = blockRepository.findByUserId(userId);
         return blocks.stream()
-                .map(block -> BlockResponse.from(block))
+                .map(BlockResponse::from)
                 .collect(Collectors.toList());
     }
 }

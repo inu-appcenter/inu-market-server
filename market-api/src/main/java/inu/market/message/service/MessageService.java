@@ -43,7 +43,7 @@ public class MessageService {
                 .findAllByRoomIdAndCreatedAtIsBeforeOrderByCreatedAtDesc(
                         roomId, LocalDateTime.parse(lastMessageDate), PageRequest.of(0, size));
         return messages.stream()
-                .map(message -> MessageResponse.from(message))
+                .map(MessageResponse::from)
                 .collect(Collectors.toList());
     }
 

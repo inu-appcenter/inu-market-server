@@ -10,9 +10,9 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class ItemCreateRequest {
+@AllArgsConstructor
+public class ItemRequest {
 
     @NotBlank(message = "제목은 필수입니다.")
     private String title;

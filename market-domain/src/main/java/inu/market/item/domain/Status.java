@@ -20,7 +20,7 @@ public enum Status {
         return Arrays.stream(values())
                 .filter(v -> v.status.equals(status))
                 .findFirst()
-                .orElseThrow(() -> new NotFoundException(String.format("잘못된 상품 상태 타입 : &s", status)));
+                .orElseThrow(() -> new NotFoundException(String.format("잘못된 상품 상태 타입 : %s", status)));
     }
 
     public String getStatus() {

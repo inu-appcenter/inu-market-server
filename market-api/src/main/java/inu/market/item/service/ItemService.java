@@ -47,12 +47,12 @@ public class ItemService {
 
     public List<String> uploadImages(List<MultipartFile> images) {
         return images.stream()
-                .map(image -> awsClient.upload(image))
+                .map(awsClient::upload)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public Long create(Long userId, ItemCreateRequest request) {
+    public Long create(Long userId, ItemRequest request) {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
@@ -73,7 +73,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void update(Long userId, Long itemId, ItemUpdateRequest request) {
+    public void update(Long userId, Long itemId, ItemRequest request) {
         Item findItem = itemRepository.findWithItemImagesById(itemId)
                 .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
 

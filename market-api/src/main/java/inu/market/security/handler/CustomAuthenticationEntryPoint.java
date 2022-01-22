@@ -26,7 +26,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
                          AuthenticationException authException) throws IOException, ServletException {
         String body = objectMapper.writeValueAsString(ExceptionResponse.from("로그인이 필요한 서비스입니다."));
 
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);;
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(body);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
     }

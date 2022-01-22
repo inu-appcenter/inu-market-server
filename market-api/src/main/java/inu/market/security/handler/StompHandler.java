@@ -8,8 +8,11 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import javax.naming.AuthenticationException;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class StompHandler implements ChannelInterceptor {
 
         if (StompCommand.CONNECT == accessor.getCommand()) {
             if (!jwtUtil.isValidToken(extractToken(accessor))) {
-                throw new RuntimeException("연결 거부");
+                throw new AccessDeniedException("연결 거부");
             }
         }
         return message;

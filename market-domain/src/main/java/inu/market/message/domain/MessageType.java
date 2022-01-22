@@ -19,7 +19,7 @@ public enum MessageType {
         return Arrays.stream(values())
                 .filter(v -> v.type.equals(messageType))
                 .findFirst()
-                .orElseThrow(() -> new NotFoundException(String.format("잘못된 메세지 타입 : &s", messageType)));
+                .orElseThrow(() -> new NotFoundException(String.format("잘못된 메세지 타입 : %s", messageType)));
     }
 
     public String getType() {

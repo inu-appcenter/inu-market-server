@@ -30,7 +30,7 @@ public class ItemController {
 
     @PostMapping("/api/items")
     public ResponseEntity<Map<String, Long>> create(@LoginUser Long userId,
-                                                    @RequestBody @Valid ItemCreateRequest request) {
+                                                    @RequestBody @Valid ItemRequest request) {
         Long itemId = itemService.create(userId, request);
         Map<String, Long> response = new HashMap<>();
         response.put("itemId", itemId);
@@ -40,7 +40,7 @@ public class ItemController {
     @PutMapping("/api/items/{itemId}")
     public ResponseEntity<Void> update(@LoginUser Long userId,
                                        @PathVariable Long itemId,
-                                       @RequestBody @Valid ItemUpdateRequest request) {
+                                       @RequestBody @Valid ItemRequest request) {
         itemService.update(userId, itemId, request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

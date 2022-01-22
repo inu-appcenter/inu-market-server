@@ -70,14 +70,14 @@ public class MajorService {
     public List<MajorResponse> findParents() {
         List<Major> majors = majorRepository.findByParentIsNull();
         return majors.stream()
-                .map(major -> MajorResponse.from(major))
+                .map(MajorResponse::from)
                 .collect(Collectors.toList());
     }
 
     public List<MajorResponse> findChildrenById(Long majorId) {
         List<Major> majors = majorRepository.findByParentId(majorId);
         return majors.stream()
-                .map(major -> MajorResponse.from(major))
+                .map(MajorResponse::from)
                 .collect(Collectors.toList());
     }
 }
