@@ -14,6 +14,11 @@ dependencyManagement {
     }
 }
 
+jar {
+    enabled = true
+}
+
+
 dependencies {
     implementation(project(":market-domain"))
     implementation(project(":market-common"))
@@ -68,6 +73,7 @@ build {
 }
 
 bootJar {
+    enabled = true
     dependsOn asciidoctor
     copy {
         from "build/asciidoc/html5"
