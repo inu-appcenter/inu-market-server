@@ -3,6 +3,7 @@ package inu.market.security.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import inu.market.common.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -27,5 +28,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().write(body);
+        response.setStatus(HttpStatus.FORBIDDEN.value());
     }
 }
