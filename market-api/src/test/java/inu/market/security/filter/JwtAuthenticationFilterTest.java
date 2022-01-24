@@ -53,7 +53,7 @@ class JwtAuthenticationFilterTest {
     @MockBean
     private UserService userService;
 
-    protected MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @BeforeEach
     void setUp(WebApplicationContext wac) {
