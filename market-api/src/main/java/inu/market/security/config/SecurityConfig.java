@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/ws-stomp/**").permitAll()
+                .antMatchers("/ws-stomp/**", "/api/port").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users", "/api/users/login").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()
