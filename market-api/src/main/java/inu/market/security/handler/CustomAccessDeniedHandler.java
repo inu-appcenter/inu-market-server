@@ -26,7 +26,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
         String body = objectMapper.writeValueAsString(ExceptionResponse.from("보유한 권한으로 접근할 수 없습니다."));
 
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().write(body);
         response.setStatus(HttpStatus.FORBIDDEN.value());
     }
